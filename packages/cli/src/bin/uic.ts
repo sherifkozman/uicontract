@@ -7,7 +7,13 @@
  */
 
 import { VERSION } from '@uic/core';
-import { scanCommand } from '../commands/index.js';
+import {
+  scanCommand,
+  findCommand,
+  describeCommand,
+  listCommand,
+  diffCommand,
+} from '../commands/index.js';
 
 const MAIN_HELP = `\
 uic — makes web app UIs machine-readable
@@ -17,6 +23,10 @@ USAGE
 
 COMMANDS
   scan <directory>    Scan a project and emit a UI manifest
+  find <query>        Search for elements by name, label, route, or handler
+  describe <id>       Show full details of an element by agent ID
+  list                List all elements with optional filtering
+  diff <old> <new>    Compare two manifests and report changes
 
 GLOBAL OPTIONS
   --version, -V       Print the uic version and exit
@@ -45,6 +55,26 @@ async function main(): Promise<void> {
   // Route to subcommands
   if (command === 'scan') {
     const code = await scanCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'find') {
+    const code = await findCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'describe') {
+    const code = await describeCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'list') {
+    const code = await listCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'diff') {
+    const code = await diffCommand(rest);
     process.exit(code);
   }
 
