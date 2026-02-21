@@ -10,7 +10,9 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",
@@ -18,6 +20,12 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@babel/parser": "^7.29.0",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
     "@uic/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0"
   }
 }
