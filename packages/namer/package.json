@@ -1,5 +1,5 @@
 {
-  "name": "uic",
+  "name": "@uic/namer",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -10,12 +10,7 @@
       "import": "./dist/index.js"
     }
   },
-  "bin": {
-    "uic": "./dist/bin/uic.js"
-  },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",
@@ -23,9 +18,6 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@uic/core": "workspace:*",
-    "@uic/parser-react": "workspace:*",
-    "@uic/namer": "workspace:*",
-    "@uic/annotator": "workspace:*"
+    "@uic/core": "workspace:*"
   }
 }

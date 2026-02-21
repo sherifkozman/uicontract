@@ -54,16 +54,34 @@ importers:
         specifier: ^3.0.0
         version: 3.2.4(@types/node@25.3.0)
 
-  packages/cli:
+  packages/annotator:
     dependencies:
       '@uic/core':
         specifier: workspace:*
         version: link:../core
+
+  packages/cli:
+    dependencies:
+      '@uic/annotator':
+        specifier: workspace:*
+        version: link:../annotator
+      '@uic/core':
+        specifier: workspace:*
+        version: link:../core
+      '@uic/namer':
+        specifier: workspace:*
+        version: link:../namer
       '@uic/parser-react':
         specifier: workspace:*
         version: link:../parser-react
 
   packages/core: {}
+
+  packages/namer:
+    dependencies:
+      '@uic/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/parser-react:
     dependencies:

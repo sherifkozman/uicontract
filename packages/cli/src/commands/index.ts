@@ -15,3 +15,9 @@ export type { ListArgs, ListArgsError } from './list.js';
 
 export { diffCommand, parseDiffArgs, diffManifests, DIFF_HELP } from './diff.js';
 export type { DiffArgs, DiffArgsError, DiffChange, DiffCategory, DiffResult, DiffSummary } from './diff.js';
+
+export { nameCommand, parseNameArgs, NAME_HELP } from './name.js';
+export type { NameArgs, NameArgsError } from './name.js';
+
+export { annotateCommand, parseAnnotateArgs, ANNOTATE_HELP } from './annotate.js';
+export type { AnnotateArgs, AnnotateArgsError } from './annotate.js';

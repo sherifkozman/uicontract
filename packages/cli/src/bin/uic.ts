@@ -13,6 +13,8 @@ import {
   describeCommand,
   listCommand,
   diffCommand,
+  nameCommand,
+  annotateCommand,
 } from '../commands/index.js';
 
 const MAIN_HELP = `\
@@ -23,6 +25,8 @@ USAGE
 
 COMMANDS
   scan <directory>    Scan a project and emit a UI manifest
+  name <manifest>     Assign stable agent IDs to elements in a manifest
+  annotate            Insert data-agent-id attributes into source files
   find <query>        Search for elements by name, label, route, or handler
   describe <id>       Show full details of an element by agent ID
   list                List all elements with optional filtering
@@ -75,6 +79,16 @@ async function main(): Promise<void> {
 
   if (command === 'diff') {
     const code = await diffCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'name') {
+    const code = await nameCommand(rest);
+    process.exit(code);
+  }
+
+  if (command === 'annotate') {
+    const code = await annotateCommand(rest);
     process.exit(code);
   }
 
