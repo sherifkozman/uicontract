@@ -4,8 +4,8 @@
 export { scanCommand, parseScanArgs, generateTempId, SCAN_HELP } from './scan.js';
 export type { ScanArgs, ScanArgsError } from './scan.js';
 
-export { findCommand, parseFindArgs, elementMatchesQuery, FIND_HELP } from './find.js';
-export type { FindArgs, FindArgsError } from './find.js';
+export { findCommand, parseFindArgs, elementMatchesQuery, scoreElement, FIND_HELP } from './find.js';
+export type { FindArgs, FindArgsError, ScoredElement } from './find.js';
 
 export { describeCommand, parseDescribeArgs, DESCRIBE_HELP } from './describe.js';
 export type { DescribeArgs, DescribeArgsError } from './describe.js';

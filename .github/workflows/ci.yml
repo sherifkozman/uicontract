@@ -54,3 +54,26 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm test -- --coverage
+
+  dogfood:
+    name: Dogfood (UIC Self-Scan)
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Scan fixture app
+        run: npx uic scan fixtures/react-app -o /tmp/current-manifest.json
+
+      # NOTE: No golden manifest committed yet. Once a baseline is committed to
+      # fixtures/react-app/uic-manifest.golden.json, uncomment the diff step below.
+      #
+      # - name: Diff against golden manifest
+      #   run: npx uic diff fixtures/react-app/uic-manifest.golden.json /tmp/current-manifest.json

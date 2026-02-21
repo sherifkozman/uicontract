@@ -59,6 +59,13 @@ importers:
       '@uic/core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
+      '@uic/namer':
+        specifier: workspace:*
+        version: link:../namer
+      '@uic/parser-react':
+        specifier: workspace:*
+        version: link:../parser-react
 
   packages/cli:
     dependencies:
@@ -101,6 +108,8 @@ importers:
       '@types/babel__traverse':
         specifier: ^7.28.0
         version: 7.28.0
+
+  packages/skill: {}
 
 packages:
 

@@ -1,0 +1,8 @@
+{
+  "name": "annotated-app-fixture",
+  "private": true,
+  "dependencies": {
+    "react": "*",
+    "next": "*"
+  }
+}

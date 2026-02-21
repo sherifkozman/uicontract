@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { parseDiffArgs, diffManifests } from '../../src/commands/diff.js';
+import {
+  parseDiffArgs,
+  diffManifests,
+  findProtectedScopeViolations,
+  formatDiffReport,
+} from '../../src/commands/diff.js';
 import type { Manifest, ManifestElement } from '@uic/core';
 
 // ---------------------------------------------------------------------------
@@ -135,6 +140,27 @@ describe('parseDiffArgs', () => {
     expect(result.json).toBe(true);
     expect(result.oldManifest).toBe('old.json');
     expect(result.newManifest).toBe('new.json');
+  });
+
+  it('parses --config flag with a path', () => {
+    const result = parseDiffArgs(['old.json', 'new.json', '--config', './my-config.json']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.configPath).toBe('./my-config.json');
+  });
+
+  it('returns error when --config is missing its value', () => {
+    const result = parseDiffArgs(['old.json', 'new.json', '--config']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --config/i);
+  });
+
+  it('returns error when --config value starts with dash', () => {
+    const result = parseDiffArgs(['old.json', 'new.json', '--config', '--json']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --config/i);
   });
 });
 
@@ -375,5 +401,138 @@ describe('diffManifests', () => {
     expect(result.summary.breakingCount).toBe(2);
     expect(result.summary.total).toBe(3);
     expect(result.breaking).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// findProtectedScopeViolations
+// ---------------------------------------------------------------------------
+
+describe('findProtectedScopeViolations', () => {
+  it('returns empty when no protected scopes configured', () => {
+    const el = makeElement({ agentId: 'settings.billing.btn' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, []);
+    expect(violations).toHaveLength(0);
+  });
+
+  it('returns empty when no changes match protected scopes', () => {
+    const el = makeElement({ agentId: 'nav.link' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+    expect(violations).toHaveLength(0);
+  });
+
+  it('detects violations when a breaking change matches a protected scope', () => {
+    const el = makeElement({ agentId: 'settings.billing.pause-btn' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+    expect(violations).toHaveLength(1);
+    expect(violations[0]?.agentId).toBe('settings.billing.pause-btn');
+  });
+
+  it('does not flag non-breaking changes as violations', () => {
+    const oldEl = makeElement({ agentId: 'settings.billing.btn', label: 'Old' });
+    const newEl = makeElement({ agentId: 'settings.billing.btn', label: 'New' });
+    const result = diffManifests(makeManifest([oldEl]), makeManifest([newEl]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+    expect(violations).toHaveLength(0);
+  });
+
+  it('matches multiple protected scopes', () => {
+    const el1 = makeElement({ agentId: 'settings.billing.btn', filePath: 'a.tsx', line: 1 });
+    const el2 = makeElement({ agentId: 'auth.login.btn', filePath: 'b.tsx', line: 2 });
+    const el3 = makeElement({ agentId: 'nav.link', filePath: 'c.tsx', line: 3 });
+
+    const result = diffManifests(makeManifest([el1, el2, el3]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, [
+      'settings.billing',
+      'auth',
+    ]);
+    expect(violations).toHaveLength(2);
+    const violationIds = violations.map((v) => v.agentId);
+    expect(violationIds).toContain('settings.billing.btn');
+    expect(violationIds).toContain('auth.login.btn');
+  });
+
+  it('uses startsWith for prefix matching', () => {
+    const el = makeElement({ agentId: 'settings.billing-extended.btn' });
+    // "settings.billing" should NOT match "settings.billing-extended" because
+    // the prefix is "settings.billing" and the id starts with "settings.billing-"
+    // Wait — actually startsWith('settings.billing') DOES match 'settings.billing-extended.btn'
+    // This is intentional: scope is a prefix match.
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+    expect(violations).toHaveLength(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// formatDiffReport
+// ---------------------------------------------------------------------------
+
+describe('formatDiffReport', () => {
+  it('shows no changes message for empty diff', () => {
+    const result = diffManifests(makeManifest([]), makeManifest([]));
+    const report = formatDiffReport(result, undefined);
+    expect(report).toContain('No changes detected');
+  });
+
+  it('shows protected scope violations section when present', () => {
+    const el = makeElement({ agentId: 'settings.billing.btn' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+
+    const report = formatDiffReport(result, undefined, violations);
+    expect(report).toContain('PROTECTED SCOPE VIOLATIONS');
+    expect(report).toContain('settings.billing.btn');
+    expect(report).toContain('cannot be overridden');
+  });
+
+  it('separates protected violations from regular breaking changes', () => {
+    const el1 = makeElement({ agentId: 'settings.billing.btn', filePath: 'a.tsx', line: 1 });
+    const el2 = makeElement({ agentId: 'nav.link', filePath: 'b.tsx', line: 2 });
+
+    const result = diffManifests(makeManifest([el1, el2]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+
+    const report = formatDiffReport(result, undefined, violations);
+    expect(report).toContain('PROTECTED SCOPE VIOLATIONS (1)');
+    expect(report).toContain('BREAKING CHANGES (1)');
+  });
+
+  it('shows allow-breaking message when set', () => {
+    const el = makeElement({ agentId: 'nav.link' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const report = formatDiffReport(result, 'Redesign');
+    expect(report).toContain('Breaking changes allowed: "Redesign"');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Config integration scenarios (unit-level, no file I/O)
+// ---------------------------------------------------------------------------
+
+describe('config integration scenarios', () => {
+  it('protected scope + --allow-breaking still detects violations', () => {
+    // This tests the logic that protected scope violations are not overridable.
+    // The diffCommand itself handles the exit code, but we test the building blocks.
+    const el = makeElement({ agentId: 'settings.billing.btn' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+    const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);
+
+    // Even with --allow-breaking, violations should still be found
+    expect(violations).toHaveLength(1);
+    expect(result.breaking).toBe(true);
+  });
+
+  it('breakingChangePolicy "warn" does not affect diff detection', () => {
+    // The policy only affects the exit code in diffCommand, not the diff detection.
+    const el = makeElement({ agentId: 'nav.btn' });
+    const result = diffManifests(makeManifest([el]), makeManifest([]));
+
+    // The diff result itself always reports breaking changes accurately
+    expect(result.breaking).toBe(true);
+    expect(result.summary.breakingCount).toBe(1);
   });
 });

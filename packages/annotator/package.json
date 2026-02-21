@@ -19,5 +19,9 @@
   },
   "dependencies": {
     "@uic/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@uic/parser-react": "workspace:*",
+    "@uic/namer": "workspace:*"
   }
 }

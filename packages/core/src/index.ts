@@ -35,3 +35,7 @@ export type { ValidationError, ValidationResult } from './schema/manifest.js';
 
 // Parser Registry
 export { ParserRegistry, parserRegistry } from './parser-registry.js';
+
+// Config
+export { loadConfig, validateConfig, DEFAULT_CONFIG } from './config.js';
+export type { UicConfig } from './config.js';

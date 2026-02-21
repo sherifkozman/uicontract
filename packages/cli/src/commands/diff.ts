@@ -7,8 +7,8 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { deserializeManifest } from '@uic/core';
-import type { Manifest, ManifestElement } from '@uic/core';
+import { deserializeManifest, loadConfig } from '@uic/core';
+import type { Manifest, ManifestElement, UicConfig } from '@uic/core';
 
 // ---------------------------------------------------------------------------
 // Help text
@@ -25,6 +25,7 @@ ARGUMENTS
 
 OPTIONS
   --allow-breaking <reason>   Override exit code to 0 even with breaking changes
+  --config <path>             Path to .uicrc.json config file (auto-detected if omitted)
   --json                      Output diff result as JSON
   --help, -h                  Show this help message
 
@@ -33,13 +34,14 @@ CHANGE CATEGORIES
   Informational: ADDED, LABEL_CHANGED, HANDLER_CHANGED, MOVED
 
 EXIT CODES
-  0  No breaking changes (or --allow-breaking used)
-  1  Breaking changes found, or error
+  0  No breaking changes (or --allow-breaking used with no protected scope violations)
+  1  Breaking changes found, error, or protected scope violation
 
 EXAMPLES
   uic diff baseline.json current.json
   uic diff old.json new.json --json
   uic diff old.json new.json --allow-breaking "Intentional redesign of nav"
+  uic diff old.json new.json --config ./my-config.json
 
 Run "uic --help" for the full list of commands.
 `;
@@ -94,6 +96,7 @@ export interface DiffArgs {
   oldManifest: string | undefined;
   newManifest: string | undefined;
   allowBreaking: string | undefined;
+  configPath: string | undefined;
   json: boolean;
   help: boolean;
 }
@@ -104,6 +107,7 @@ export interface DiffArgsError {
 
 export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
   let allowBreaking: string | undefined;
+  let configPath: string | undefined;
   let json = false;
   let help = false;
   const positionals: string[] = [];
@@ -128,6 +132,15 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
       i++;
       continue;
     }
+    if (arg === '--config') {
+      const next = args[i + 1];
+      if (next === undefined || next.startsWith('-')) {
+        return { error: 'Missing value for --config. Provide a path. Example: --config .uicrc.json' };
+      }
+      configPath = next;
+      i++;
+      continue;
+    }
     if (arg !== undefined && arg.startsWith('-')) {
       return { error: `Unknown option: ${arg}. Run "uic diff --help" for usage.` };
     }
@@ -148,6 +161,7 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
     oldManifest: positionals[0],
     newManifest: positionals[1],
     allowBreaking,
+    configPath,
     json,
     help,
   };
@@ -314,22 +328,65 @@ export function diffManifests(oldManifest: Manifest, newManifest: Manifest): Dif
 }
 
 // ---------------------------------------------------------------------------
+// Protected scope checking (pure function)
+// ---------------------------------------------------------------------------
+
+/**
+ * Check which breaking changes touch a protected scope.
+ * Returns the subset of breaking changes whose agentId starts with
+ * any prefix in `protectedScopes`.
+ */
+export function findProtectedScopeViolations(
+  changes: DiffChange[],
+  protectedScopes: string[],
+): DiffChange[] {
+  if (protectedScopes.length === 0) return [];
+  return changes.filter(
+    (c) =>
+      c.breaking &&
+      protectedScopes.some((scope) => c.agentId.startsWith(scope)),
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Formatting
 // ---------------------------------------------------------------------------
 
-function formatDiffReport(result: DiffResult, allowBreaking: string | undefined): string {
+export function formatDiffReport(
+  result: DiffResult,
+  allowBreaking: string | undefined,
+  protectedViolations: DiffChange[] = [],
+): string {
   if (result.changes.length === 0) {
     return 'UIC Manifest Diff\n=================\n\nNo changes detected.\n';
   }
 
   const lines: string[] = ['UIC Manifest Diff', '=================', ''];
 
-  const breaking = result.changes.filter((c) => c.breaking);
+  // Protected scope violations section (always shown first if any)
+  if (protectedViolations.length > 0) {
+    lines.push(
+      `PROTECTED SCOPE VIOLATIONS (${String(protectedViolations.length)}):`,
+    );
+    lines.push(
+      '  These changes affect protected scopes and cannot be overridden with --allow-breaking.',
+    );
+    for (const change of protectedViolations) {
+      lines.push(`  !! ${change.category}  ${change.agentId}`);
+      lines.push(`     ${change.details}`);
+    }
+    lines.push('');
+  }
+
+  const protectedIds = new Set(protectedViolations.map((c) => `${c.category}:${c.agentId}`));
+  const breakingNonProtected = result.changes.filter(
+    (c) => c.breaking && !protectedIds.has(`${c.category}:${c.agentId}`),
+  );
   const nonBreaking = result.changes.filter((c) => !c.breaking);
 
-  if (breaking.length > 0) {
-    lines.push(`BREAKING CHANGES (${String(breaking.length)}):`);
-    for (const change of breaking) {
+  if (breakingNonProtected.length > 0) {
+    lines.push(`BREAKING CHANGES (${String(breakingNonProtected.length)}):`);
+    for (const change of breakingNonProtected) {
       lines.push(`  \u2717 ${change.category}  ${change.agentId}`);
       lines.push(`    ${change.details}`);
     }
@@ -377,6 +434,33 @@ export async function diffCommand(args: string[]): Promise<number> {
   const oldPath = path.resolve(parsed.oldManifest as string);
   const newPath = path.resolve(parsed.newManifest as string);
 
+  // Load config
+  let config: UicConfig;
+  if (parsed.configPath !== undefined) {
+    // Explicit config path: read and validate directly
+    const configFilePath = path.resolve(parsed.configPath);
+    try {
+      const raw = await fs.readFile(configFilePath, 'utf-8');
+      const { validateConfig } = await import('@uic/core');
+      const jsonParsed: unknown = JSON.parse(raw);
+      config = validateConfig(jsonParsed);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      process.stderr.write(
+        `Error: Failed to load config "${configFilePath}": ${message}\n`,
+      );
+      return 1;
+    }
+  } else {
+    try {
+      config = await loadConfig(process.cwd());
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      process.stderr.write(`Error: Failed to load config: ${message}\n`);
+      return 1;
+    }
+  }
+
   // Load old manifest
   let oldManifest: Manifest;
   try {
@@ -401,14 +485,41 @@ export async function diffCommand(args: string[]): Promise<number> {
 
   const result = diffManifests(oldManifest, newManifest);
 
+  // Check protected scope violations
+  const protectedViolations = findProtectedScopeViolations(
+    result.changes,
+    config.protectedScopes,
+  );
+
   if (parsed.json) {
-    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    const jsonOutput = {
+      ...result,
+      protectedScopeViolations: protectedViolations.map((c) => c.agentId),
+    };
+    process.stdout.write(JSON.stringify(jsonOutput, null, 2) + '\n');
   } else {
-    process.stdout.write(formatDiffReport(result, parsed.allowBreaking));
+    process.stdout.write(formatDiffReport(result, parsed.allowBreaking, protectedViolations));
   }
 
-  // Exit code
-  if (result.breaking && parsed.allowBreaking === undefined) {
+  // Exit code logic:
+  // 1. Protected scope violations ALWAYS exit 1 (--allow-breaking does NOT override)
+  if (protectedViolations.length > 0) {
+    return 1;
+  }
+
+  // 2. Breaking changes follow policy
+  if (result.breaking) {
+    if (parsed.allowBreaking !== undefined) {
+      // --allow-breaking overrides the policy
+      return 0;
+    }
+
+    if (config.breakingChangePolicy === 'warn') {
+      // "warn" policy: print (already done above) but exit 0
+      return 0;
+    }
+
+    // "block" policy (default): exit 1
     return 1;
   }
 
