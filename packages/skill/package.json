@@ -1,13 +1,25 @@
 {
   "name": "@uicontract/skill",
   "version": "0.1.0",
-  "private": true,
-  "description": "Agent skill files for UIC",
+  "description": "Agent skill files for UIC - makes web app UIs machine-readable for AI coding agents",
   "license": "MIT",
   "author": "UIC Contributors",
+  "homepage": "https://github.com/sherifkozman/uicontract",
   "repository": {
     "type": "git",
     "url": "https://github.com/sherifkozman/uicontract.git",
     "directory": "packages/skill"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/sherifkozman/uicontract/issues"
+  },
+  "keywords": ["uic", "ui-contracts", "agent", "skill", "ai-agent", "data-agent-id", "manifest", "automation", "claude", "cursor", "copilot"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "SKILL.md",
+    "references",
+    "README.md"
+  ]
 }

@@ -132,7 +132,37 @@ cy.get('[data-agent-id="settings.billing.pause-subscription.button"]').click();
 document.querySelector('[data-agent-id="settings.billing.pause-subscription.button"]')
 ```
 
-For AI coding agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
+---
+
+## AI Agent Skill
+
+UIC ships a skill file that teaches AI coding agents (Claude, Cursor, Copilot, etc.) how to discover and target UI elements using `manifest.json` instead of fragile selectors.
+
+```bash
+npm install @uicontract/skill
+```
+
+Then copy the skill into your agent's instruction folder:
+
+```bash
+# Claude Code
+cp node_modules/@uicontract/skill/SKILL.md .claude/skills/uic.md
+
+# Cursor
+cp node_modules/@uicontract/skill/SKILL.md .cursor/rules/uic.mdc
+
+# Copilot / VS Code
+cat node_modules/@uicontract/skill/SKILL.md >> .github/copilot-instructions.md
+```
+
+Once loaded, the agent can find any interactive element by name:
+
+```bash
+npx uicontract find "pause subscription" --json
+# => { "agentId": "settings.billing.pause-subscription.button", ... }
+```
+
+See [`packages/skill/README.md`](packages/skill/README.md) for full installation instructions and all supported tools.
 
 ---
 
