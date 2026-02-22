@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const SKILL_DIR = path.resolve(__dirname, '..');
 const SKILL_MD_PATH = path.join(SKILL_DIR, 'SKILL.md');
 const REFERENCES_DIR = path.join(SKILL_DIR, 'references');
@@ -59,8 +62,9 @@ describe('skill package structure', () => {
   it('all reference files linked in SKILL.md exist', async () => {
     const content = await fs.readFile(SKILL_MD_PATH, 'utf-8');
 
-    // Extract all references/<name> patterns from SKILL.md
-    const refPattern = /references\/[\w-]+\.md/g;
+    // Extract all references/<name>.md patterns from SKILL.md
+    // Intentionally matches only .md files — update if non-markdown refs are added
+    const refPattern = /references\/[\w.-]+\.md/g;
     const matches = content.match(refPattern);
     expect(matches).not.toBeNull();
     expect(matches!.length).toBeGreaterThan(0);
@@ -82,7 +86,7 @@ describe('skill package structure', () => {
       const filePath = path.join(SKILL_DIR, file);
       await expect(
         fs.stat(filePath),
-      ).rejects.toThrow();
+      ).rejects.toThrow(/ENOENT/);
     }
   });
 });
