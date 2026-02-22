@@ -43,6 +43,26 @@ export function extractComponentName(nodePath: NodePath): string | null {
       return node.id.name;
     }
 
+    // Arrow/function inside a call expression (HOC wrapper, memo, forwardRef):
+    // `const Foo = withAuth(() => <div>...</div>)`
+    // `const Bar = React.memo(() => <div>...</div>)`
+    if (
+      (t.isArrowFunctionExpression(node) || t.isFunctionExpression(node)) &&
+      t.isCallExpression(current.parent)
+    ) {
+      const callPath = current.parentPath;
+      if (callPath && t.isVariableDeclarator(callPath.parent) && t.isIdentifier(callPath.parent.id)) {
+        return callPath.parent.id.name;
+      }
+      // Nested calls: `React.memo(React.forwardRef(() => ...))`
+      if (callPath?.parentPath && t.isCallExpression(callPath.parentPath.node)) {
+        const outerCallPath = callPath.parentPath;
+        if (outerCallPath && t.isVariableDeclarator(outerCallPath.parent) && t.isIdentifier(outerCallPath.parent.id)) {
+          return outerCallPath.parent.id.name;
+        }
+      }
+    }
+
     // Class component: `class MyComponent extends React.Component { ... }`
     if (t.isClassDeclaration(node) && node.id) {
       return node.id.name;

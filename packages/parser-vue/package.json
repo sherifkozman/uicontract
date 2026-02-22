@@ -1,5 +1,5 @@
 {
-  "name": "uic",
+  "name": "@uic/parser-vue",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,9 +9,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
-  },
-  "bin": {
-    "uic": "./dist/bin/uic.js"
   },
   "files": [
     "dist"
@@ -24,9 +21,6 @@
   },
   "dependencies": {
     "@uic/core": "workspace:*",
-    "@uic/parser-react": "workspace:*",
-    "@uic/parser-vue": "workspace:*",
-    "@uic/namer": "workspace:*",
-    "@uic/annotator": "workspace:*"
+    "@vue/compiler-dom": "^3.5.0"
   }
 }

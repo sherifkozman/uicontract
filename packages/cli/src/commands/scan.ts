@@ -18,12 +18,20 @@ import {
 } from '@uic/core';
 import type { NamedElement, RawElement } from '@uic/core';
 import { reactParser } from '@uic/parser-react';
+import { vueParser } from '@uic/parser-vue';
 
-// Register the React parser into the global registry.
+// Register parsers into the global registry.
 // Guard against duplicate registration if this module is imported multiple times
 // in the same process (e.g., during tests).
 try {
   parserRegistry.register(reactParser);
+} catch (err) {
+  if (!(err instanceof UicError) || err.code !== 'PARSER_DUPLICATE') {
+    throw err;
+  }
+}
+try {
+  parserRegistry.register(vueParser);
 } catch (err) {
   if (!(err instanceof UicError) || err.code !== 'PARSER_DUPLICATE') {
     throw err;
@@ -43,7 +51,7 @@ ARGUMENTS
   <directory>            Path to the project root to scan
 
 OPTIONS
-  --framework <name>     Framework to use (e.g. react). Auto-detected if omitted.
+  --framework <name>     Framework to use (react, vue). Auto-detected if omitted.
   --output, -o <file>    Write manifest to a file instead of stdout.
   --json                 Output manifest as JSON (default when writing to stdout).
   --verbose              Enable debug logging.
