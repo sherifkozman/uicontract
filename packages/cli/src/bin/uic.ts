@@ -6,7 +6,7 @@
  * stderr: logs, errors, help
  */
 
-import { VERSION } from '@uic/core';
+import { VERSION } from '@uicontract/core';
 import {
   scanCommand,
   findCommand,

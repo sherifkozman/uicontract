@@ -1,18 +1,18 @@
-# @uic/namer
+# @uicontract/namer
 
 Naming engine that assigns hierarchical agent IDs to UI elements.
 
 ## Install
 
 ```bash
-npm install @uic/namer
+npm install @uicontract/namer
 ```
 
 ## Usage
 
 ```typescript
-import { assignNames } from '@uic/namer';
-import type { RawElement } from '@uic/core';
+import { assignNames } from '@uicontract/namer';
+import type { RawElement } from '@uicontract/core';
 
 const rawElements: RawElement[] = [
   /* output from a parser */

@@ -369,7 +369,7 @@ pnpm build
 pnpm test
 
 # Run tests for a specific package
-pnpm --filter @uic/parser-react test
+pnpm --filter @uicontract/parser-react test
 
 # Lint
 pnpm lint

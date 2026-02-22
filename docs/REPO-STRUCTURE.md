@@ -240,26 +240,26 @@ Agent skill files need versioning (they reference CLI commands and manifest sche
 ## Package Dependency Graph
 
 ```
-@uic/cli
-  ├── @uic/core
-  ├── @uic/parser-react
-  ├── @uic/parser-vue (optional peer dependency)
-  ├── @uic/namer
-  └── @uic/annotator
+@uicontract/cli
+  ├── @uicontract/core
+  ├── @uicontract/parser-react
+  ├── @uicontract/parser-vue (optional peer dependency)
+  ├── @uicontract/namer
+  └── @uicontract/annotator
 
-@uic/parser-react
-  └── @uic/core
+@uicontract/parser-react
+  └── @uicontract/core
 
-@uic/parser-vue
-  └── @uic/core
+@uicontract/parser-vue
+  └── @uicontract/core
 
-@uic/namer
-  └── @uic/core
+@uicontract/namer
+  └── @uicontract/core
 
-@uic/annotator
-  └── @uic/core
+@uicontract/annotator
+  └── @uicontract/core
 
-@uic/skill
+@uicontract/skill
   └── (no runtime dependencies -- just markdown files)
 ```
 
@@ -267,13 +267,13 @@ Agent skill files need versioning (they reference CLI commands and manifest sche
 
 | Package | npm name | Published |
 |---------|----------|-----------|
-| core | `@uic/core` | Yes |
+| core | `@uicontract/core` | Yes |
 | cli | `uic` (bin: `uic`) | Yes |
-| parser-react | `@uic/parser-react` | Yes |
-| parser-vue | `@uic/parser-vue` | Yes (Phase 5) |
-| namer | `@uic/namer` | Yes |
-| annotator | `@uic/annotator` | Yes |
-| skill | `@uic/skill` | Yes |
+| parser-react | `@uicontract/parser-react` | Yes |
+| parser-vue | `@uicontract/parser-vue` | Yes (Phase 5) |
+| namer | `@uicontract/namer` | Yes |
+| annotator | `@uicontract/annotator` | Yes |
+| skill | `@uicontract/skill` | Yes |
 
 The main CLI package is `uic` (no scope) for ease of use: `npx uic scan`.
-All library packages use the `@uic/` scope.
+All library packages use the `@uicontract/` scope.

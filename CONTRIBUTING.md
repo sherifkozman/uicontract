@@ -36,7 +36,7 @@ pnpm lint && pnpm typecheck
 | `pnpm lint` | Lint code with ESLint |
 | `pnpm typecheck` | Type check all packages with TypeScript |
 | `pnpm format` | Format code with Prettier |
-| `pnpm --filter @uic/core test` | Run tests for a specific package |
+| `pnpm --filter @uicontract/core test` | Run tests for a specific package |
 
 ## Development Workflow
 
@@ -91,7 +91,7 @@ For detailed architecture, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ### Logging
 
-- No `console.log` in library code. Use the structured logger from `@uic/core`.
+- No `console.log` in library code. Use the structured logger from `@uicontract/core`.
 - Logs go to stderr, never stdout.
 
 For the full contributor contract, see [CLAUDE.md](./CLAUDE.md).
@@ -105,10 +105,10 @@ For the full contributor contract, see [CLAUDE.md](./CLAUDE.md).
 pnpm test
 
 # Specific package
-pnpm --filter @uic/parser-react test
+pnpm --filter @uicontract/parser-react test
 
 # Watch mode
-pnpm --filter @uic/core test -- --watch
+pnpm --filter @uicontract/core test -- --watch
 
 # Single test file
 cd packages/core && npx vitest run tests/config.test.ts
@@ -150,7 +150,7 @@ Fixture apps in `fixtures/` provide realistic test data:
 ## Adding a Parser
 
 1. Create `packages/parser-<framework>/` following the package structure
-2. Implement the `Parser` interface from `@uic/core`
+2. Implement the `Parser` interface from `@uicontract/core`
 3. Register in the parser registry
 4. Create fixture app in `fixtures/<framework>-app/`
 5. Add golden file tests

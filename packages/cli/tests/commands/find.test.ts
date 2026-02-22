@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parseFindArgs, elementMatchesQuery, scoreElement } from '../../src/commands/find.js';
 import { levenshtein, tokenize, scoreField, fuzzyMatchElement } from '../../src/fuzzy-match.js';
-import type { ManifestElement } from '@uic/core';
+import type { ManifestElement } from '@uicontract/core';
 
 // ---------------------------------------------------------------------------
 // Test helper

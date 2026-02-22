@@ -24,7 +24,7 @@ await page.click('[data-agent-id="settings.billing.pause-subscription.button"]')
 
 ```bash
 # Install UIC
-pnpm add -D @uic/cli
+pnpm add -D @uicontract/cli
 
 # Scan your project
 npx uic scan ./src -o manifest.json

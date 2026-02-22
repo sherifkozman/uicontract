@@ -12,7 +12,7 @@ function validManifest(): Manifest {
     schemaVersion: '1.0',
     generatedAt: '2025-01-15T10:30:00.000Z',
     generator: {
-      name: '@uic/cli',
+      name: '@uicontract/cli',
       version: '0.1.0',
     },
     metadata: {
@@ -273,7 +273,7 @@ describe('buildManifest', () => {
     });
 
     expect(manifest.schemaVersion).toBe('1.0');
-    expect(manifest.generator.name).toBe('@uic/cli');
+    expect(manifest.generator.name).toBe('@uicontract/cli');
     expect(manifest.generator.version).toBe('0.1.0');
     expect(manifest.metadata.framework).toBe('react');
     expect(manifest.metadata.filesScanned).toBe(10);

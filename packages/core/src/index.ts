@@ -1,5 +1,5 @@
 /**
- * @uic/core — foundation types and utilities for UIC.
+ * @uicontract/core — foundation types and utilities for UIC.
  */
 export const VERSION = '0.0.0';
 

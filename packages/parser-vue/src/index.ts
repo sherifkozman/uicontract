@@ -1,11 +1,11 @@
 /**
- * @uic/parser-vue — Vue/Nuxt parser for UIC.
- * Implements the Parser interface from @uic/core.
+ * @uicontract/parser-vue — Vue/Nuxt parser for UIC.
+ * Implements the Parser interface from @uicontract/core.
  */
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import type { Parser, DiscoveryResult, ParserOptions, RawElement, ParserWarning } from '@uic/core';
+import type { Parser, DiscoveryResult, ParserOptions, RawElement, ParserWarning } from '@uicontract/core';
 import { discoverFiles } from './file-discovery.js';
 import { parseVueFile } from './sfc-visitor.js';
 

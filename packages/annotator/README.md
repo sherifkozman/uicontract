@@ -1,21 +1,21 @@
-# @uic/annotator
+# @uicontract/annotator
 
 Source code annotator that inserts `data-agent-id` attributes into UI components.
 
 ## Install
 
 ```bash
-npm install @uic/annotator
+npm install @uicontract/annotator
 ```
 
 ## Usage
 
 ```typescript
-import { annotate } from '@uic/annotator';
+import { annotate } from '@uicontract/annotator';
 
 const result = await annotate({
   projectRoot: '/path/to/my-app',
-  elements: namedElements,   // NamedElement[] from @uic/namer
+  elements: namedElements,   // NamedElement[] from @uicontract/namer
   dryRun: true,              // preview patches without writing files
 });
 

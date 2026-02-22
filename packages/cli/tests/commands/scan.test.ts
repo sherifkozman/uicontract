@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parseScanArgs, generateTempId } from '../../src/commands/scan.js';
-import type { RawElement } from '@uic/core';
+import type { RawElement } from '@uicontract/core';
 
 // ---------------------------------------------------------------------------
 // parseScanArgs

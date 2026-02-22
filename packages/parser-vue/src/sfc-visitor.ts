@@ -5,7 +5,7 @@
 
 import { parse as compilerParse } from '@vue/compiler-dom';
 import type { RootNode } from '@vue/compiler-dom';
-import type { RawElement, InteractiveElementType } from '@uic/core';
+import type { RawElement, InteractiveElementType } from '@uicontract/core';
 import {
   extractComponentName,
   extractRoute,

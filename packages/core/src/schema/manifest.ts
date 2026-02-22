@@ -186,7 +186,7 @@ export function validateManifest(manifest: unknown): ValidationResult {
       errors.push({
         path: 'schemaVersion',
         code: 'VERSION_UNSUPPORTED',
-        message: `schemaVersion major version ${String(major)} is not supported. Only version 1.x is supported. Please update @uic/core to handle this manifest version.`,
+        message: `schemaVersion major version ${String(major)} is not supported. Only version 1.x is supported. Please update @uicontract/core to handle this manifest version.`,
       });
     }
   }
@@ -320,7 +320,7 @@ export function buildManifest(options: {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     generator: {
-      name: '@uic/cli',
+      name: '@uicontract/cli',
       version: options.generatorVersion,
     },
     metadata: {

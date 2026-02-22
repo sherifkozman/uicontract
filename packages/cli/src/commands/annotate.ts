@@ -7,15 +7,15 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { deserializeManifest } from '@uic/core';
-import type { Manifest, NamedElement } from '@uic/core';
+import { deserializeManifest } from '@uicontract/core';
+import type { Manifest, NamedElement } from '@uicontract/core';
 import {
   annotateSource,
   generatePatch,
   createBackup,
   cleanupBackup,
-} from '@uic/annotator';
-import type { AnnotationTarget, AnnotateFileResult, FilePatch } from '@uic/annotator';
+} from '@uicontract/annotator';
+import type { AnnotationTarget, AnnotateFileResult, FilePatch } from '@uicontract/annotator';
 
 // ---------------------------------------------------------------------------
 // Help text

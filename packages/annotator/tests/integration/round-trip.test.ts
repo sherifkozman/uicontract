@@ -10,8 +10,8 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import * as os from 'node:os';
-import { ReactParser } from '@uic/parser-react';
-import { nameElements } from '@uic/namer';
+import { ReactParser } from '@uicontract/parser-react';
+import { nameElements } from '@uicontract/namer';
 import { annotateSource } from '../../src/jsx-annotator.js';
 import type { AnnotationTarget } from '../../src/jsx-annotator.js';
 

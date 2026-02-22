@@ -125,16 +125,16 @@ No layer may import from a layer above it. No circular imports. Violations caugh
 
 ```
 uic (cli)
-  ├── @uic/core
-  ├── @uic/parser-react
-  ├── @uic/parser-vue
-  ├── @uic/namer
-  └── @uic/annotator
+  ├── @uicontract/core
+  ├── @uicontract/parser-react
+  ├── @uicontract/parser-vue
+  ├── @uicontract/namer
+  └── @uicontract/annotator
 
-@uic/parser-react  →  @uic/core
-@uic/parser-vue    →  @uic/core
-@uic/namer         →  @uic/core
-@uic/annotator     →  @uic/core
+@uicontract/parser-react  →  @uicontract/core
+@uicontract/parser-vue    →  @uicontract/core
+@uicontract/namer         →  @uicontract/core
+@uicontract/annotator     →  @uicontract/core
 ```
 
 Parsers are separate packages so downstream consumers can tree-shake. A React-only project does not pay the cost of `@vue/compiler-dom`.

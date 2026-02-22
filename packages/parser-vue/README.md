@@ -1,17 +1,17 @@
-# @uic/parser-vue
+# @uicontract/parser-vue
 
 Vue and Nuxt parser for discovering interactive UI elements.
 
 ## Install
 
 ```bash
-npm install @uic/parser-vue
+npm install @uicontract/parser-vue
 ```
 
 ## Usage
 
 ```typescript
-import { VueParser } from '@uic/parser-vue';
+import { VueParser } from '@uicontract/parser-vue';
 
 const parser = new VueParser();
 
@@ -24,12 +24,12 @@ const { elements, warnings, metadata } = await parser.discover('/path/to/my-app'
 });
 
 console.log(`Found ${elements.length} elements in ${metadata.filesScanned} files`);
-// elements: RawElement[] ready for @uic/namer
+// elements: RawElement[] ready for @uicontract/namer
 ```
 
 ## API
 
-- **`VueParser`**: Implements the `Parser` interface from `@uic/core`.
+- **`VueParser`**: Implements the `Parser` interface from `@uicontract/core`.
   - **`detect(dir)`**: Returns `true` if the directory contains a Vue 3 or Nuxt project.
   - **`discover(dir, options)`**: Parses `.vue` Single File Component templates using `@vue/compiler-dom`. Returns `{ elements, warnings, metadata }`.
 

@@ -17,10 +17,10 @@ import {
   loadConfig,
   loadPlugins,
   VERSION,
-} from '@uic/core';
-import type { NamedElement, RawElement } from '@uic/core';
-import { reactParser } from '@uic/parser-react';
-import { vueParser } from '@uic/parser-vue';
+} from '@uicontract/core';
+import type { NamedElement, RawElement } from '@uicontract/core';
+import { reactParser } from '@uicontract/parser-react';
+import { vueParser } from '@uicontract/parser-vue';
 
 // Register parsers into the global registry.
 // Guard against duplicate registration if this module is imported multiple times

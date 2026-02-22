@@ -1,5 +1,5 @@
 {
-  "name": "@uic/parser-vue",
+  "name": "@uicontract/parser-vue",
   "version": "0.1.0",
   "description": "Vue and Nuxt parser for discovering interactive UI elements",
   "type": "module",
@@ -41,7 +41,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@uic/core": "workspace:*",
+    "@uicontract/core": "workspace:*",
     "@vue/compiler-dom": "^3.5.0"
   }
 }

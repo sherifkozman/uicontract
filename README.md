@@ -125,11 +125,11 @@ For AI agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
 | Package | npm | Description |
 |---------|-----|-------------|
 | [`uic`](packages/cli) | `npm i uic` | CLI — all commands |
-| [`@uic/core`](packages/core) | `npm i @uic/core` | Types, schema, validation, logger, errors |
-| [`@uic/parser-react`](packages/parser-react) | `npm i @uic/parser-react` | React/Next.js AST parser |
-| [`@uic/parser-vue`](packages/parser-vue) | `npm i @uic/parser-vue` | Vue/Nuxt SFC parser |
-| [`@uic/namer`](packages/namer) | `npm i @uic/namer` | Hierarchical ID naming engine |
-| [`@uic/annotator`](packages/annotator) | `npm i @uic/annotator` | Source code annotator |
+| [`@uicontract/core`](packages/core) | `npm i @uicontract/core` | Types, schema, validation, logger, errors |
+| [`@uicontract/parser-react`](packages/parser-react) | `npm i @uicontract/parser-react` | React/Next.js AST parser |
+| [`@uicontract/parser-vue`](packages/parser-vue) | `npm i @uicontract/parser-vue` | Vue/Nuxt SFC parser |
+| [`@uicontract/namer`](packages/namer) | `npm i @uicontract/namer` | Hierarchical ID naming engine |
+| [`@uicontract/annotator`](packages/annotator) | `npm i @uicontract/annotator` | Source code annotator |
 
 ---
 

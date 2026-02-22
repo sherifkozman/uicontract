@@ -5,7 +5,7 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import type { ParserOptions } from '@uic/core';
+import type { ParserOptions } from '@uicontract/core';
 
 const DEFAULT_INCLUDE = ['**/*.tsx', '**/*.jsx'];
 const DEFAULT_EXCLUDE = [

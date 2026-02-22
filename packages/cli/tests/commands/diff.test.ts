@@ -5,7 +5,7 @@ import {
   findProtectedScopeViolations,
   formatDiffReport,
 } from '../../src/commands/diff.js';
-import type { Manifest, ManifestElement } from '@uic/core';
+import type { Manifest, ManifestElement } from '@uicontract/core';
 
 // ---------------------------------------------------------------------------
 // Test helpers
@@ -33,7 +33,7 @@ function makeManifest(elements: ManifestElement[]): Manifest {
   return {
     schemaVersion: '1.0',
     generatedAt: '2026-01-01T00:00:00.000Z',
-    generator: { name: '@uic/cli', version: '0.0.0' },
+    generator: { name: '@uicontract/cli', version: '0.0.0' },
     metadata: {
       framework: 'react',
       projectRoot: '/project',

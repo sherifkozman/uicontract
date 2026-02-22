@@ -5,7 +5,7 @@
  * to ALL duplicates. Duplicates are ordered by line number for stability.
  */
 
-import type { NamedElement } from '@uic/core';
+import type { NamedElement } from '@uicontract/core';
 
 /**
  * Deduplicate named elements by appending numeric suffixes to collisions.

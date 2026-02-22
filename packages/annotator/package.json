@@ -1,5 +1,5 @@
 {
-  "name": "@uic/annotator",
+  "name": "@uicontract/annotator",
   "version": "0.1.0",
   "description": "Source code annotator that inserts data-agent-id attributes into UI components",
   "type": "module",
@@ -37,10 +37,10 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@uic/core": "workspace:*"
+    "@uicontract/core": "workspace:*"
   },
   "devDependencies": {
-    "@uic/parser-react": "workspace:*",
-    "@uic/namer": "workspace:*"
+    "@uicontract/parser-react": "workspace:*",
+    "@uicontract/namer": "workspace:*"
   }
 }

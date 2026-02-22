@@ -9,7 +9,7 @@
  * fails, the deterministic namer is used as a fallback.
  */
 
-import type { RawElement } from '@uic/core';
+import type { RawElement } from '@uicontract/core';
 
 /** Options for the AI naming provider. */
 export interface AiNamerOptions {

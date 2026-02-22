@@ -7,8 +7,8 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { deserializeManifest } from '@uic/core';
-import type { ManifestElement } from '@uic/core';
+import { deserializeManifest } from '@uicontract/core';
+import type { ManifestElement } from '@uicontract/core';
 import { fuzzyMatchElement } from '../fuzzy-match.js';
 
 // ---------------------------------------------------------------------------

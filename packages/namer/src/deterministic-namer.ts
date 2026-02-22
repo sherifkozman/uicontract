@@ -5,7 +5,7 @@
  * combines route, label, handler, component name, and element type.
  */
 
-import type { RawElement } from '@uic/core';
+import type { RawElement } from '@uicontract/core';
 import {
   routeToSegments,
   labelToSegment,

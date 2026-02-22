@@ -1,17 +1,17 @@
-# @uic/core
+# @uicontract/core
 
 Core types, schema, validation, logger, and error classes for UIC.
 
 ## Install
 
 ```bash
-npm install @uic/core
+npm install @uicontract/core
 ```
 
 ## Usage
 
 ```typescript
-import { type ManifestElement, validateManifest, createLogger, UicError } from '@uic/core';
+import { type ManifestElement, validateManifest, createLogger, UicError } from '@uicontract/core';
 
 // Validate a manifest against the JSON Schema
 const result = validateManifest(manifest);
@@ -37,7 +37,7 @@ throw new UicError('MANIFEST_NOT_FOUND', {
 - **`createLogger(options)`**: Returns a structured logger with `debug`, `info`, `warn`, and `error` methods
 - **`UicError`**: Base error class with `code` and `context` properties for all UIC packages
 
-All shared types and interfaces live here. Framework-specific packages (`@uic/parser-react`, `@uic/parser-vue`) and the naming/annotation layers all depend on this package.
+All shared types and interfaces live here. Framework-specific packages (`@uicontract/parser-react`, `@uicontract/parser-vue`) and the naming/annotation layers all depend on this package.
 
 ## Part of UIC
 

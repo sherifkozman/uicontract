@@ -17,11 +17,11 @@ Initial public release of UIC (UI Contracts).
 | Package | Version |
 |---------|---------|
 | `uic` | 0.1.0 |
-| `@uic/core` | 0.1.0 |
-| `@uic/parser-react` | 0.1.0 |
-| `@uic/parser-vue` | 0.1.0 |
-| `@uic/namer` | 0.1.0 |
-| `@uic/annotator` | 0.1.0 |
+| `@uicontract/core` | 0.1.0 |
+| `@uicontract/parser-react` | 0.1.0 |
+| `@uicontract/parser-vue` | 0.1.0 |
+| `@uicontract/namer` | 0.1.0 |
+| `@uicontract/annotator` | 0.1.0 |
 
 ### Added
 
@@ -35,31 +35,31 @@ Initial public release of UIC (UI Contracts).
 - `uic diff [<old> <new>]` — detect breaking UI contract changes between two manifests
 - All commands support `--json` for machine-readable output and `--help` for usage
 
-**Core (`@uic/core`)**
+**Core (`@uicontract/core`)**
 - Manifest v1 JSON Schema with full validation
 - Typed error class `UicError` with machine-readable `code` and structured `context`
 - Structured logger with `debug`/`info`/`warn`/`error` levels, always to stderr
 - Parser registry for framework auto-detection
 
-**React Parser (`@uic/parser-react`)**
+**React Parser (`@uicontract/parser-react`)**
 - AST-based discovery using `@babel/parser` and `@babel/traverse`
 - Discovers: `<button>`, `<a>`, `<input>`, `<select>`, `<textarea>`, `onClick`/`onChange`/`onSubmit` handlers
 - Context extraction: file path, line number, component name, label text, event handler name
 - Route inference from Next.js `app/` and `pages/` directory structure
 - Handles: function components, arrow components, `forwardRef`, `React.memo`, HOCs, conditional rendering
 
-**Vue Parser (`@uic/parser-vue`)**
+**Vue Parser (`@uicontract/parser-vue`)**
 - SFC template parsing using `@vue/compiler-dom`
 - Discovers interactive elements in `<template>` blocks
 - Handles `v-on:click`, `@click`, `v-model` bindings
 - Supports `<script setup>` and Options API
 
-**Namer (`@uic/namer`)**
+**Namer (`@uicontract/namer`)**
 - Deterministic naming: derives stable IDs from route + component + label + element type
 - ID format: `route.component.element-label.type` (e.g., `settings.billing.pause-subscription.button`)
 - Collision detection and automatic deduplication
 
-**Annotator (`@uic/annotator`)**
+**Annotator (`@uicontract/annotator`)**
 - Inserts `data-agent-id` attributes into JSX/TSX and Vue SFC source files
 - Generates unified diff patches for review
 - Creates `.uic-backup/` before any modification

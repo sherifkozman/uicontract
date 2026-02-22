@@ -5,7 +5,7 @@ UIC provides a command-line interface for scanning projects, querying manifests,
 ## Installation
 
 ```bash
-npm install -g @uic/cli
+npm install -g @uicontract/cli
 # or use npx
 npx uic <command>
 ```

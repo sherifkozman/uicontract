@@ -1,12 +1,12 @@
 /**
- * @uic/annotator -- source code annotation with data-agent-id attributes.
+ * @uicontract/annotator -- source code annotation with data-agent-id attributes.
  *
  * Public API: annotateFiles (main entry point) plus lower-level exports
  * for annotation, patch generation, and backup management.
  */
 import * as fs from 'node:fs/promises';
 
-import type { NamedElement } from '@uic/core';
+import type { NamedElement } from '@uicontract/core';
 
 import type { AnnotationTarget, AnnotationResult } from './jsx-annotator.js';
 import { annotateSource } from './jsx-annotator.js';

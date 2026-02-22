@@ -7,9 +7,9 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { deserializeManifest, serializeManifest } from '@uic/core';
-import type { Manifest } from '@uic/core';
-import { nameElements } from '@uic/namer';
+import { deserializeManifest, serializeManifest } from '@uicontract/core';
+import type { Manifest } from '@uicontract/core';
+import { nameElements } from '@uicontract/namer';
 
 // ---------------------------------------------------------------------------
 // Help text

@@ -1,5 +1,5 @@
 {
-  "name": "@uic/skill",
+  "name": "@uicontract/skill",
   "version": "0.1.0",
   "private": true,
   "description": "Agent skill files for UIC",

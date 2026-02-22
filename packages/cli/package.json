@@ -41,10 +41,10 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@uic/core": "workspace:*",
-    "@uic/parser-react": "workspace:*",
-    "@uic/parser-vue": "workspace:*",
-    "@uic/namer": "workspace:*",
-    "@uic/annotator": "workspace:*"
+    "@uicontract/core": "workspace:*",
+    "@uicontract/parser-react": "workspace:*",
+    "@uicontract/parser-vue": "workspace:*",
+    "@uicontract/namer": "workspace:*",
+    "@uicontract/annotator": "workspace:*"
   }
 }

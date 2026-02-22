@@ -7,8 +7,8 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { deserializeManifest, loadConfig } from '@uic/core';
-import type { Manifest, ManifestElement, UicConfig } from '@uic/core';
+import { deserializeManifest, loadConfig } from '@uicontract/core';
+import type { Manifest, ManifestElement, UicConfig } from '@uicontract/core';
 
 // ---------------------------------------------------------------------------
 // Help text
@@ -441,7 +441,7 @@ export async function diffCommand(args: string[]): Promise<number> {
     const configFilePath = path.resolve(parsed.configPath);
     try {
       const raw = await fs.readFile(configFilePath, 'utf-8');
-      const { validateConfig } = await import('@uic/core');
+      const { validateConfig } = await import('@uicontract/core');
       const jsonParsed: unknown = JSON.parse(raw);
       config = validateConfig(jsonParsed);
     } catch (err) {

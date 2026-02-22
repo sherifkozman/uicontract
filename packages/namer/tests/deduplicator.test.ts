@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { NamedElement } from '@uic/core';
+import type { NamedElement } from '@uicontract/core';
 import { deduplicateNames } from '../src/deduplicator.js';
 
 function makeNamed(

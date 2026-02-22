@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { RawElement } from '@uic/core';
+import type { RawElement } from '@uicontract/core';
 import { assignDeterministicName } from '../src/deterministic-namer.js';
 
 const AGENT_ID_PATTERN = /^[a-z][a-z0-9.-]*$/;

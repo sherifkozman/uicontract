@@ -6,14 +6,14 @@ Parsers are the framework-specific layer of UIC. Each parser knows how to scan a
 
 | Framework | Package | Auto-Detection |
 |-----------|---------|---------------|
-| React / Next.js | `@uic/parser-react` | Checks for `react` in `package.json` dependencies |
-| Vue / Nuxt | `@uic/parser-vue` | Checks for `vue` in `package.json` dependencies |
+| React / Next.js | `@uicontract/parser-react` | Checks for `react` in `package.json` dependencies |
+| Vue / Nuxt | `@uicontract/parser-vue` | Checks for `vue` in `package.json` dependencies |
 
 Both parsers are built-in and registered automatically by the CLI.
 
 ## Parser Interface
 
-Every parser must implement the `Parser` interface from `@uic/core`:
+Every parser must implement the `Parser` interface from `@uicontract/core`:
 
 ```typescript
 interface Parser {
@@ -163,7 +163,7 @@ cd uic-parser-svelte
 pnpm init
 ```
 
-Your `package.json` should include `@uic/core` as a peer dependency:
+Your `package.json` should include `@uicontract/core` as a peer dependency:
 
 ```json
 {
@@ -172,7 +172,7 @@ Your `package.json` should include `@uic/core` as a peer dependency:
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@uic/core": ">=0.1.0"
+    "@uicontract/core": ">=0.1.0"
   }
 }
 ```
@@ -181,7 +181,7 @@ Your `package.json` should include `@uic/core` as a peer dependency:
 
 ```typescript
 // src/index.ts
-import type { Parser, ParserOptions, DiscoveryResult } from '@uic/core';
+import type { Parser, ParserOptions, DiscoveryResult } from '@uicontract/core';
 
 export const svelteParser: Parser = {
   framework: 'svelte',

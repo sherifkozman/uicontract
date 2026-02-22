@@ -5,7 +5,7 @@
 import { parse } from '@babel/parser';
 import _traverse from '@babel/traverse';
 import * as t from '@babel/types';
-import type { RawElement, InteractiveElementType } from '@uic/core';
+import type { RawElement, InteractiveElementType } from '@uicontract/core';
 import {
   extractComponentName,
   extractRoute,

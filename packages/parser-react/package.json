@@ -1,5 +1,5 @@
 {
-  "name": "@uic/parser-react",
+  "name": "@uicontract/parser-react",
   "version": "0.1.0",
   "description": "React and Next.js parser for discovering interactive UI elements",
   "type": "module",
@@ -44,7 +44,7 @@
     "@babel/parser": "^7.29.0",
     "@babel/traverse": "^7.29.0",
     "@babel/types": "^7.29.0",
-    "@uic/core": "workspace:*"
+    "@uicontract/core": "workspace:*"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.28.0"

@@ -1,12 +1,12 @@
 /**
- * @uic/namer — naming engine for UIC elements.
+ * @uicontract/namer — naming engine for UIC elements.
  *
  * Takes RawElements discovered by a parser and assigns stable,
  * hierarchical agentIds using deterministic rules (with an optional
  * AI-assisted mode for future use).
  */
 
-import type { RawElement, NamedElement } from '@uic/core';
+import type { RawElement, NamedElement } from '@uicontract/core';
 import { assignDeterministicName } from './deterministic-namer.js';
 import { deduplicateNames } from './deduplicator.js';
 import { assignAiName } from './ai-namer.js';

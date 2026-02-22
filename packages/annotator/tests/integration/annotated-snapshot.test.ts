@@ -7,7 +7,7 @@
 
 import { describe, it, expect } from 'vitest';
 import * as path from 'node:path';
-import { ReactParser } from '@uic/parser-react';
+import { ReactParser } from '@uicontract/parser-react';
 
 // ---------------------------------------------------------------------------
 // Setup

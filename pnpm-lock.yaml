@@ -59,32 +59,32 @@ importers:
 
   packages/annotator:
     dependencies:
-      '@uic/core':
+      '@uicontract/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
-      '@uic/namer':
+      '@uicontract/namer':
         specifier: workspace:*
         version: link:../namer
-      '@uic/parser-react':
+      '@uicontract/parser-react':
         specifier: workspace:*
         version: link:../parser-react
 
   packages/cli:
     dependencies:
-      '@uic/annotator':
+      '@uicontract/annotator':
         specifier: workspace:*
         version: link:../annotator
-      '@uic/core':
+      '@uicontract/core':
         specifier: workspace:*
         version: link:../core
-      '@uic/namer':
+      '@uicontract/namer':
         specifier: workspace:*
         version: link:../namer
-      '@uic/parser-react':
+      '@uicontract/parser-react':
         specifier: workspace:*
         version: link:../parser-react
-      '@uic/parser-vue':
+      '@uicontract/parser-vue':
         specifier: workspace:*
         version: link:../parser-vue
 
@@ -92,7 +92,7 @@ importers:
 
   packages/namer:
     dependencies:
-      '@uic/core':
+      '@uicontract/core':
         specifier: workspace:*
         version: link:../core
 
@@ -107,7 +107,7 @@ importers:
       '@babel/types':
         specifier: ^7.29.0
         version: 7.29.0
-      '@uic/core':
+      '@uicontract/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -117,7 +117,7 @@ importers:
 
   packages/parser-vue:
     dependencies:
-      '@uic/core':
+      '@uicontract/core':
         specifier: workspace:*
         version: link:../core
       '@vue/compiler-dom':

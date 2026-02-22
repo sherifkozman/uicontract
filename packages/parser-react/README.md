@@ -1,17 +1,17 @@
-# @uic/parser-react
+# @uicontract/parser-react
 
 React and Next.js parser for discovering interactive UI elements.
 
 ## Install
 
 ```bash
-npm install @uic/parser-react
+npm install @uicontract/parser-react
 ```
 
 ## Usage
 
 ```typescript
-import { ReactParser } from '@uic/parser-react';
+import { ReactParser } from '@uicontract/parser-react';
 
 const parser = new ReactParser();
 
@@ -24,12 +24,12 @@ const { elements, warnings, metadata } = await parser.discover('/path/to/my-app'
 });
 
 console.log(`Found ${elements.length} elements in ${metadata.filesScanned} files`);
-// elements: RawElement[] ready for @uic/namer
+// elements: RawElement[] ready for @uicontract/namer
 ```
 
 ## API
 
-- **`ReactParser`**: Implements the `Parser` interface from `@uic/core`.
+- **`ReactParser`**: Implements the `Parser` interface from `@uicontract/core`.
   - **`detect(dir)`**: Returns `true` if the directory contains a React project.
   - **`discover(dir, options)`**: AST-parses `.tsx` and `.jsx` files using `@babel/parser` and `@babel/traverse`. Returns `{ elements, warnings, metadata }`.
 
