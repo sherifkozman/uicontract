@@ -10,7 +10,7 @@ Semantic versioning applies to the **npm packages**. The **manifest schema** has
 
 ## [0.1.0] - 2026-02-22
 
-Initial public release of UIC (UI Contracts).
+Initial public release of UI Contracts.
 
 ### Packages
 

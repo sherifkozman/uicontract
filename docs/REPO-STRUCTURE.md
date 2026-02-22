@@ -1,4 +1,4 @@
-# UIC Repository Structure
+# UI Contracts Repository Structure
 
 ## Directory Layout
 
@@ -209,7 +209,7 @@ uic/
 ├── vitest.config.ts                   -- Root Vitest config
 ├── .changeset/
 │   └── config.json                    -- Changesets configuration
-└── .uicrc.json                        -- UIC config for dogfooding (protectedScopes, etc.)
+└── .uicrc.json                        -- UI Contracts config for dogfooding (protectedScopes, etc.)
 ```
 
 ## Rationale for This Structure

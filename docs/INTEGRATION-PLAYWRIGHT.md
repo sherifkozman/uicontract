@@ -1,18 +1,18 @@
 # Playwright Integration Guide
 
-This guide shows how to use UIC with Playwright for stable, maintainable end-to-end tests.
+This guide shows how to use UI Contracts with Playwright for stable, maintainable end-to-end tests.
 
 ## Overview
 
-UIC assigns stable `data-agent-id` attributes to interactive elements in your source code. Playwright tests can use these IDs as selectors instead of brittle CSS selectors or XPaths that break when the UI changes.
+UI Contracts assigns stable `data-agent-id` attributes to interactive elements in your source code. Playwright tests can use these IDs as selectors instead of brittle CSS selectors or XPaths that break when the UI changes.
 
-**Before UIC:**
+**Before UI Contracts:**
 ```typescript
 // Fragile - breaks when CSS changes
 await page.click('.billing-section > div:nth-child(3) > button.btn-danger');
 ```
 
-**After UIC:**
+**After UI Contracts:**
 ```typescript
 // Stable - survives refactors
 await page.click('[data-agent-id="settings.billing.pause-subscription.button"]');
@@ -23,7 +23,7 @@ await page.click('[data-agent-id="settings.billing.pause-subscription.button"]')
 ### 1. Install and Scan
 
 ```bash
-# Install UIC
+# Install UI Contracts
 pnpm add -D @uicontract/cli
 
 # Scan your project
@@ -86,7 +86,7 @@ test('pause subscription flow', async ({ page }) => {
 
 ## Finding Agent IDs
 
-Use UIC commands to discover the right agent ID for your test:
+Use UI Contracts commands to discover the right agent ID for your test:
 
 ```bash
 # Search by name or label
@@ -101,7 +101,7 @@ npx uicontract describe settings.billing.pause-subscription.button
 
 ## CI Pipeline
 
-Add UIC diff checking to your CI to catch when UI changes break agent IDs:
+Add UI Contracts diff checking to your CI to catch when UI changes break agent IDs:
 
 ```yaml
 # .github/workflows/test.yml
@@ -140,7 +140,7 @@ jobs:
 
 - **Commit your baseline manifest** to version control so `uicontract diff` can detect regressions.
 - **Run `uicontract scan` after UI changes** to keep the manifest in sync.
-- **Use `--json` flag** for programmatic consumption of UIC output in CI scripts.
+- **Use `--json` flag** for programmatic consumption of UI Contracts output in CI scripts.
 - **Protect critical scopes** in `.uicrc.json` to prevent accidental changes to important elements:
   ```json
   {
@@ -151,4 +151,4 @@ jobs:
 
 ## Stripping Attributes in Production
 
-If you prefer not to ship `data-agent-id` attributes to production, you can strip them at build time. UIC provides guidance on configuring Babel or SWC plugins to remove `data-agent-id` attributes during production builds while keeping them in development and test environments.
+If you prefer not to ship `data-agent-id` attributes to production, you can strip them at build time. UI Contracts provides guidance on configuring Babel or SWC plugins to remove `data-agent-id` attributes during production builds while keeping them in development and test environments.

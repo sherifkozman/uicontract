@@ -1,6 +1,6 @@
 # @uicontract/core
 
-Core types, schema, validation, logger, and error classes for UIC.
+Core types, schema, validation, logger, and error classes for UI Contracts.
 
 ## Install
 
@@ -35,13 +35,13 @@ throw new UicError('MANIFEST_NOT_FOUND', {
 - **Types**: `ManifestElement`, `RawElement`, `NamedElement`, `ParserPlugin`, `DiscoveryResult`, and more
 - **`validateManifest(manifest)`**: Validates a manifest object against the v1 JSON Schema; returns `{ valid, errors }`
 - **`createLogger(options)`**: Returns a structured logger with `debug`, `info`, `warn`, and `error` methods
-- **`UicError`**: Base error class with `code` and `context` properties for all UIC packages
+- **`UicError`**: Base error class with `code` and `context` properties for all UI Contracts packages
 
 All shared types and interfaces live here. Framework-specific packages (`@uicontract/parser-react`, `@uicontract/parser-vue`) and the naming/annotation layers all depend on this package.
 
-## Part of UIC
+## Part of UI Contracts
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
+This package is part of [UI Contracts](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

@@ -1,4 +1,4 @@
-# UIC - UI Contracts
+# UI Contracts
 
 [![npm](https://img.shields.io/npm/v/uicontract)](https://www.npmjs.com/package/uicontract)
 [![license](https://img.shields.io/npm/l/uicontract)](LICENSE)
@@ -7,7 +7,7 @@
 
 **Make web app UIs machine-readable.**
 
-UIC parses your source code to discover every interactive element, assigns stable hierarchical IDs, annotates source with `data-agent-id` attributes, generates a manifest describing the full UI surface, and provides a CI diff gate for breaking changes.
+UI Contracts parses your source code to discover every interactive element, assigns stable hierarchical IDs, annotates source with `data-agent-id` attributes, generates a manifest describing the full UI surface, and provides a CI diff gate for breaking changes.
 
 Think of it as **OpenAPI for UIs** - a typed, queryable contract between your frontend and anything that needs to interact with it: AI agents, test automation, accessibility audits.
 
@@ -39,7 +39,7 @@ npx uicontract diff
 
 ---
 
-## What UIC Produces
+## What UI Contracts Produces
 
 **1. A manifest** - every interactive element in your app, with stable IDs:
 
@@ -81,9 +81,9 @@ BREAKING: 2 elements removed
 
 ---
 
-## Why UIC
+## Why UI Contracts
 
-| Problem | UIC Solution |
+| Problem | UI Contracts Solution |
 |---------|-------------|
 | Browser automation breaks on class/text changes | Stable `data-agent-id` selectors survive refactors |
 | AI agents cannot discover what's clickable | `manifest.json` gives agents a typed inventory |
@@ -94,7 +94,7 @@ BREAKING: 2 elements removed
 
 ## How It Works
 
-UIC follows a four-step pipeline:
+UI Contracts follows a four-step pipeline:
 
 **1. Discover** - The parser walks your source AST (Babel for React/TSX, `@vue/compiler-dom` for Vue SFCs) and finds every interactive element: `<button>`, `<a>`, `<input>`, `<select>`, `<textarea>`, and any element with an `onClick`, `onChange`, or `onSubmit` handler. No runtime execution required.
 
@@ -119,7 +119,7 @@ Agent IDs survive refactors because they are recomputed from source structure, n
 
 ## Integration
 
-UIC agent IDs work with any browser automation tool:
+UI Contracts agent IDs work with any browser automation tool:
 
 ```js
 // Playwright
@@ -136,7 +136,7 @@ document.querySelector('[data-agent-id="settings.billing.pause-subscription.butt
 
 ## AI Agent Skill
 
-UIC ships a skill file that teaches AI coding agents (Claude, Cursor, Copilot, etc.) how to discover and target UI elements using `manifest.json` instead of fragile selectors.
+UI Contracts ships a skill file that teaches AI coding agents (Claude, Cursor, Copilot, etc.) how to discover and target UI elements using `manifest.json` instead of fragile selectors.
 
 ```bash
 npm install @uicontract/skill

@@ -1,6 +1,6 @@
 # @uicontract/skill
 
-Agent skill files for [UIC - UI Contracts](https://github.com/sherifkozman/uicontract).
+Agent skill files for [UI Contracts](https://github.com/sherifkozman/uicontract).
 
 Gives AI coding agents a structured way to discover, target, and interact with UI elements using stable `data-agent-id` selectors instead of fragile CSS classes or text matches.
 

@@ -1,4 +1,4 @@
-# UIC Project Phases & Milestones
+# UI Contracts Project Phases & Milestones
 
 ## Phase 0: Foundation
 
@@ -180,7 +180,7 @@
 - [ ] Protected scope violation exits non-zero even with `--allow-breaking`
 - [ ] CI script works in GitHub Actions (tested in this repo's own CI)
 - [ ] PR comment is readable and actionable (not a wall of JSON)
-- [ ] Dogfooding: UIC's own CI runs `uicontract diff` on its fixture manifests
+- [ ] Dogfooding: UI Contracts' own CI runs `uicontract diff` on its fixture manifests
 - [ ] Integration test: modify fixture, generate new manifest, diff, verify output
 
 **Dependencies**: Phase 1
@@ -249,8 +249,8 @@
   - "Integrate with agent-browser" guide
   - "Integrate with Stagehand" guide
 - Example repos:
-  - `uic-example-react` -- full Next.js app with UIC integrated
-  - `uic-example-vue` -- full Nuxt app with UIC integrated
+  - `uic-example-react` -- full Next.js app with UI Contracts integrated
+  - `uic-example-vue` -- full Nuxt app with UI Contracts integrated
 - Contribution guide (CONTRIBUTING.md)
 - Issue templates, PR templates
 - RFC process for breaking changes

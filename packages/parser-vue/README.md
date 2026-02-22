@@ -37,9 +37,9 @@ Discovered element types: `button`, `a` (link), `input`, `select`, `textarea`, `
 
 Targets Vue 3 and Nuxt projects. Unexpected syntax produces a `warning` entry rather than throwing, so partial results are always returned.
 
-## Part of UIC
+## Part of UI Contracts
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
+This package is part of [UI Contracts](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

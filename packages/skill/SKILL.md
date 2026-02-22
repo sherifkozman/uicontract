@@ -3,9 +3,9 @@ name: uic
 description: Use when automating browser interactions with a web app that has a manifest.json or data-agent-id attributes. Use when the agent needs to find, target, or interact with specific UI elements by name, label, or purpose.
 ---
 
-# UIC -- UI Contracts for Agent Automation
+# UI Contracts for Agent Automation
 
-UIC makes web app UIs machine-readable with stable hierarchical IDs, so agents can find, target, and interact with any interactive element by name instead of fragile selectors.
+UI Contracts makes web app UIs machine-readable with stable hierarchical IDs, so agents can find, target, and interact with any interactive element by name instead of fragile selectors.
 
 ## Quick Start
 
@@ -180,11 +180,11 @@ Use these CSS attribute selectors to target `data-agent-id` values:
 | Prefix | `[data-agent-id^="settings.billing."]` | All elements in a section |
 | Substring | `[data-agent-id*="billing"]` | Any element mentioning "billing" |
 | Suffix | `[data-agent-id$=".button"]` | All buttons |
-| Presence | `[data-agent-id]` | Any UIC-annotated element |
+| Presence | `[data-agent-id]` | Any UI Contracts-annotated element |
 
 ## Integration Example
 
-UIC + agent-browser, three steps:
+UI Contracts + agent-browser, three steps:
 
 **Step 1 -- Find the element:**
 

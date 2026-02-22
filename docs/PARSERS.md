@@ -1,6 +1,6 @@
 # Parser Documentation
 
-Parsers are the framework-specific layer of UIC. Each parser knows how to scan a project directory, detect whether a given framework is in use, and discover all interactive UI elements.
+Parsers are the framework-specific layer of UI Contracts. Each parser knows how to scan a project directory, detect whether a given framework is in use, and discover all interactive UI elements.
 
 ## Supported Frameworks
 
@@ -153,7 +153,7 @@ Parsers extract contextual information for each element:
 
 ## Write Your Own Parser
 
-Follow these steps to create a third-party parser plugin for UIC.
+Follow these steps to create a third-party parser plugin for UI Contracts.
 
 ### Step 1: Create the Package
 

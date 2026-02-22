@@ -1,10 +1,10 @@
 # AI Agent Integration Guide
 
-This guide shows how AI agents can use UIC manifests to understand and interact with web application UIs.
+This guide shows how AI agents can use UI Contracts manifests to understand and interact with web application UIs.
 
 ## Overview
 
-UIC makes web UIs machine-readable by scanning source code and generating a manifest of all interactive elements with stable, hierarchical IDs. AI agents can use this manifest to:
+UI Contracts makes web UIs machine-readable by scanning source code and generating a manifest of all interactive elements with stable, hierarchical IDs. AI agents can use this manifest to:
 
 - **Discover** what interactive elements exist in an application
 - **Navigate** to specific elements by their stable agent ID
@@ -13,12 +13,12 @@ UIC makes web UIs machine-readable by scanning source code and generating a mani
 
 ## Agent Skill Files
 
-UIC ships with pre-built skill files that teach agents the available commands:
+UI Contracts ships with pre-built skill files that teach agents the available commands:
 
 - `packages/skill/universal.md` - framework-agnostic skill for any agent
 - `packages/skill/SKILL.md` - optimized for AI coding agents
 
-These files describe the UIC CLI commands, typical workflows, and tips for programmatic usage. Install them as agent context or system prompts.
+These files describe the UI Contracts CLI commands, typical workflows, and tips for programmatic usage. Install them as agent context or system prompts.
 
 ## Typical Agent Workflow
 
@@ -169,7 +169,7 @@ npx uicontract diff a.json b.json --json  # Returns JSON object
 
 ### Use Fuzzy Search
 
-UIC supports fuzzy matching by default. Agents can search with approximate terms:
+UI Contracts supports fuzzy matching by default. Agents can search with approximate terms:
 
 ```bash
 npx uicontract find "pase subscribtion"  # Finds "pause-subscription"

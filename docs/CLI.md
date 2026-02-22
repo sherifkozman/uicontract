@@ -1,6 +1,6 @@
 # CLI Command Reference
 
-UIC provides a command-line interface for scanning projects, querying manifests, and managing UI contracts.
+UI Contracts provides a command-line interface for scanning projects, querying manifests, and managing UI contracts.
 
 ## Installation
 
@@ -292,7 +292,7 @@ uicontract diff old.json new.json --config ./my-config.json
 
 ## Configuration
 
-UIC is configured via a `.uicrc.json` file in your project root. The CLI searches the target directory and its parents for this file.
+UI Contracts is configured via a `.uicrc.json` file in your project root. The CLI searches the target directory and its parents for this file.
 
 ### Schema
 

@@ -51,9 +51,9 @@ npx uicontract list --json
 
 Every command accepts `--help` for flag documentation and `--json` for machine-readable output.
 
-## Part of UIC
+## Part of UI Contracts
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
+This package is part of [UI Contracts](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

@@ -2,13 +2,13 @@
 
 ## validate-oss.sh
 
-Validates UIC against any public OSS repository by shallow-cloning it, running
+Validates UI Contracts against any public OSS repository by shallow-cloning it, running
 `uicontract scan` and `uicontract name`, and printing a summary report with element counts,
 scan duration, warning counts, and duplicate ID detection.
 
 ### Prerequisites
 
-Build UIC before running the script:
+Build UI Contracts before running the script:
 
 ```bash
 pnpm install
@@ -44,7 +44,7 @@ pnpm build
 ### What the Script Does
 
 1. Validates arguments (repo URL and framework name are required).
-2. Locates the built UIC binary at `packages/cli/dist/bin/uic.js`.
+2. Locates the built UI Contracts binary at `packages/cli/dist/bin/uic.js`.
 3. Creates a temporary directory and shallow-clones the repository (`--depth 1`).
 4. Runs `uicontract scan` with the specified framework and records scan duration.
 5. Counts warnings emitted during the scan.
@@ -59,7 +59,7 @@ The script prints a report like:
 
 ```
 ============================================
-  UIC OSS Validation Report
+  UI Contracts OSS Validation Report
 ============================================
 
   Repository:       https://github.com/calcom/cal.com

@@ -1,4 +1,4 @@
-# UIC Testing Strategy
+# UI Contracts Testing Strategy
 
 ## Testing Pyramid
 

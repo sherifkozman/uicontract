@@ -1,6 +1,6 @@
 # Workflow Patterns
 
-Multi-step automation recipes that chain UIC CLI commands with browser tools. Each recipe is a concrete bash sequence you can adapt to your application.
+Multi-step automation recipes that chain UI Contracts CLI commands with browser tools. Each recipe is a concrete bash sequence you can adapt to your application.
 
 ## Recipe 1: Form Fill
 

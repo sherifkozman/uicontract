@@ -39,9 +39,9 @@ Supported patterns: JSX, TSX, `forwardRef`, `memo`, HOCs, dynamic imports, condi
 
 Unexpected syntax produces a `warning` entry rather than throwing, so partial results are always returned.
 
-## Part of UIC
+## Part of UI Contracts
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
+This package is part of [UI Contracts](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

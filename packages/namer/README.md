@@ -40,9 +40,9 @@ Examples:
 
 The namer is deterministic: the same element always receives the same ID across runs. It does not read source files or write anything to disk.
 
-## Part of UIC
+## Part of UI Contracts
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
+This package is part of [UI Contracts](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

@@ -1,6 +1,6 @@
-# Contributing to UIC
+# Contributing to UI Contracts
 
-Thank you for your interest in contributing to UIC! This guide covers everything you need to get started.
+Thank you for your interest in contributing to UI Contracts! This guide covers everything you need to get started.
 
 ## Prerequisites
 
@@ -170,7 +170,7 @@ Changes that affect the manifest schema, CLI command interface, Parser plugin AP
 
 ## Release Process
 
-UIC uses [Changesets](https://github.com/changesets/changesets) for version management.
+UI Contracts uses [Changesets](https://github.com/changesets/changesets) for version management.
 
 ### Adding a Changeset
 

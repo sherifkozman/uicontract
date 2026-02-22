@@ -1,6 +1,6 @@
 # Browser Tool Bridge
 
-UIC annotates source code with `data-agent-id` attributes. This reference documents how to target those attributes from each browser automation tool, bridging the gap between UIC's manifest output and actual browser interactions.
+UI Contracts annotates source code with `data-agent-id` attributes. This reference documents how to target those attributes from each browser automation tool, bridging the gap between UI Contracts' manifest output and actual browser interactions.
 
 ## Tool-Specific Targeting
 
@@ -62,7 +62,7 @@ The universal selector pattern works with any tool that supports CSS selectors:
 | Prefix    | `[data-agent-id^="settings.billing."]`    | All elements in billing section       |
 | Substring | `[data-agent-id*="billing"]`              | Any element mentioning "billing"      |
 | Suffix    | `[data-agent-id$=".button"]`              | All buttons                           |
-| Presence  | `[data-agent-id]`                         | Any UIC-annotated element             |
+| Presence  | `[data-agent-id]`                         | Any UI Contracts-annotated element             |
 
 ## Handling Conditional Elements
 

@@ -1,8 +1,8 @@
-# UIC Architecture
+# UI Contracts Architecture
 
 ## Overview
 
-UIC is a CLI tool and library ecosystem organized as a six-layer pipeline. Each layer has a single responsibility and depends only on layers below it. No circular dependencies.
+UI Contracts is a CLI tool and library ecosystem organized as a six-layer pipeline. Each layer has a single responsibility and depends only on layers below it. No circular dependencies.
 
 ```
                     +-----------------+
