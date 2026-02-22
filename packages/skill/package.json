@@ -2,5 +2,12 @@
   "name": "@uic/skill",
   "version": "0.1.0",
   "private": true,
-  "description": "Agent skill files for UIC"
+  "description": "Agent skill files for UIC",
+  "license": "MIT",
+  "author": "UIC Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherifkozman/uicontract.git",
+    "directory": "packages/skill"
+  }
 }

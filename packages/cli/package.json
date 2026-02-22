@@ -1,7 +1,23 @@
 {
   "name": "uic",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "CLI tool that makes web app UIs machine-readable for AI agents",
   "type": "module",
+  "license": "MIT",
+  "author": "UIC Contributors",
+  "homepage": "https://github.com/sherifkozman/uicontract",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherifkozman/uicontract.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/sherifkozman/uicontract/issues"
+  },
+  "keywords": ["uic", "ui-contracts", "cli", "agent-id", "data-agent-id", "manifest", "accessibility", "testing", "automation"],
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -14,7 +30,9 @@
     "uic": "./dist/bin/uic.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -b",

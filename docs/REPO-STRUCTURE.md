@@ -125,11 +125,11 @@ uic/
 │   │   └── README.md
 │   │
 │   └── skill/                         -- Agent skill files
-│       ├── claude-code.md             -- Instructions for Claude Code
-│       ├── universal.md               -- Framework-agnostic instructions for any AI IDE
-│       ├── examples/
-│       │   ├── find-element.md        -- Example: agent uses uic to find an element
-│       │   └── annotate-project.md    -- Example: agent annotates a project
+│       ├── SKILL.md                   -- Core skill file (Claude Code YAML frontmatter)
+│       ├── references/
+│       │   ├── manifest-schema.md     -- Full manifest field reference
+│       │   ├── browser-tool-bridge.md -- Tool-specific selector patterns
+│       │   └── workflow-patterns.md   -- Automation recipes
 │       └── package.json
 │
 ├── fixtures/                          -- Test fixture apps
@@ -176,13 +176,14 @@ uic/
 │       └── diff-pipeline.test.ts      -- scan -> modify -> re-scan -> diff -> verify
 │
 ├── docs/
-│   ├── SPEC.md                        -- Full specification
 │   ├── ARCHITECTURE.md                -- Architecture overview and layer diagram
 │   ├── MILESTONES.md                  -- Project phases and acceptance criteria
 │   ├── CLI.md                         -- CLI command reference
 │   ├── PARSERS.md                     -- Parser documentation
-│   ├── MANIFEST-SCHEMA.md             -- Manifest schema reference
 │   ├── TESTING.md                     -- Testing strategy
+│   ├── BENCHMARKS.md                  -- Benchmark methodology and metrics
+│   ├── INTEGRATION-AGENTS.md          -- Agent integration patterns
+│   ├── INTEGRATION-PLAYWRIGHT.md      -- Playwright integration guide
 │   └── rfcs/
 │       └── TEMPLATE.md                -- RFC template
 │

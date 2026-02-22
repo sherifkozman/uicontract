@@ -1,7 +1,26 @@
 {
   "name": "@uic/parser-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "React and Next.js parser for discovering interactive UI elements",
   "type": "module",
+  "license": "MIT",
+  "author": "UIC Contributors",
+  "homepage": "https://github.com/sherifkozman/uicontract/tree/main/packages/parser-react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherifkozman/uicontract.git",
+    "directory": "packages/parser-react"
+  },
+  "bugs": {
+    "url": "https://github.com/sherifkozman/uicontract/issues"
+  },
+  "keywords": ["uic", "ui-contracts", "parser", "react", "nextjs", "ast"],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -11,7 +30,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -b",

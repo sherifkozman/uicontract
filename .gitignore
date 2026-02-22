@@ -4,3 +4,10 @@ coverage/
 *.tsbuildinfo
 .uic-backup/
 .claude/
+.env
+.env.*
+.env.local
+
+# Internal documents not intended for public
+sow.md
+RESEARCH-*.md

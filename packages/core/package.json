@@ -1,7 +1,26 @@
 {
   "name": "@uic/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Core types, schema, validation, logger, and error classes for UIC",
   "type": "module",
+  "license": "MIT",
+  "author": "UIC Contributors",
+  "homepage": "https://github.com/sherifkozman/uicontract/tree/main/packages/core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherifkozman/uicontract.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/sherifkozman/uicontract/issues"
+  },
+  "keywords": ["uic", "ui-contracts", "schema", "manifest", "agent-id"],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -10,7 +29,7 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "LICENSE", "README.md"],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",

@@ -1,7 +1,26 @@
 {
   "name": "@uic/annotator",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Source code annotator that inserts data-agent-id attributes into UI components",
   "type": "module",
+  "license": "MIT",
+  "author": "UIC Contributors",
+  "homepage": "https://github.com/sherifkozman/uicontract/tree/main/packages/annotator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sherifkozman/uicontract.git",
+    "directory": "packages/annotator"
+  },
+  "bugs": {
+    "url": "https://github.com/sherifkozman/uicontract/issues"
+  },
+  "keywords": ["uic", "ui-contracts", "annotator", "data-agent-id", "source-transform"],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -10,7 +29,7 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "LICENSE", "README.md"],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",
