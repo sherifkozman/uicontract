@@ -1,0 +1,8 @@
+{
+  "name": "uic-fixture-vue-storefront",
+  "private": true,
+  "dependencies": {
+    "vue": "*",
+    "nuxt": "*"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "uic-fixture-react-dashboard",
+  "private": true,
+  "dependencies": {
+    "react": "*",
+    "react-dom": "*"
+  }
+}
