@@ -39,3 +39,7 @@ export { ParserRegistry, parserRegistry } from './parser-registry.js';
 // Config
 export { loadConfig, validateConfig, DEFAULT_CONFIG } from './config.js';
 export type { UicConfig } from './config.js';
+
+// Plugin Loader
+export { loadPlugins } from './plugin-loader.js';
+export type { PluginLoadResult } from './plugin-loader.js';

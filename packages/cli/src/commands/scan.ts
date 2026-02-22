@@ -14,6 +14,8 @@ import {
   serializeManifest,
   UicError,
   createLogger,
+  loadConfig,
+  loadPlugins,
   VERSION,
 } from '@uic/core';
 import type { NamedElement, RawElement } from '@uic/core';
@@ -252,6 +254,21 @@ export async function scanCommand(args: string[]): Promise<number> {
       `Error: Directory not found: "${resolvedDir}". Check the path and try again.\n`,
     );
     return 1;
+  }
+
+  // Load plugins from config
+  try {
+    const config = await loadConfig(resolvedDir);
+    if (config.plugins.length > 0) {
+      const pluginResult = await loadPlugins(config.plugins, parserRegistry, logger);
+      if (pluginResult.loaded.length > 0) {
+        logger.debug('Loaded plugins', { plugins: pluginResult.loaded });
+      }
+    }
+  } catch (err) {
+    // Config errors should not block scanning — warn and continue
+    const message = err instanceof Error ? err.message : String(err);
+    logger.warn(`Failed to load config/plugins: ${message}`);
   }
 
   // Resolve parser

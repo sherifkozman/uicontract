@@ -18,11 +18,14 @@ export interface UicConfig {
   protectedScopes: string[];
   /** How to handle breaking changes: "block" exits non-zero, "warn" prints warning but exits 0 */
   breakingChangePolicy: 'block' | 'warn';
+  /** npm package names implementing the Parser interface to load at startup */
+  plugins: string[];
 }
 
 export const DEFAULT_CONFIG: UicConfig = {
   protectedScopes: [],
   breakingChangePolicy: 'block',
+  plugins: [],
 };
 
 const CONFIG_FILENAME = '.uicrc.json';
@@ -68,6 +71,27 @@ export function validateConfig(raw: unknown): UicConfig {
       }
     }
     config.protectedScopes = raw['protectedScopes'] as string[];
+  }
+
+  // plugins
+  if ('plugins' in raw) {
+    if (!Array.isArray(raw['plugins'])) {
+      throw new UicError('MANIFEST_INVALID', {
+        message:
+          'Invalid .uicrc.json: "plugins" must be an array of strings. Example: ["uic-parser-svelte"]',
+        context: { received: typeof raw['plugins'] },
+      });
+    }
+    for (let i = 0; i < raw['plugins'].length; i++) {
+      const item: unknown = raw['plugins'][i];
+      if (typeof item !== 'string') {
+        throw new UicError('MANIFEST_INVALID', {
+          message: `Invalid .uicrc.json: "plugins[${String(i)}]" must be a string, got ${typeof item}.`,
+          context: { index: i, received: typeof item },
+        });
+      }
+    }
+    config.plugins = raw['plugins'] as string[];
   }
 
   // breakingChangePolicy
