@@ -1,5 +1,5 @@
 /**
- * `uic describe` command — show full details of a single element by agentId.
+ * `uicontract describe` command - show full details of a single element by agentId.
  *
  * stdout: element details (human-readable or JSON)
  * stderr: logs, errors, help text
@@ -15,7 +15,7 @@ import type { ManifestElement } from '@uicontract/core';
 // ---------------------------------------------------------------------------
 
 export const DESCRIBE_HELP = `\
-uic describe <agent-id> [options]
+uicontract describe <agent-id> [options]
 
 Show full details of an interactive UI element by its agent ID.
 
@@ -28,9 +28,9 @@ OPTIONS
   --help, -h             Show this help message
 
 EXAMPLES
-  uic describe settings.billing.pause-btn.button
-  uic describe login.email.input --json
-  uic describe nav.home.a --manifest dist/manifest.json
+  uicontract describe settings.billing.pause-btn.button
+  uicontract describe login.email.input --json
+  uicontract describe nav.home.a --manifest dist/manifest.json
 
 Run "uicontract --help" for the full list of commands.
 `;

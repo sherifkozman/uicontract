@@ -1,4 +1,4 @@
-# UIC Agent Skill — Implementation Plan
+# UIC Agent Skill - Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
@@ -12,7 +12,7 @@
 
 ## Task 1: Create `references/` directory and `manifest-schema.md`
 
-Start bottom-up — references first so SKILL.md can link to them.
+Start bottom-up - references first so SKILL.md can link to them.
 
 **Files:**
 - Create: `packages/skill/references/manifest-schema.md`
@@ -29,22 +29,22 @@ Create `packages/skill/references/manifest-schema.md` with the following content
 
 The file should contain:
 - Title: "Manifest Schema Reference"
-- Intro: explain manifest is JSON produced by `npx uic scan` + `npx uic name`
+- Intro: explain manifest is JSON produced by `npx uicontract scan` + `npx uicontract name`
 - Top-Level Structure section with jsonc example showing schemaVersion, generatedAt, generator, metadata, elements
 - Top-level fields table: schemaVersion ("1.0"), generatedAt (ISO 8601), generator (object), metadata (object), elements (array)
 - Metadata section table: framework (string, "react"/"vue"), projectRoot (string), filesScanned (number), elementsDiscovered (number), warnings (number)
 - Element Fields section with table of all fields:
-  - agentId (string) — primary selector target, stable hierarchical ID
-  - type (string) — button, input, select, a, form, textarea
-  - label (string) — human-readable description
-  - route (string|null) — URL path where element appears
-  - handler (string|null) — event handler function name
-  - conditional (boolean) — may not be visible
-  - dynamic (boolean) — rendered from dynamic data
-  - filePath (string) — source file path relative to project root
-  - line (number) — line number, 1-indexed
-  - column (number) — column number, 1-indexed
-  - componentName (string) — React/Vue component
+  - agentId (string) - primary selector target, stable hierarchical ID
+  - type (string) - button, input, select, a, form, textarea
+  - label (string) - human-readable description
+  - route (string|null) - URL path where element appears
+  - handler (string|null) - event handler function name
+  - conditional (boolean) - may not be visible
+  - dynamic (boolean) - rendered from dynamic data
+  - filePath (string) - source file path relative to project root
+  - line (number) - line number, 1-indexed
+  - column (number) - column number, 1-indexed
+  - componentName (string) - React/Vue component
 - Agent ID Format section: pattern `route.component.element-name.type` with 3 examples
 - Note about hierarchical structure enabling prefix selectors
 
@@ -77,18 +77,18 @@ The file should contain:
 
 **Tool-Specific Targeting sections:**
 
-1. **agent-browser** — no config needed, use `find testid` locator:
+1. **agent-browser** - no config needed, use `find testid` locator:
    - Click: `agent-browser find testid "<agentId>" click`
    - Fill: `agent-browser find testid "<agentId>" fill "<value>"`
    - Check visibility: `agent-browser find testid "<agentId>" visible`
 
-2. **Playwright MCP** — configure at launch with `--test-id-attribute=data-agent-id`. After that, agent IDs appear in accessibility snapshots. Use refs from snapshot.
+2. **Playwright MCP** - configure at launch with `--test-id-attribute=data-agent-id`. After that, agent IDs appear in accessibility snapshots. Use refs from snapshot.
 
-3. **Chrome MCP** — use `find` tool or `javascript_tool` with `document.querySelector('[data-agent-id="<agentId>"]')`
+3. **Chrome MCP** - use `find` tool or `javascript_tool` with `document.querySelector('[data-agent-id="<agentId>"]')`
 
-4. **Cypress** — `cy.get('[data-agent-id="<agentId>"]').click()`
+4. **Cypress** - `cy.get('[data-agent-id="<agentId>"]').click()`
 
-5. **Any CSS-Based Tool** — universal selector: `[data-agent-id="<agentId>"]`
+5. **Any CSS-Based Tool** - universal selector: `[data-agent-id="<agentId>"]`
 
 **Selector Patterns table:**
 
@@ -101,8 +101,8 @@ The file should contain:
 | Presence | `[data-agent-id]` | Any UIC-annotated element |
 
 **Additional sections:**
-- Handling Conditional Elements — check route, navigate first, use wait/retry
-- Handling Dynamic Elements — rendered from data, use prefix selectors to find all instances
+- Handling Conditional Elements - check route, navigate first, use wait/retry
+- Handling Dynamic Elements - rendered from data, use prefix selectors to find all instances
 
 **Step 2: Verify the file was created**
 
@@ -133,21 +133,21 @@ The file should contain:
 
 **4 Recipes:**
 
-1. **Recipe 1: Form Fill** — scan manifest, filter inputs by route, fill each field, submit
-   - `npx uic list --route "/checkout" --type input --json`
-   - `npx uic find "submit order" --json`
+1. **Recipe 1: Form Fill** - scan manifest, filter inputs by route, fill each field, submit
+   - `npx uicontract list --route "/checkout" --type input --json`
+   - `npx uicontract find "submit order" --json`
    - Navigate, fill each field with `agent-browser find testid`, submit
 
-2. **Recipe 2: Navigation Test** — verify every route has expected elements
-   - `npx uic list --routes --json` to get all routes
+2. **Recipe 2: Navigation Test** - verify every route has expected elements
+   - `npx uicontract list --routes --json` to get all routes
    - Navigate to each route, verify elements with `agent-browser find testid ... visible`
 
-3. **Recipe 3: Regression Check (CI)** — diff baseline vs current
-   - `npx uic scan ./src -o current.json && npx uic name current.json -o current.json`
-   - `npx uic diff baseline.json current.json --json`
+3. **Recipe 3: Regression Check (CI)** - diff baseline vs current
+   - `npx uicontract scan ./src -o current.json && npx uicontract name current.json -o current.json`
+   - `npx uicontract diff baseline.json current.json --json`
    - Exit code 1 if breaking changes
 
-4. **Recipe 4: Full Annotation Pipeline** — scan, name, annotate, re-scan, verify round-trip
+4. **Recipe 4: Full Annotation Pipeline** - scan, name, annotate, re-scan, verify round-trip
    - scan -> name -> annotate --dry-run -> annotate --write -> re-scan -> diff (should be zero changes)
 
 Each recipe should be concrete bash sequences with expected outputs.
@@ -187,46 +187,46 @@ description: Use when automating browser interactions with a web app that has a 
 
 **Body sections in order:**
 
-1. **Title and intro** — "UIC -- UI Contracts for Agent Automation". One sentence: makes web app UIs machine-readable with stable hierarchical IDs.
+1. **Title and intro** - "UIC -- UI Contracts for Agent Automation". One sentence: makes web app UIs machine-readable with stable hierarchical IDs.
 
-2. **Quick Start** — 6 commands in a single bash block:
-   - `npx uic scan ./src -o manifest.json`
-   - `npx uic name manifest.json -o manifest.json`
-   - `npx uic find "login" --json`
-   - `npx uic describe <agent-id> --json`
-   - `npx uic list --type button --json`
-   - `npx uic diff old.json new.json --json`
+2. **Quick Start** - 6 commands in a single bash block:
+   - `npx uicontract scan ./src -o manifest.json`
+   - `npx uicontract name manifest.json -o manifest.json`
+   - `npx uicontract find "login" --json`
+   - `npx uicontract describe <agent-id> --json`
+   - `npx uicontract list --type button --json`
+   - `npx uicontract diff old.json new.json --json`
 
-3. **Core Workflow** — 4 numbered steps:
+3. **Core Workflow** - 4 numbered steps:
    - Discover: check for manifest.json, if missing run scan + name
-   - Find: `npx uic find "<description>" --json`, show fuzzy matching example
+   - Find: `npx uicontract find "<description>" --json`, show fuzzy matching example
    - Target: show agent-browser, CSS selector, Playwright MCP patterns. Link to `references/browser-tool-bridge.md`
-   - Verify: `npx uic diff baseline.json current.json`
+   - Verify: `npx uicontract diff baseline.json current.json`
 
-4. **Commands** — organized by category:
+4. **Commands** - organized by category:
    - **Discovery**: scan (flags: --framework, --json, --verbose), name (flags: --ai, --ai-timeout), annotate (flags: --dry-run, --write, --backup-dir)
    - **Query**: find (flags: --manifest, --type, --exact, --json), describe (flags: --manifest, --json), list (flags: --manifest, --type, --route, --component, --routes, --components, --json)
    - **Governance**: diff (flags: --allow-breaking, --json). Note breaking vs informational change categories.
 
-5. **Selector Patterns** — table with 5 patterns: exact, prefix, substring, suffix, presence
+5. **Selector Patterns** - table with 5 patterns: exact, prefix, substring, suffix, presence
 
-6. **Integration Example** — UIC + agent-browser 3-step sequence:
-   - Step 1: `npx uic find "pause subscription" --json`
+6. **Integration Example** - UIC + agent-browser 3-step sequence:
+   - Step 1: `npx uicontract find "pause subscription" --json`
    - Step 2: `agent-browser open http://localhost:3000/settings/billing`
    - Step 3: `agent-browser find testid "settings.billing.pause-subscription.button" click`
 
-7. **Key Rules** — bullet list:
+7. **Key Rules** - bullet list:
    - Always use `--json` for machine parsing
    - Never hardcode selectors
    - Check `conditional: true` and `dynamic: true`
-   - Run `npx uic diff` before/after
-   - Run `npx uic scan` after UI changes
+   - Run `npx uicontract diff` before/after
+   - Run `npx uicontract scan` after UI changes
    - Commit baseline manifest to version control
 
-8. **References** — table with 3 rows linking to reference files:
-   - `references/browser-tool-bridge.md` — tool-specific targeting
-   - `references/workflow-patterns.md` — multi-step automation recipes
-   - `references/manifest-schema.md` — full manifest.json structure
+8. **References** - table with 3 rows linking to reference files:
+   - `references/browser-tool-bridge.md` - tool-specific targeting
+   - `references/workflow-patterns.md` - multi-step automation recipes
+   - `references/manifest-schema.md` - full manifest.json structure
 
 **Step 2: Verify the file was created and check approximate word count**
 
@@ -283,19 +283,19 @@ Structural tests that verify the skill package is well-formed.
 Create `packages/skill/tests/skill-validation.test.ts` with these test cases:
 
 **Test suite: "skill package structure"**
-- `SKILL.md exists` — fs.stat confirms file
-- `SKILL.md has valid YAML frontmatter with required fields` — starts with `---`, has `name:` and `description:`, name is "uic"
-- `SKILL.md body is under 2000 words` — strip frontmatter and code blocks, count words
-- `references directory exists` — fs.stat confirms directory
-- `all reference files linked in SKILL.md exist` — regex extract `references/<name>` patterns from SKILL.md, stat each
-- `old skill files do not exist` — fs.stat rejects for claude-code.md and universal.md
+- `SKILL.md exists` - fs.stat confirms file
+- `SKILL.md has valid YAML frontmatter with required fields` - starts with `---`, has `name:` and `description:`, name is "uic"
+- `SKILL.md body is under 2000 words` - strip frontmatter and code blocks, count words
+- `references directory exists` - fs.stat confirms directory
+- `all reference files linked in SKILL.md exist` - regex extract `references/<name>` patterns from SKILL.md, stat each
+- `old skill files do not exist` - fs.stat rejects for claude-code.md and universal.md
 
 **Test suite: "reference file content"**
 - For each of browser-tool-bridge.md, workflow-patterns.md, manifest-schema.md:
-  - `<name> is non-empty` — content length > 100 chars
-- `browser-tool-bridge.md covers all target tools` — content contains: agent-browser, Playwright, Chrome MCP, Cypress, data-agent-id
-- `workflow-patterns.md has at least 3 recipes` — count `## Recipe` headings >= 3
-- `manifest-schema.md documents all element fields` — check content contains: agentId, type, label, route, handler, conditional, dynamic, filePath, line, column, componentName
+  - `<name> is non-empty` - content length > 100 chars
+- `browser-tool-bridge.md covers all target tools` - content contains: agent-browser, Playwright, Chrome MCP, Cypress, data-agent-id
+- `workflow-patterns.md has at least 3 recipes` - count `## Recipe` headings >= 3
+- `manifest-schema.md documents all element fields` - check content contains: agentId, type, label, route, handler, conditional, dynamic, filePath, line, column, componentName
 
 Use these imports:
 ```typescript
@@ -340,11 +340,11 @@ Expected: clean build, no errors
 **Step 2: Run the quick-start sequence**
 
 ```bash
-npx uic scan fixtures/react-app -o /tmp/uic-skill-test.json
-npx uic name /tmp/uic-skill-test.json -o /tmp/uic-skill-named.json
-npx uic find "login" --manifest /tmp/uic-skill-named.json --json
-npx uic list --manifest /tmp/uic-skill-named.json --type button --json
-npx uic diff /tmp/uic-skill-named.json /tmp/uic-skill-named.json --json
+npx uicontract scan fixtures/react-app -o /tmp/uic-skill-test.json
+npx uicontract name /tmp/uic-skill-test.json -o /tmp/uic-skill-named.json
+npx uicontract find "login" --manifest /tmp/uic-skill-named.json --json
+npx uicontract list --manifest /tmp/uic-skill-named.json --type button --json
+npx uicontract diff /tmp/uic-skill-named.json /tmp/uic-skill-named.json --json
 ```
 
 Expected: all commands exit 0, JSON output is valid
@@ -354,7 +354,7 @@ Expected: all commands exit 0, JSON output is valid
 Pick an agentId from the find output and run:
 
 ```bash
-npx uic describe <agent-id> --manifest /tmp/uic-skill-named.json --json
+npx uicontract describe <agent-id> --manifest /tmp/uic-skill-named.json --json
 ```
 
 Expected: exits 0, returns full element details

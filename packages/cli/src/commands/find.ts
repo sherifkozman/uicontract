@@ -1,5 +1,5 @@
 /**
- * `uic find` command -- fuzzy search for elements in a manifest.
+ * `uicontract find` command -- fuzzy search for elements in a manifest.
  *
  * stdout: matching elements (human-readable or JSON)
  * stderr: logs, errors, help text
@@ -16,7 +16,7 @@ import { fuzzyMatchElement } from '../fuzzy-match.js';
 // ---------------------------------------------------------------------------
 
 export const FIND_HELP = `\
-uic find <query> [options]
+uicontract find <query> [options]
 
 Search for interactive UI elements in a manifest by name, label, route, or handler.
 
@@ -32,11 +32,11 @@ OPTIONS
   --help, -h             Show this help message
 
 EXAMPLES
-  uic find "login"
-  uic find "pase subscribtion"          # fuzzy match finds "pause-subscription"
-  uic find "button" --type button
-  uic find "settings" --exact           # strict substring match only
-  uic find "settings" --manifest dist/manifest.json --json
+  uicontract find "login"
+  uicontract find "pase subscribtion"          # fuzzy match finds "pause-subscription"
+  uicontract find "button" --type button
+  uicontract find "settings" --exact           # strict substring match only
+  uicontract find "settings" --manifest dist/manifest.json --json
 
 Run "uicontract --help" for the full list of commands.
 `;

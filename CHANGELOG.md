@@ -25,14 +25,14 @@ Initial public release of UIC (UI Contracts).
 
 ### Added
 
-**CLI (`uic`)**
-- `uic scan <dir>` — parse a React or Vue project and produce `manifest.json`
-- `uic name` — assign stable hierarchical agent IDs to discovered elements
-- `uic annotate [--dry-run]` — insert `data-agent-id` attributes into source files
-- `uic find <query>` — fuzzy-search elements by label, handler, route, or ID
-- `uic describe <agent-id>` — full detail for a single element
-- `uic list [--type|--routes|--components]` — browse the full element inventory
-- `uic diff [<old> <new>]` — detect breaking UI contract changes between two manifests
+**CLI (`uicontract`)**
+- `uicontract scan <dir>` - parse a React or Vue project and produce `manifest.json`
+- `uicontract name` - assign stable hierarchical agent IDs to discovered elements
+- `uicontract annotate [--dry-run]` - insert `data-agent-id` attributes into source files
+- `uicontract find <query>` - fuzzy-search elements by label, handler, route, or ID
+- `uicontract describe <agent-id>` - full detail for a single element
+- `uicontract list [--type|--routes|--components]` - browse the full element inventory
+- `uicontract diff [<old> <new>]` - detect breaking UI contract changes between two manifests
 - All commands support `--json` for machine-readable output and `--help` for usage
 
 **Core (`@uicontract/core`)**

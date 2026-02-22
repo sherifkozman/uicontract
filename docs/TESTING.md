@@ -418,7 +418,7 @@ describe('JSX annotator', () => {
 **Example test cases for `commands/diff.test.ts`:**
 
 ```typescript
-describe('uic diff', () => {
+describe('uicontract diff', () => {
   it('exits 0 when no breaking changes', () => {
     const oldManifest = createManifest([
       { agentId: 'home.login.button', type: 'button' },
@@ -511,8 +511,8 @@ Tests that exercise two or more packages together, using real fixture apps.
 | `fixture-scan.test.ts` | parser-react + core | Scans `fixtures/react-app`, validates manifest against schema |
 | `naming-pipeline.test.ts` | parser-react + namer | Scans fixture, names all elements, verifies no duplicates |
 | `annotate-fixture.test.ts` | parser-react + namer + annotator | Annotates fixture, verifies data-agent-id in output |
-| `scan.integration.test.ts` | cli + parser-react + core | Runs `uic scan` as subprocess, verifies stdout JSON |
-| `find.integration.test.ts` | cli + core | Runs `uic find` against committed manifest, verifies results |
+| `scan.integration.test.ts` | cli + parser-react + core | Runs `uicontract scan` as subprocess, verifies stdout JSON |
+| `find.integration.test.ts` | cli + core | Runs `uicontract find` against committed manifest, verifies results |
 | `full-pipeline.integration.test.ts` | all | scan -> name -> annotate -> re-scan -> diff against original |
 
 **Example: `fixture-scan.test.ts`:**
@@ -847,8 +847,8 @@ jobs:
       - run: pnpm test -- --coverage
       - run: pnpm test:e2e
       # Dogfooding: scan our own fixtures and diff against baseline
-      - run: npx uic scan fixtures/react-app -o /tmp/current-manifest.json
-      - run: npx uic diff fixtures/react-app/baseline-manifest.json /tmp/current-manifest.json
+      - run: npx uicontract scan fixtures/react-app -o /tmp/current-manifest.json
+      - run: npx uicontract diff fixtures/react-app/baseline-manifest.json /tmp/current-manifest.json
 ```
 
 ## Coverage Reporting

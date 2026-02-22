@@ -35,7 +35,7 @@ export interface NamedElement extends RawElement {
   agentId: string;
 }
 
-/** Manifest element (serialized to JSON) — identical to NamedElement by design. */
+/** Manifest element (serialized to JSON) - identical to NamedElement by design. */
 export type ManifestElement = NamedElement;
 
 /** Full manifest structure */

@@ -21,6 +21,6 @@ describe('commands/index exports', () => {
   it('exports SCAN_HELP as a non-empty string', () => {
     expect(typeof SCAN_HELP).toBe('string');
     expect(SCAN_HELP.length).toBeGreaterThan(0);
-    expect(SCAN_HELP).toContain('uic scan');
+    expect(SCAN_HELP).toContain('uicontract scan');
   });
 });

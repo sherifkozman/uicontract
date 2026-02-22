@@ -7,34 +7,34 @@ CLI tool that makes web app UIs machine-readable for AI agents.
 ```bash
 npm install -g uic
 # or use without installing:
-npx uic <command>
+npx uicontract <command>
 ```
 
 ## Usage
 
 ```bash
 # Scan a project and produce a manifest
-npx uic scan ./my-app
+npx uicontract scan ./my-app
 
 # Find elements by label or ID pattern
-npx uic find "login"
+npx uicontract find "login"
 
 # Describe a specific element
-npx uic describe settings.billing.pause-subscription.button
+npx uicontract describe settings.billing.pause-subscription.button
 
 # List all elements in the manifest
-npx uic list
+npx uicontract list
 
 # Insert data-agent-id attributes into source files (dry run first)
-npx uic annotate --dry-run
-npx uic annotate
+npx uicontract annotate --dry-run
+npx uicontract annotate
 
 # Diff the current manifest against a baseline (CI gate)
-npx uic diff
+npx uicontract diff
 
 # All commands support --help and --json
-npx uic scan --help
-npx uic list --json
+npx uicontract scan --help
+npx uicontract list --json
 ```
 
 ## Commands
@@ -53,7 +53,7 @@ Every command accepts `--help` for flag documentation and `--json` for machine-r
 
 ## Part of UIC
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) — making web app UIs machine-readable.
+This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

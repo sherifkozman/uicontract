@@ -1,5 +1,5 @@
 /**
- * @uicontract/parser-vue — Vue/Nuxt parser for UIC.
+ * @uicontract/parser-vue - Vue/Nuxt parser for UIC.
  * Implements the Parser interface from @uicontract/core.
  */
 
@@ -31,7 +31,7 @@ async function detectVue(dir: string): Promise<boolean> {
     };
     if ('vue' in deps || 'nuxt' in deps) return true;
   } catch {
-    // No package.json or unreadable — fall through to file check
+    // No package.json or unreadable - fall through to file check
   }
 
   // Fallback: any .vue file present

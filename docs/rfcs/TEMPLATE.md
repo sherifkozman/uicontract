@@ -48,7 +48,7 @@ How do existing users adopt this change?
 - Is this a breaking change?
 - Can it be rolled out incrementally?
 - What deprecation steps are needed?
-- How does `uic diff` handle the transition?
+- How does `uicontract diff` handle the transition?
 
 ## Backward Compatibility
 

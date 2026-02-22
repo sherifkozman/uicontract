@@ -79,7 +79,7 @@ async function walkDir(
   try {
     entries = await fs.readdir(dir, { withFileTypes: true }) as import('node:fs').Dirent[];
   } catch {
-    // Unreadable directory — skip silently
+    // Unreadable directory - skip silently
     return;
   }
 

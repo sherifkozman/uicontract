@@ -1,7 +1,7 @@
 /**
  * AI-assisted naming engine (stub).
  *
- * TODO: Connect to an AI provider (e.g., OpenAI, Anthropic) to generate
+ * TODO: Connect to an AI provider (e.g., OpenAI, Gemini) to generate
  * context-aware, human-friendly agent IDs. The AI namer should receive
  * the full element context (surrounding code, component hierarchy, route
  * structure) and produce a naming suggestion that is validated against
@@ -27,7 +27,7 @@ export interface AiNamerOptions {
  *
  * @param _element - The raw element to name.
  * @param _options - AI provider options.
- * @returns null (stub — AI naming not yet implemented).
+ * @returns null (stub - AI naming not yet implemented).
  */
 export async function assignAiName(
   _element: RawElement,

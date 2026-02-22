@@ -97,14 +97,14 @@ uic/
 │   │   │   ├── index.ts               -- CLI entry point, argument parsing
 │   │   │   ├── commands/
 │   │   │   │   ├── index.ts           -- Command registry
-│   │   │   │   ├── scan.ts            -- npx uic scan <dir>
-│   │   │   │   ├── name.ts            -- npx uic name <manifest>
-│   │   │   │   ├── annotate.ts        -- npx uic annotate <dir>
-│   │   │   │   ├── find.ts            -- npx uic find <query>
-│   │   │   │   ├── describe.ts        -- npx uic describe <agent-id>
-│   │   │   │   ├── list.ts            -- npx uic list [--routes|--components|--type]
-│   │   │   │   ├── diff.ts            -- npx uic diff <old> <new>
-│   │   │   │   └── strip.ts           -- npx uic strip <dir> (remove data-agent-id)
+│   │   │   │   ├── scan.ts            -- npx uicontract scan <dir>
+│   │   │   │   ├── name.ts            -- npx uicontract name <manifest>
+│   │   │   │   ├── annotate.ts        -- npx uicontract annotate <dir>
+│   │   │   │   ├── find.ts            -- npx uicontract find <query>
+│   │   │   │   ├── describe.ts        -- npx uicontract describe <agent-id>
+│   │   │   │   ├── list.ts            -- npx uicontract list [--routes|--components|--type]
+│   │   │   │   ├── diff.ts            -- npx uicontract diff <old> <new>
+│   │   │   │   └── strip.ts           -- npx uicontract strip <dir> (remove data-agent-id)
 │   │   │   └── formatters/
 │   │   │       ├── table.ts           -- Human-readable table output
 │   │   │       └── json.ts            -- JSON output (--json flag)
@@ -125,7 +125,7 @@ uic/
 │   │   └── README.md
 │   │
 │   └── skill/                         -- Agent skill files
-│       ├── SKILL.md                   -- Core skill file (Claude Code YAML frontmatter)
+│       ├── SKILL.md                   -- Core skill file (YAML frontmatter for agent tools)
 │       ├── references/
 │       │   ├── manifest-schema.md     -- Full manifest field reference
 │       │   ├── browser-tool-bridge.md -- Tool-specific selector patterns
@@ -235,7 +235,7 @@ E2E tests exercise the full pipeline across packages. They don't belong to any s
 
 ### Why skill/ as a package?
 
-Agent skill files need versioning (they reference CLI commands and manifest schema). Packaging them means they can be published to npm (`npx uic skill --print`) and consumed by agent tool registries.
+Agent skill files need versioning (they reference CLI commands and manifest schema). Packaging them means they can be published to npm (`npx uicontract skill --print`) and consumed by agent tool registries.
 
 ## Package Dependency Graph
 
@@ -268,12 +268,12 @@ Agent skill files need versioning (they reference CLI commands and manifest sche
 | Package | npm name | Published |
 |---------|----------|-----------|
 | core | `@uicontract/core` | Yes |
-| cli | `uic` (bin: `uic`) | Yes |
+| cli | `uicontract` (bin: `uicontract`) | Yes |
 | parser-react | `@uicontract/parser-react` | Yes |
 | parser-vue | `@uicontract/parser-vue` | Yes (Phase 5) |
 | namer | `@uicontract/namer` | Yes |
 | annotator | `@uicontract/annotator` | Yes |
 | skill | `@uicontract/skill` | Yes |
 
-The main CLI package is `uic` (no scope) for ease of use: `npx uic scan`.
+The main CLI package is `uicontract` (no scope) for ease of use: `npx uicontract scan`.
 All library packages use the `@uicontract/` scope.

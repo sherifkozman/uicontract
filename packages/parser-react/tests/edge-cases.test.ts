@@ -367,10 +367,10 @@ describe('Conditional and dynamic combined', () => {
     expect(elements[0]!.dynamic).toBe(true);
   });
 
-  it('marks element in conditional .map() — dynamic but not conditional (arrow fn boundary)', () => {
+  it('marks element in conditional .map() - dynamic but not conditional (arrow fn boundary)', () => {
     // The button is inside an arrow function callback passed to .map().
     // isConditional stops at arrow function boundaries, so the && outside
-    // the .map() callback is not seen. This is correct — the arrow fn
+    // the .map() callback is not seen. This is correct - the arrow fn
     // creates a new scope. The element IS dynamic (.map) but NOT conditional.
     const source = `
       export function Both({ isAdmin, items }) {

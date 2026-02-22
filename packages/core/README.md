@@ -25,7 +25,7 @@ logger.info('Scan complete', { filesScanned: 42 });
 
 // Typed errors with code and context
 throw new UicError('MANIFEST_NOT_FOUND', {
-  message: 'No manifest.json found. Run "npx uic scan <dir>" first.',
+  message: 'No manifest.json found. Run "npx uicontract scan <dir>" first.',
   path: '/my-app',
 });
 ```
@@ -41,7 +41,7 @@ All shared types and interfaces live here. Framework-specific packages (`@uicont
 
 ## Part of UIC
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) — making web app UIs machine-readable.
+This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

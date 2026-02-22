@@ -18,7 +18,7 @@ import {
 } from '../commands/index.js';
 
 const MAIN_HELP = `\
-uic — makes web app UIs machine-readable
+uic - makes web app UIs machine-readable
 
 USAGE
   uic <command> [options]
@@ -37,7 +37,7 @@ GLOBAL OPTIONS
   --help, -h          Show this help message
 
 Run "uicontract <command> --help" for command-specific help.
-  e.g. uic scan --help
+  e.g. uicontract scan --help
 `;
 
 async function main(): Promise<void> {

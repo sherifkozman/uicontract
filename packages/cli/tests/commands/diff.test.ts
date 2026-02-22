@@ -459,7 +459,7 @@ describe('findProtectedScopeViolations', () => {
     const el = makeElement({ agentId: 'settings.billing-extended.btn' });
     // "settings.billing" should NOT match "settings.billing-extended" because
     // the prefix is "settings.billing" and the id starts with "settings.billing-"
-    // Wait — actually startsWith('settings.billing') DOES match 'settings.billing-extended.btn'
+    // Wait - actually startsWith('settings.billing') DOES match 'settings.billing-extended.btn'
     // This is intentional: scope is a prefix match.
     const result = diffManifests(makeManifest([el]), makeManifest([]));
     const violations = findProtectedScopeViolations(result.changes, ['settings.billing']);

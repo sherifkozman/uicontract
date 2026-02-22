@@ -12,7 +12,7 @@ describe('uic full pipeline (e2e)', () => {
     expect((await runUic(['scan', 'fixtures/react-app', '-o', scanOut])).exitCode).toBe(0);
     expect((await runUic(['name', scanOut, '-o', namedOut])).exitCode).toBe(0);
 
-    // Annotator resolves file paths relative to CWD — must match fixture root
+    // Annotator resolves file paths relative to CWD - must match fixture root
     const reactDir = path.join(PROJECT_ROOT, 'fixtures', 'react-app');
     const annotateResult = await runUic(['annotate', '--manifest', namedOut, '--dry-run'], { cwd: reactDir });
     expect(annotateResult.exitCode).toBe(0);
@@ -30,7 +30,7 @@ describe('uic full pipeline (e2e)', () => {
     expect((await runUic(['scan', 'fixtures/vue-app', '-o', scanOut])).exitCode).toBe(0);
     expect((await runUic(['name', scanOut, '-o', namedOut])).exitCode).toBe(0);
 
-    // Annotator resolves file paths relative to CWD — must match fixture root
+    // Annotator resolves file paths relative to CWD - must match fixture root
     const vueDir = path.join(PROJECT_ROOT, 'fixtures', 'vue-app');
     const annotateResult = await runUic(['annotate', '--manifest', namedOut, '--dry-run'], { cwd: vueDir });
     expect(annotateResult.exitCode).toBe(0);

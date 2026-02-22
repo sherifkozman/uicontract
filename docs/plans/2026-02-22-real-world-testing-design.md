@@ -62,9 +62,9 @@ Tests invoke `node packages/cli/dist/bin/uic.js` as a subprocess. Each test capt
 #### Helper module
 
 `tests/e2e/helpers.ts` exports:
-- `runUic(args: string[], options?): Promise<{ stdout, stderr, exitCode }>` — subprocess wrapper using `execFile`
-- `loadManifest(path: string): Manifest` — parse and validate
-- `tempDir()` — create/cleanup temp directory
+- `runUic(args: string[], options?): Promise<{ stdout, stderr, exitCode }>` - subprocess wrapper using `execFile`
+- `loadManifest(path: string): Manifest` - parse and validate
+- `tempDir()` - create/cleanup temp directory
 
 ### Track 2: Real-World OSS Validation
 
@@ -81,10 +81,10 @@ Tests invoke `node packages/cli/dist/bin/uic.js` as a subprocess. Each test capt
 
 **Validation script** (`scripts/validate-oss.sh`):
 1. Clone repo to temp directory (shallow clone)
-2. Run `uic scan --json -o /tmp/manifest.json`
+2. Run `uicontract scan --json -o /tmp/manifest.json`
 3. Check exit code and warning count
 4. Log element count, file count, scan duration
-5. Run `uic name` on the manifest
+5. Run `uicontract name` on the manifest
 6. Check for duplicate agentIds
 7. Output summary report
 

@@ -1,7 +1,7 @@
 /**
- * E2E test helpers — shared utilities for subprocess-based CLI testing.
+ * E2E test helpers - shared utilities for subprocess-based CLI testing.
  *
- * Uses `execFile` (never `exec`) for security — no shell interpolation.
+ * Uses `execFile` (never `exec`) for security - no shell interpolation.
  */
 
 import { execFile } from 'node:child_process';

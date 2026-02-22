@@ -77,18 +77,18 @@ UIC claims to make agent-driven UI testing faster, more accurate, and more token
 
 | Task | Description | Complexity |
 |------|------------|------------|
-| A1 | Write a test that clicks the "Pause Subscription" button and verifies a confirmation dialog appears | Simple — single element, single assertion |
-| A2 | Write a test that fills the login form (email + password) and submits it | Medium — form with multiple inputs |
-| A3 | Write a test that navigates to billing settings, changes the plan from monthly to annual, and verifies the price updates | Complex — multi-step flow across elements |
-| A4 | Write a test that verifies all navigation links on the settings page go to the correct routes | Comprehensive — multiple elements, multiple assertions |
-| A5 | Write a test for the search bar: type a query, verify results appear, click a result, verify navigation | End-to-end — interaction chain with dynamic content |
+| A1 | Write a test that clicks the "Pause Subscription" button and verifies a confirmation dialog appears | Simple - single element, single assertion |
+| A2 | Write a test that fills the login form (email + password) and submits it | Medium - form with multiple inputs |
+| A3 | Write a test that navigates to billing settings, changes the plan from monthly to annual, and verifies the price updates | Complex - multi-step flow across elements |
+| A4 | Write a test that verifies all navigation links on the settings page go to the correct routes | Comprehensive - multiple elements, multiple assertions |
+| A5 | Write a test for the search bar: type a query, verify results appear, click a result, verify navigation | End-to-end - interaction chain with dynamic content |
 
 **Conditions**:
 
 | Condition | Description |
 |-----------|------------|
 | **Baseline (no UIC)** | Agent has: Playwright docs, page URL, no manifest, no agent IDs. Must discover elements via DOM snapshots, page.getByRole(), or CSS selectors. |
-| **With UIC** | Agent has: Playwright docs, page URL, UIC manifest, agent skill instructions. Can use `npx uic find/describe` before writing tests. Elements have `data-agent-id` attributes. |
+| **With UIC** | Agent has: Playwright docs, page URL, UIC manifest, agent skill instructions. Can use `npx uicontract find/describe` before writing tests. Elements have `data-agent-id` attributes. |
 
 ### Scenario B: Repair Tests After UI Refactor
 
@@ -107,7 +107,7 @@ UIC claims to make agent-driven UI testing faster, more accurate, and more token
 | Condition | Description |
 |-----------|------------|
 | **Baseline** | Agent must re-discover elements by inspecting the changed DOM |
-| **With UIC** | Agent runs `npx uic diff` to see what changed, then `npx uic find` to locate new elements |
+| **With UIC** | Agent runs `npx uicontract diff` to see what changed, then `npx uicontract find` to locate new elements |
 
 ### Scenario C: Agent-Browser (Snapshot/Ref) Workflow
 
@@ -126,7 +126,7 @@ UIC claims to make agent-driven UI testing faster, more accurate, and more token
 | Condition | Description |
 |-----------|------------|
 | **Baseline** | Agent reads full accessibility snapshot, searches for elements by text/role |
-| **With UIC** | Agent calls `npx uic find` first, then searches snapshot for the known `data-agent-id` value |
+| **With UIC** | Agent calls `npx uicontract find` first, then searches snapshot for the known `data-agent-id` value |
 
 **Key measurement**: Snapshot size vs. UIC query response size. If the full snapshot is 50KB and the UIC find response is 200 bytes, that's a 250x reduction in context consumed for element discovery.
 
@@ -172,9 +172,9 @@ benchmark/
 
 Token counting must be precise, not estimated. Two approaches:
 
-**Approach A — API-level counting (preferred)**:
+**Approach A - API-level counting (preferred)**:
 
-If using Claude API directly, every response includes `usage.input_tokens` and `usage.output_tokens`. The harness wraps API calls and accumulates:
+If using a model API with usage tracking, every response typically includes `usage.input_tokens` and `usage.output_tokens`. The harness wraps API calls and accumulates:
 
 ```typescript
 interface TokenAccumulator {
@@ -193,12 +193,12 @@ function wrapApiCall(client: AnthropicClient): AnthropicClient {
 }
 ```
 
-**Approach B — Tiktoken estimation (fallback)**:
+**Approach B - Tiktoken estimation (fallback)**:
 
-If API-level counting isn't available (e.g., using Claude Code CLI), estimate tokens using `tiktoken` or `@anthropic-ai/tokenizer`:
+If API-level counting isn't available (e.g., using a CLI agent), estimate tokens using `tiktoken` or `@anthropic-ai/tokenizer`:
 
 ```typescript
-import { countTokens } from '@anthropic-ai/tokenizer';
+import { countTokens } from "@your-tokenizer-package";
 
 function estimateTokens(text: string): number {
   return countTokens(text);
@@ -234,7 +234,7 @@ For benchmarks to be meaningful, we must control:
 
 | Variable | How We Control It |
 |----------|-------------------|
-| **Model** | Same model version for both conditions (e.g., Claude Sonnet 4) |
+| **Model** | Same model version for both conditions (e.g., GPT-4o, Sonnet 4) |
 | **Temperature** | Set to 0 for deterministic output |
 | **System prompt** | Identical base prompt; only UIC instructions differ |
 | **App state** | Fixture app starts from identical state per run (reset between runs) |
@@ -312,8 +312,8 @@ pnpm benchmark:flakiness --runs 50 --suite tests/generated/scenario-a/
 # Failures: 3
 # Flake rate: 6%
 # Flaky tests:
-#   - test-a3-billing-flow.spec.ts (failed 2/50 — timeout on plan selector)
-#   - test-a5-search-flow.spec.ts (failed 1/50 — stale element reference)
+#   - test-a3-billing-flow.spec.ts (failed 2/50 - timeout on plan selector)
+#   - test-a5-search-flow.spec.ts (failed 1/50 - stale element reference)
 ```
 
 ### 5.2 Categorizing Flakiness
@@ -351,7 +351,7 @@ Create N variants of the fixture app, each with a specific UI refactor:
 
 For each refactor variant:
 
-1. Run the original test suite (should pass — sanity check)
+1. Run the original test suite (should pass - sanity check)
 2. Apply the refactor
 3. Run the original test suite again (no test modifications)
 4. Record: how many tests pass, how many fail, which selectors broke
@@ -381,7 +381,7 @@ When agents use the agent-browser pattern (accessibility snapshots), the primary
 | Metric | Definition |
 |--------|-----------|
 | `snapshot_size_tokens` | Token count of a full interactive-only accessibility snapshot |
-| `uic_find_response_tokens` | Token count of `npx uic find` response for the same element |
+| `uic_find_response_tokens` | Token count of `npx uicontract find` response for the same element |
 | `context_reduction_ratio` | `snapshot_size_tokens / uic_find_response_tokens` |
 
 **Example measurement**:
@@ -409,7 +409,7 @@ For a multi-step test flow (navigate → find element → interact → verify �
   Total: 14,500 tokens
 
 5-step flow, with UIC:
-  Pre-step: uic find ×5 (150 tok) + skill instructions (200 tok)
+  Pre-step: uicontract find ×5 (150 tok) + skill instructions (200 tok)
   Step 1: targeted ref lookup (100 tok) + reasoning (200 tok)
   Step 2: targeted ref lookup (100 tok) + reasoning (200 tok)
   Step 3: targeted ref lookup (100 tok) + reasoning (200 tok)
@@ -464,7 +464,7 @@ Run benchmarks whenever:
 - The parser changes (element discovery affects what agents find)
 - The manifest schema changes (agent consumption patterns change)
 - The agent skill instructions change (agent behavior changes)
-- A new Playwright or Claude version is released (baseline may shift)
+- A new Playwright or model version is released (baseline may shift)
 
 ---
 
@@ -484,7 +484,7 @@ All benchmarks above use fixture apps. These give controlled, reproducible resul
 
 Once UIC reaches Phase 3+, validate with real projects:
 
-1. **Open-source apps**: Find 3-5 open-source React/Next.js apps of varying size. Run `uic scan`, write tests with and without UIC, compare metrics.
+1. **Open-source apps**: Find 3-5 open-source React/Next.js apps of varying size. Run `uicontract scan`, write tests with and without UIC, compare metrics.
 2. **Dogfooding**: Use UIC on UIC's own fixture apps in CI. Track metrics over time.
 3. **Community reports**: Provide a `pnpm benchmark` command so users can run benchmarks on their own codebases and share (anonymized) results.
 
@@ -524,4 +524,4 @@ UIC is validated when:
 | Context efficiency | ≥10x reduction for agent-browser | Context window measurement |
 | Real-world coverage | ≥80% element discovery rate | Real-world validation on 3+ apps |
 
-If these targets aren't met, the tool needs improvement before promoting adoption. The benchmarks are the accountability mechanism — they prevent shipping something that sounds good but doesn't deliver.
+If these targets aren't met, the tool needs improvement before promoting adoption. The benchmarks are the accountability mechanism - they prevent shipping something that sounds good but doesn't deliver.

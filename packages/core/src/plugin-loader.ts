@@ -29,7 +29,7 @@ function isParser(value: unknown): value is Parser {
 // Public API
 // ---------------------------------------------------------------------------
 
-/** Result of loading plugins — which succeeded and which failed. */
+/** Result of loading plugins - which succeeded and which failed. */
 export interface PluginLoadResult {
   loaded: string[];
   failed: string[];
@@ -87,7 +87,7 @@ export async function loadPlugins(
             parser = mod;
           }
         } catch {
-          // Property access threw — module is not a valid Parser
+          // Property access threw - module is not a valid Parser
         }
       }
 

@@ -8,13 +8,13 @@ UIC assigns stable `data-agent-id` attributes to interactive elements in your so
 
 **Before UIC:**
 ```typescript
-// Fragile — breaks when CSS changes
+// Fragile - breaks when CSS changes
 await page.click('.billing-section > div:nth-child(3) > button.btn-danger');
 ```
 
 **After UIC:**
 ```typescript
-// Stable — survives refactors
+// Stable - survives refactors
 await page.click('[data-agent-id="settings.billing.pause-subscription.button"]');
 ```
 
@@ -27,16 +27,16 @@ await page.click('[data-agent-id="settings.billing.pause-subscription.button"]')
 pnpm add -D @uicontract/cli
 
 # Scan your project
-npx uic scan ./src -o manifest.json
+npx uicontract scan ./src -o manifest.json
 
 # Assign agent IDs
-npx uic name manifest.json -o named-manifest.json
+npx uicontract name manifest.json -o named-manifest.json
 
 # Preview annotation changes
-npx uic annotate --manifest named-manifest.json --dry-run
+npx uicontract annotate --manifest named-manifest.json --dry-run
 
 # Apply annotations to source files
-npx uic annotate --manifest named-manifest.json --write
+npx uicontract annotate --manifest named-manifest.json --write
 ```
 
 After annotation, your source files contain `data-agent-id` attributes:
@@ -90,13 +90,13 @@ Use UIC commands to discover the right agent ID for your test:
 
 ```bash
 # Search by name or label
-npx uic find "pause subscription"
+npx uicontract find "pause subscription"
 
 # List all buttons on a route
-npx uic list --route /settings/billing --type button
+npx uicontract list --route /settings/billing --type button
 
 # Get full details for an element
-npx uic describe settings.billing.pause-subscription.button
+npx uicontract describe settings.billing.pause-subscription.button
 ```
 
 ## CI Pipeline
@@ -114,10 +114,10 @@ jobs:
       - run: pnpm build
 
       # Generate current manifest
-      - run: npx uic scan ./src -o /tmp/current.json
+      - run: npx uicontract scan ./src -o /tmp/current.json
 
       # Compare against committed baseline
-      - run: npx uic diff manifest.json /tmp/current.json
+      - run: npx uicontract diff manifest.json /tmp/current.json
 
   playwright:
     runs-on: ubuntu-latest
@@ -138,8 +138,8 @@ jobs:
 
 ## Best Practices
 
-- **Commit your baseline manifest** to version control so `uic diff` can detect regressions.
-- **Run `uic scan` after UI changes** to keep the manifest in sync.
+- **Commit your baseline manifest** to version control so `uicontract diff` can detect regressions.
+- **Run `uicontract scan` after UI changes** to keep the manifest in sync.
 - **Use `--json` flag** for programmatic consumption of UIC output in CI scripts.
 - **Protect critical scopes** in `.uicrc.json` to prevent accidental changes to important elements:
   ```json
@@ -147,7 +147,7 @@ jobs:
     "protectedScopes": ["checkout", "settings.billing"]
   }
   ```
-- **Don't hard-code agent IDs** in test data. Use the `uic find` command or read from the manifest file to make tests self-documenting.
+- **Don't hard-code agent IDs** in test data. Use the `uicontract find` command or read from the manifest file to make tests self-documenting.
 
 ## Stripping Attributes in Production
 

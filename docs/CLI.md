@@ -7,7 +7,7 @@ UIC provides a command-line interface for scanning projects, querying manifests,
 ```bash
 npm install -g @uicontract/cli
 # or use npx
-npx uic <command>
+npx uicontract <command>
 ```
 
 ## Global Options
@@ -21,12 +21,12 @@ Run `uic <command> --help` for command-specific help.
 
 ---
 
-## `uic scan`
+## `uicontract scan`
 
 Scan a project directory for interactive UI elements and emit a manifest.
 
 ```
-uic scan <directory> [options]
+uicontract scan <directory> [options]
 ```
 
 **Arguments:**
@@ -49,9 +49,9 @@ uic scan <directory> [options]
 **Examples:**
 
 ```bash
-uic scan ./my-app
-uic scan ./my-app --framework react --output manifest.json
-uic scan ./my-app --verbose
+uicontract scan ./my-app
+uicontract scan ./my-app --framework react --output manifest.json
+uicontract scan ./my-app --verbose
 ```
 
 **Exit codes:**
@@ -63,19 +63,19 @@ uic scan ./my-app --verbose
 
 ---
 
-## `uic name`
+## `uicontract name`
 
 Assign stable, hierarchical agent IDs to elements in a manifest.
 
 ```
-uic name <manifest> [options]
+uicontract name <manifest> [options]
 ```
 
 **Arguments:**
 
 | Argument | Description |
 |----------|-------------|
-| `<manifest>` | Path to a `manifest.json` produced by `uic scan` |
+| `<manifest>` | Path to a `manifest.json` produced by `uicontract scan` |
 
 **Options:**
 
@@ -90,20 +90,20 @@ uic name <manifest> [options]
 **Examples:**
 
 ```bash
-uic name manifest.json
-uic name manifest.json -o named-manifest.json
-uic name manifest.json --ai
-uic name manifest.json --ai --ai-timeout 10000
+uicontract name manifest.json
+uicontract name manifest.json -o named-manifest.json
+uicontract name manifest.json --ai
+uicontract name manifest.json --ai --ai-timeout 10000
 ```
 
 ---
 
-## `uic annotate`
+## `uicontract annotate`
 
 Insert `data-agent-id` attributes into source files based on a manifest.
 
 ```
-uic annotate [options]
+uicontract annotate [options]
 ```
 
 **Options:**
@@ -120,23 +120,23 @@ uic annotate [options]
 **Examples:**
 
 ```bash
-uic annotate
-uic annotate --manifest named-manifest.json --dry-run
-uic annotate --write
-uic annotate --write --backup-dir ./my-backup
-uic annotate --json
+uicontract annotate
+uicontract annotate --manifest named-manifest.json --dry-run
+uicontract annotate --write
+uicontract annotate --write --backup-dir ./my-backup
+uicontract annotate --json
 ```
 
 **Safety:** The annotator creates a backup in `.uic-backup/` before modifying any files when using `--write`. Use `--dry-run` (default) to preview changes first.
 
 ---
 
-## `uic find`
+## `uicontract find`
 
 Search for interactive UI elements in a manifest by name, label, route, or handler.
 
 ```
-uic find <query> [options]
+uicontract find <query> [options]
 ```
 
 **Arguments:**
@@ -159,21 +159,21 @@ uic find <query> [options]
 **Examples:**
 
 ```bash
-uic find "login"
-uic find "pase subscribtion"          # fuzzy match finds "pause-subscription"
-uic find "button" --type button
-uic find "settings" --exact           # strict substring match only
-uic find "settings" --manifest dist/manifest.json --json
+uicontract find "login"
+uicontract find "pase subscribtion"          # fuzzy match finds "pause-subscription"
+uicontract find "button" --type button
+uicontract find "settings" --exact           # strict substring match only
+uicontract find "settings" --manifest dist/manifest.json --json
 ```
 
 ---
 
-## `uic describe`
+## `uicontract describe`
 
 Show full details of an interactive UI element by its agent ID.
 
 ```
-uic describe <agent-id> [options]
+uicontract describe <agent-id> [options]
 ```
 
 **Arguments:**
@@ -193,19 +193,19 @@ uic describe <agent-id> [options]
 **Examples:**
 
 ```bash
-uic describe settings.billing.pause-btn.button
-uic describe login.email.input --json
-uic describe nav.home.a --manifest dist/manifest.json
+uicontract describe settings.billing.pause-btn.button
+uicontract describe login.email.input --json
+uicontract describe nav.home.a --manifest dist/manifest.json
 ```
 
 ---
 
-## `uic list`
+## `uicontract list`
 
 List all interactive UI elements in a manifest.
 
 ```
-uic list [options]
+uicontract list [options]
 ```
 
 **Options:**
@@ -224,23 +224,23 @@ uic list [options]
 **Examples:**
 
 ```bash
-uic list
-uic list --type button
-uic list --route /settings/billing
-uic list --component LoginForm
-uic list --routes
-uic list --components
-uic list --json --manifest dist/manifest.json
+uicontract list
+uicontract list --type button
+uicontract list --route /settings/billing
+uicontract list --component LoginForm
+uicontract list --routes
+uicontract list --components
+uicontract list --json --manifest dist/manifest.json
 ```
 
 ---
 
-## `uic diff`
+## `uicontract diff`
 
 Compare two manifests and report changes. Designed for CI pipelines to catch breaking changes to agent-facing IDs.
 
 ```
-uic diff <old-manifest> <new-manifest> [options]
+uicontract diff <old-manifest> <new-manifest> [options]
 ```
 
 **Arguments:**
@@ -282,10 +282,10 @@ uic diff <old-manifest> <new-manifest> [options]
 **Examples:**
 
 ```bash
-uic diff baseline.json current.json
-uic diff old.json new.json --json
-uic diff old.json new.json --allow-breaking "Intentional redesign of nav"
-uic diff old.json new.json --config ./my-config.json
+uicontract diff baseline.json current.json
+uicontract diff old.json new.json --json
+uicontract diff old.json new.json --allow-breaking "Intentional redesign of nav"
+uicontract diff old.json new.json --config ./my-config.json
 ```
 
 ---
@@ -308,9 +308,9 @@ UIC is configured via a `.uicrc.json` file in your project root. The CLI searche
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `protectedScopes` | `string[]` | `[]` | Agent ID prefixes that require explicit approval to change. `uic diff` exits non-zero when elements under these scopes are modified, even with `--allow-breaking`. |
-| `breakingChangePolicy` | `"block" \| "warn"` | `"block"` | How `uic diff` handles breaking changes. `"block"` exits non-zero, `"warn"` prints a warning but exits 0. |
-| `plugins` | `string[]` | `[]` | npm package names implementing the `Parser` interface. Loaded automatically by `uic scan`. See [PARSERS.md](./PARSERS.md) for how to write a parser plugin. |
+| `protectedScopes` | `string[]` | `[]` | Agent ID prefixes that require explicit approval to change. `uicontract diff` exits non-zero when elements under these scopes are modified, even with `--allow-breaking`. |
+| `breakingChangePolicy` | `"block" \| "warn"` | `"block"` | How `uicontract diff` handles breaking changes. `"block"` exits non-zero, `"warn"` prints a warning but exits 0. |
+| `plugins` | `string[]` | `[]` | npm package names implementing the `Parser` interface. Loaded automatically by `uicontract scan`. See [PARSERS.md](./PARSERS.md) for how to write a parser plugin. |
 
 ### Plugin Configuration
 
@@ -334,20 +334,20 @@ The CLI loads plugins at startup and registers them into the parser registry. Se
 
 ```bash
 # 1. Scan your project
-uic scan ./src -o manifest.json
+uicontract scan ./src -o manifest.json
 
 # 2. Assign proper agent IDs
-uic name manifest.json -o named-manifest.json
+uicontract name manifest.json -o named-manifest.json
 
 # 3. Annotate source files (preview first)
-uic annotate --manifest named-manifest.json --dry-run
-uic annotate --manifest named-manifest.json --write
+uicontract annotate --manifest named-manifest.json --dry-run
+uicontract annotate --manifest named-manifest.json --write
 
 # 4. Query the manifest
-uic find "login"
-uic describe settings.billing.pause-btn.button
-uic list --type button
+uicontract find "login"
+uicontract describe settings.billing.pause-btn.button
+uicontract list --type button
 
 # 5. Detect regressions in CI
-uic diff baseline.json manifest.json
+uicontract diff baseline.json manifest.json
 ```

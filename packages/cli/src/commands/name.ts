@@ -1,5 +1,5 @@
 /**
- * `uic name` command — assign hierarchical agent IDs to manifest elements.
+ * `uicontract name` command - assign hierarchical agent IDs to manifest elements.
  *
  * stdout: named manifest (JSON)
  * stderr: logs, errors, help text
@@ -16,7 +16,7 @@ import { nameElements } from '@uicontract/namer';
 // ---------------------------------------------------------------------------
 
 export const NAME_HELP = `\
-uic name <manifest> [options]
+uicontract name <manifest> [options]
 
 Assign stable, hierarchical agent IDs to elements in a manifest.
 
@@ -31,10 +31,10 @@ OPTIONS
   --help, -h             Show this help message
 
 EXAMPLES
-  uic name manifest.json
-  uic name manifest.json -o named-manifest.json
-  uic name manifest.json --ai
-  uic name manifest.json --ai --ai-timeout 10000
+  uicontract name manifest.json
+  uicontract name manifest.json -o named-manifest.json
+  uicontract name manifest.json --ai
+  uicontract name manifest.json --ai --ai-timeout 10000
 
 Run "uicontract --help" for the full list of commands.
 `;

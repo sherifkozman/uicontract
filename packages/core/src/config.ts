@@ -126,7 +126,7 @@ async function findConfigFile(dir: string): Promise<string | null> {
       await fs.access(candidate);
       return candidate;
     } catch {
-      // not found — go up
+      // not found - go up
     }
 
     const parent = path.dirname(current);

@@ -92,7 +92,7 @@ export function assignDeterministicName(element: RawElement): string {
     return ensureValid(buildId([componentSeg, handlerSeg], element.type));
   }
 
-  // Priority 5: fallback — component (or "unknown") + type + line
+  // Priority 5: fallback - component (or "unknown") + type + line
   const base = hasComponent ? componentSeg : 'unknown';
   return ensureValid(`${base}.${element.type}.${element.line}`);
 }

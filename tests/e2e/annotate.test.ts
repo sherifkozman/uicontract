@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir, PROJECT_ROOT } from './helpers.js';
 
-describe('uic annotate (e2e)', () => {
+describe('uicontract annotate (e2e)', () => {
   // The annotator resolves manifest filePaths relative to CWD.
   // Since scan produces paths relative to the scanned directory root,
   // we must run annotate with CWD = the fixture directory.

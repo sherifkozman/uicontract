@@ -41,7 +41,7 @@ Unexpected syntax produces a `warning` entry rather than throwing, so partial re
 
 ## Part of UIC
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) — making web app UIs machine-readable.
+This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

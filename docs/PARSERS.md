@@ -101,7 +101,7 @@ interface ParserWarning {
 
 ## How Auto-Detection Works
 
-When `uic scan` is invoked without `--framework`, the CLI calls `ParserRegistry.detect()`, which iterates through all registered parsers and calls each parser's `detect()` method. The first parser that returns `true` is selected.
+When `uicontract scan` is invoked without `--framework`, the CLI calls `ParserRegistry.detect()`, which iterates through all registered parsers and calls each parser's `detect()` method. The first parser that returns `true` is selected.
 
 Detection order is determined by registration order. Built-in parsers are registered first (React, then Vue), followed by any plugins from `.uicrc.json`.
 
@@ -115,21 +115,21 @@ Each parser's `detect()` typically checks:
 
 These JSX/template elements are always considered interactive:
 
-- `<button>` — always interactive
-- `<input>` — always interactive
-- `<select>` — always interactive
-- `<textarea>` — always interactive
-- `<a>` — always interactive (links)
-- `<form>` — always interactive
+- `<button>` - always interactive
+- `<input>` - always interactive
+- `<select>` - always interactive
+- `<textarea>` - always interactive
+- `<a>` - always interactive (links)
+- `<form>` - always interactive
 
 ### Conditionally Interactive
 
 These elements are only interactive when they have event handlers:
 
-- `<div>` — only with `onClick`, `onSubmit`, etc.
-- `<span>` — only with event handlers
-- `<img>` — only with `onClick`
-- `<label>` — only with `htmlFor` or `onClick`
+- `<div>` - only with `onClick`, `onSubmit`, etc.
+- `<span>` - only with event handlers
+- `<img>` - only with `onClick`
+- `<label>` - only with `htmlFor` or `onClick`
 
 ### Context Extraction
 
@@ -138,16 +138,16 @@ Parsers extract contextual information for each element:
 **Route inference:** For file-based routing frameworks (Next.js, Nuxt), the parser infers routes from the file path. For example, `src/app/settings/billing/page.tsx` maps to `/settings/billing`.
 
 **Label extraction:** Parsers look for:
-- Direct text children: `<button>Submit</button>` — label: "Submit"
+- Direct text children: `<button>Submit</button>` - label: "Submit"
 - `aria-label` attribute
 - `title` attribute
 - `placeholder` for inputs
 - `alt` for images
 
 **Handler extraction:** Parsers extract the name of the event handler function:
-- `onClick={handleSubmit}` — handler: "handleSubmit"
-- `onClick={() => submit()}` — handler: "submit" (when possible)
-- `@click="onLogin"` (Vue) — handler: "onLogin"
+- `onClick={handleSubmit}` - handler: "handleSubmit"
+- `onClick={() => submit()}` - handler: "submit" (when possible)
+- `@click="onLogin"` (Vue) - handler: "onLogin"
 
 **Component name:** Extracted from the function/class declaration or the default export.
 
@@ -224,9 +224,9 @@ export { svelteParser as parser };
 
 The plugin loader tries three export patterns in order:
 
-1. **Default export** — `export default myParser`
-2. **Named `parser` export** — `export { myParser as parser }`
-3. **Module object itself** — for CommonJS modules that directly export a Parser
+1. **Default export** - `export default myParser`
+2. **Named `parser` export** - `export { myParser as parser }`
+3. **Module object itself** - for CommonJS modules that directly export a Parser
 
 At least one of these must be a valid `Parser` object.
 
@@ -306,11 +306,11 @@ it('matches golden file', async () => {
 
 Scan, annotate, re-scan, and verify the elements still match:
 
-1. `uic scan fixtures/my-app -o manifest.json`
-2. `uic annotate --manifest manifest.json --write`
-3. `uic scan fixtures/my-app -o manifest2.json`
-4. `uic diff manifest.json manifest2.json` — no breaking changes
+1. `uicontract scan fixtures/my-app -o manifest.json`
+2. `uicontract annotate --manifest manifest.json --write`
+3. `uicontract scan fixtures/my-app -o manifest2.json`
+4. `uicontract diff manifest.json manifest2.json` - no breaking changes
 
 ### Integration Test
 
-Use `uic` commands as subprocesses to verify the full pipeline works end-to-end with your parser.
+Use `uicontract` commands as subprocesses to verify the full pipeline works end-to-end with your parser.

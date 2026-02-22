@@ -44,7 +44,7 @@ pnpm lint && pnpm typecheck
 2. **Discuss non-trivial changes.** For features or architectural changes, comment on the issue with your approach before coding.
 3. **Fork and branch.** Fork the repo and create a feature branch from `main`.
 4. **Write code and tests.** Follow the code standards below.
-5. **Verify locally.** Run `pnpm build && pnpm lint && pnpm test` — all must pass with zero errors and zero warnings.
+5. **Verify locally.** Run `pnpm build && pnpm lint && pnpm test` - all must pass with zero errors and zero warnings.
 6. **Add a changeset.** Run `pnpm changeset` to describe your change for the changelog.
 7. **Submit a PR.** See the PR checklist below.
 
@@ -86,7 +86,7 @@ For detailed architecture, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ### Error Handling
 
 - Use `UicError` with a machine-readable `code` and human-readable `message`.
-- Parsers never throw on unexpected input — return results with a `warnings` array.
+- Parsers never throw on unexpected input - return results with a `warnings` array.
 - CLI commands print errors to stderr, output to stdout.
 
 ### Logging
@@ -122,20 +122,20 @@ cd packages/core && npx vitest run tests/config.test.ts
 
 ### Test Types
 
-- **Unit tests** — `packages/*/tests/*.test.ts`
-- **Integration tests** — `packages/*/tests/integration/*.test.ts`
-- **Golden file tests** — snapshot tests in `packages/*/tests/__snapshots__/`
-- **E2E tests** — `tests/e2e/*.test.ts`
+- **Unit tests** - `packages/*/tests/*.test.ts`
+- **Integration tests** - `packages/*/tests/integration/*.test.ts`
+- **Golden file tests** - snapshot tests in `packages/*/tests/__snapshots__/`
+- **E2E tests** - `tests/e2e/*.test.ts`
 
 ### Fixture Apps
 
 Fixture apps in `fixtures/` provide realistic test data:
 
-- `fixtures/react-app/` — Full React/Next.js app with 15+ interactive elements
-- `fixtures/react-minimal/` — Minimal smoke test (1 component, 3 elements)
-- `fixtures/react-edge-cases/` — Edge cases: forwardRef, memo, HOCs, portals
-- `fixtures/vue-app/` — Vue 3/Nuxt app
-- `fixtures/annotated-app/` — Pre-annotated app for round-trip testing
+- `fixtures/react-app/` - Full React/Next.js app with 15+ interactive elements
+- `fixtures/react-minimal/` - Minimal smoke test (1 component, 3 elements)
+- `fixtures/react-edge-cases/` - Edge cases: forwardRef, memo, HOCs, portals
+- `fixtures/vue-app/` - Vue 3/Nuxt app
+- `fixtures/annotated-app/` - Pre-annotated app for round-trip testing
 
 ## Adding a CLI Command
 
@@ -184,9 +184,9 @@ Select the affected packages, choose the appropriate version bump (patch/minor/m
 
 ### Version Bumps
 
-- **patch** — bug fixes, documentation, internal refactoring
-- **minor** — new features, new CLI flags, new parser capabilities
-- **major** — breaking changes to manifest schema, CLI interface, or Parser API
+- **patch** - bug fixes, documentation, internal refactoring
+- **minor** - new features, new CLI flags, new parser capabilities
+- **major** - breaking changes to manifest schema, CLI interface, or Parser API
 
 ### Publishing
 

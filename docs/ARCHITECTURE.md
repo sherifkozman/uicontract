@@ -6,11 +6,11 @@ UIC is a CLI tool and library ecosystem organized as a six-layer pipeline. Each 
 
 ```
                     +-----------------+
-                    |   Governance    |  uic diff, CI integration
+                    |   Governance    |  uicontract diff, CI integration
                     +-----------------+
                             |
                     +-----------------+
-                    |     Query       |  uic find / describe / list
+                    |     Query       |  uicontract find / describe / list
                     +-----------------+
                             |
               +-------------+-------------+
@@ -39,7 +39,7 @@ The foundation. Everything else depends on it. Nothing depends on it except the 
 Responsibilities:
 - Shared TypeScript types: `RawElement`, `NamedElement`, `ManifestElement`, `Parser`, `ParserOptions`, `DiscoveryResult`
 - Manifest JSON Schema (`manifest.v1.schema.json`) and validation
-- Structured logger: `debug`, `info`, `warn`, `error` — always to stderr
+- Structured logger: `debug`, `info`, `warn`, `error` - always to stderr
 - Error base class: `UicError` with machine-readable `code` and structured `context`
 - Parser registry: discovers and loads framework parsers
 
@@ -74,14 +74,14 @@ Responsibilities:
 - `generateManifest()`: accepts named elements + metadata, returns validated manifest object
 - `writeManifest()`: serializes to disk
 - `readManifest()`: deserializes and validates; rejects manifests from incompatible schema versions
-- Schema versioning: `schemaVersion: "major.minor"` — tools must refuse to read newer major versions
+- Schema versioning: `schemaVersion: "major.minor"` - tools must refuse to read newer major versions
 
 ### Annotator (`packages/annotator`)
 
 Reads source files and inserts `data-agent-id` attributes at the locations produced by the parser.
 
 Responsibilities:
-- Receive element locations (file path, line, column) from parser output — does **not** re-parse source code
+- Receive element locations (file path, line, column) from parser output - does **not** re-parse source code
 - Generate patches (unified diff format) for each file
 - Apply patches in-place with backup to `.uic-backup/`
 - `--dry-run` outputs patches without modifying any files
@@ -92,9 +92,9 @@ Responsibilities:
 Reads `manifest.json` and provides search and filtering over it.
 
 Responsibilities:
-- `uic find <query>`: fuzzy search by label, handler, route, component name, or agent ID
-- `uic describe <agent-id>`: full details of one element
-- `uic list [--type|--routes|--components]`: filtered listing
+- `uicontract find <query>`: fuzzy search by label, handler, route, component name, or agent ID
+- `uicontract describe <agent-id>`: full details of one element
+- `uicontract list [--type|--routes|--components]`: filtered listing
 - All commands support `--json` for machine consumption
 - Stateless: reads manifest, formats output, exits
 
@@ -167,7 +167,7 @@ generateManifest(named, metadata)
 
 **Parsers are guests, not hosts.** Parsers discover elements. They do not name, annotate, validate, or write to disk. Any parser that does more than produce `RawElement[]` is violating its boundary.
 
-**Fail loudly at boundaries, softly internally.** Parsers never throw on unexpected JSX patterns — they warn and skip. But the CLI will exit non-zero and print a clear message when the manifest is missing, invalid, or incompatible.
+**Fail loudly at boundaries, softly internally.** Parsers never throw on unexpected JSX patterns - they warn and skip. But the CLI will exit non-zero and print a clear message when the manifest is missing, invalid, or incompatible.
 
 **One manifest format, all frameworks.** `manifest.json` is framework-agnostic. React and Vue elements share the same schema. Parsers normalize their output to `RawElement`; the schema does not know what framework generated it.
 

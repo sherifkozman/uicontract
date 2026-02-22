@@ -19,7 +19,7 @@ const parser = new ReactParser();
 // react-minimal fixture
 // ---------------------------------------------------------------------------
 
-describe('ReactParser integration — react-minimal', () => {
+describe('ReactParser integration - react-minimal', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-minimal');
 
   it('detects the react-minimal app as a React project', async () => {
@@ -83,7 +83,7 @@ describe('ReactParser integration — react-minimal', () => {
 // react-app fixture
 // ---------------------------------------------------------------------------
 
-describe('ReactParser integration — react-app', () => {
+describe('ReactParser integration - react-app', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-app');
 
   it('detects the react-app as a React project', async () => {
@@ -103,7 +103,7 @@ describe('ReactParser integration — react-app', () => {
 
   it('route extraction: page files in react-app only compose components (no direct interactive elements)', async () => {
     // In the react-app fixture, page files (app/page.tsx, app/settings/billing/page.tsx, etc.)
-    // only render component JSX (<BillingSettings />, <LoginForm />, etc.) — they contain no
+    // only render component JSX (<BillingSettings />, <LoginForm />, etc.) - they contain no
     // native interactive HTML elements directly. The actual interactive elements live in
     // src/components/, which are not under an app/ path. This means route is null for all
     // discovered elements in this fixture. This is correct parser behavior: route is only
@@ -111,7 +111,7 @@ describe('ReactParser integration — react-app', () => {
     // Route extraction itself is verified via unit tests in context-extraction.test.ts.
     const result = await parser.discover(fixtureDir, {});
     const withRoutes = result.elements.filter((e) => e.route !== null);
-    // All component files are under src/components/, not app/ — correctly null
+    // All component files are under src/components/, not app/ - correctly null
     expect(withRoutes.length).toBe(0);
   });
 
@@ -121,7 +121,7 @@ describe('ReactParser integration — react-app', () => {
     // app/page.tsx is a page file; layout.tsx is also in app/
     expect(rootRoute.length).toBeGreaterThanOrEqual(0);
     // (page.tsx just composes components via JSX, so it may have 0 interactive elements
-    // directly — but layout.tsx or root page might contribute)
+    // directly - but layout.tsx or root page might contribute)
   });
 
   it('extracts billing route /settings/billing for elements in billing/page.tsx', async () => {
@@ -138,7 +138,7 @@ describe('ReactParser integration — react-app', () => {
   it('extracts component names for all elements', async () => {
     const result = await parser.discover(fixtureDir, {});
     const withNames = result.elements.filter((e) => e.componentName !== null);
-    // All components in react-app are named — expect full coverage
+    // All components in react-app are named - expect full coverage
     expect(withNames.length).toBe(result.elements.length);
   });
 
@@ -232,7 +232,7 @@ describe('ReactParser integration — react-app', () => {
 // react-edge-cases fixture
 // ---------------------------------------------------------------------------
 
-describe('ReactParser integration — react-edge-cases', () => {
+describe('ReactParser integration - react-edge-cases', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-edge-cases');
 
   it('detects the react-edge-cases app as a React project', async () => {
@@ -247,7 +247,7 @@ describe('ReactParser integration — react-edge-cases', () => {
 
   it('does not skip files in the edge case fixture', async () => {
     const result = await parser.discover(fixtureDir, {});
-    // Well-formed TypeScript/JSX — no parse errors expected
+    // Well-formed TypeScript/JSX - no parse errors expected
     expect(result.metadata.filesSkipped).toBe(0);
   });
 
@@ -328,10 +328,10 @@ describe('ReactParser integration — react-edge-cases', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Framework detection — negative cases
+// Framework detection - negative cases
 // ---------------------------------------------------------------------------
 
-describe('ReactParser.detect() — negative cases', () => {
+describe('ReactParser.detect() - negative cases', () => {
   it('returns false for a directory with no package.json and no tsx/jsx files', async () => {
     // The fixtures dir root has no package.json at the top level
     // Use the docs/ directory as a non-React directory
@@ -346,7 +346,7 @@ describe('ReactParser.detect() — negative cases', () => {
 // ParserOptions: include/exclude
 // ---------------------------------------------------------------------------
 
-describe('ReactParser integration — options', () => {
+describe('ReactParser integration - options', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-app');
 
   it('respects include pattern to limit files scanned', async () => {
@@ -389,10 +389,10 @@ describe('ReactParser integration — options', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Golden file tests — manifest snapshot
+// Golden file tests - manifest snapshot
 // ---------------------------------------------------------------------------
 
-describe('ReactParser golden file — react-minimal', () => {
+describe('ReactParser golden file - react-minimal', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-minimal');
 
   it('matches the committed snapshot for react-minimal', async () => {
@@ -408,7 +408,7 @@ describe('ReactParser golden file — react-minimal', () => {
   });
 });
 
-describe('ReactParser golden file — react-app', () => {
+describe('ReactParser golden file - react-app', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-app');
 
   it('matches the committed snapshot for react-app', async () => {
@@ -423,7 +423,7 @@ describe('ReactParser golden file — react-app', () => {
   });
 });
 
-describe('ReactParser golden file — react-edge-cases', () => {
+describe('ReactParser golden file - react-edge-cases', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'react-edge-cases');
 
   it('matches the committed snapshot for react-edge-cases', async () => {

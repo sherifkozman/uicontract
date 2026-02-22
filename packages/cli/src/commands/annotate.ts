@@ -1,5 +1,5 @@
 /**
- * `uic annotate` command — insert data-agent-id attributes into source files.
+ * `uicontract annotate` command - insert data-agent-id attributes into source files.
  *
  * stdout: unified diff patches (or JSON)
  * stderr: logs, errors, help text
@@ -22,7 +22,7 @@ import type { AnnotationTarget, AnnotateFileResult, FilePatch } from '@uicontrac
 // ---------------------------------------------------------------------------
 
 export const ANNOTATE_HELP = `\
-uic annotate [options]
+uicontract annotate [options]
 
 Insert data-agent-id attributes into source files based on a manifest.
 
@@ -35,11 +35,11 @@ OPTIONS
   --help, -h             Show this help message
 
 EXAMPLES
-  uic annotate
-  uic annotate --manifest named-manifest.json --dry-run
-  uic annotate --write
-  uic annotate --write --backup-dir ./my-backup
-  uic annotate --json
+  uicontract annotate
+  uicontract annotate --manifest named-manifest.json --dry-run
+  uicontract annotate --write
+  uicontract annotate --write --backup-dir ./my-backup
+  uicontract annotate --json
 
 Run "uicontract --help" for the full list of commands.
 `;

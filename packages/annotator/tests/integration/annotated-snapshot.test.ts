@@ -21,7 +21,7 @@ const parser = new ReactParser();
 // Tests
 // ---------------------------------------------------------------------------
 
-describe('Annotated fixture — annotated-app', () => {
+describe('Annotated fixture - annotated-app', () => {
   it('detects the annotated-app as a React project', async () => {
     const detected = await parser.detect(ANNOTATED_FIXTURE);
     expect(detected).toBe(true);

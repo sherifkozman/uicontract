@@ -116,7 +116,7 @@ export function extractLabel(node: VueElementNode): string | null {
       const trimmed = (child as VueTextNode).content.trim();
       if (trimmed) textParts.push(trimmed);
     } else if (child.type === 5) {
-      // InterpolationNode {{ expr }} — skip dynamic content
+      // InterpolationNode {{ expr }} - skip dynamic content
     }
   }
   if (textParts.length > 0) {
@@ -161,13 +161,13 @@ export function extractHandler(node: VueElementNode): string | null {
       return content;
     }
 
-    // Member expression: obj.method — extract last part
+    // Member expression: obj.method - extract last part
     const dotMatch = /\.([a-zA-Z_$][a-zA-Z0-9_$]*)$/.exec(content);
     if (dotMatch?.[1]) {
       return dotMatch[1];
     }
 
-    // Call expression: handleClick() — extract function name
+    // Call expression: handleClick() - extract function name
     const callMatch = /^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/.exec(content);
     if (callMatch?.[1]) {
       return callMatch[1];

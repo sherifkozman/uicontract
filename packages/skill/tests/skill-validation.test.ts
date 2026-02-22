@@ -63,7 +63,7 @@ describe('skill package structure', () => {
     const content = await fs.readFile(SKILL_MD_PATH, 'utf-8');
 
     // Extract all references/<name>.md patterns from SKILL.md
-    // Intentionally matches only .md files — update if non-markdown refs are added
+    // Intentionally matches only .md files - update if non-markdown refs are added
     const refPattern = /references\/[\w.-]+\.md/g;
     const matches = content.match(refPattern);
     expect(matches).not.toBeNull();

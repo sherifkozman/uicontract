@@ -1,5 +1,5 @@
 /**
- * `uic diff` command — compare two manifests and detect breaking changes.
+ * `uicontract diff` command - compare two manifests and detect breaking changes.
  *
  * stdout: diff report (human-readable or JSON)
  * stderr: logs, errors, help text
@@ -15,7 +15,7 @@ import type { Manifest, ManifestElement, UicConfig } from '@uicontract/core';
 // ---------------------------------------------------------------------------
 
 export const DIFF_HELP = `\
-uic diff <old-manifest> <new-manifest> [options]
+uicontract diff <old-manifest> <new-manifest> [options]
 
 Compare two manifests and report changes. Exits non-zero if breaking changes found.
 
@@ -38,10 +38,10 @@ EXIT CODES
   1  Breaking changes found, error, or protected scope violation
 
 EXAMPLES
-  uic diff baseline.json current.json
-  uic diff old.json new.json --json
-  uic diff old.json new.json --allow-breaking "Intentional redesign of nav"
-  uic diff old.json new.json --config ./my-config.json
+  uicontract diff baseline.json current.json
+  uicontract diff old.json new.json --json
+  uicontract diff old.json new.json --allow-breaking "Intentional redesign of nav"
+  uicontract diff old.json new.json --config ./my-config.json
 
 Run "uicontract --help" for the full list of commands.
 `;
@@ -150,7 +150,7 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
   }
 
   if (!help && positionals.length < 2) {
-    return { error: 'Missing required arguments. Usage: uic diff <old-manifest> <new-manifest>' };
+    return { error: 'Missing required arguments. Usage: uicontractontract diff <old-manifest> <new-manifest>' };
   }
 
   if (positionals.length > 2) {
@@ -168,7 +168,7 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
 }
 
 // ---------------------------------------------------------------------------
-// Diff logic (pure function — no I/O)
+// Diff logic (pure function - no I/O)
 // ---------------------------------------------------------------------------
 
 /** Compare two manifests and return categorized changes. */

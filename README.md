@@ -1,4 +1,4 @@
-# UIC — UI Contracts
+# UIC - UI Contracts
 
 [![npm](https://img.shields.io/npm/v/uicontract)](https://www.npmjs.com/package/uicontract)
 [![license](https://img.shields.io/npm/l/uicontract)](LICENSE)
@@ -9,7 +9,7 @@
 
 UIC parses your source code to discover every interactive element, assigns stable hierarchical IDs, annotates source with `data-agent-id` attributes, generates a manifest describing the full UI surface, and provides a CI diff gate for breaking changes.
 
-Think of it as **OpenAPI for UIs** — a typed, queryable contract between your frontend and anything that needs to interact with it: AI agents, test automation, accessibility audits.
+Think of it as **OpenAPI for UIs** - a typed, queryable contract between your frontend and anything that needs to interact with it: AI agents, test automation, accessibility audits.
 
 ---
 
@@ -17,31 +17,31 @@ Think of it as **OpenAPI for UIs** — a typed, queryable contract between your 
 
 ```bash
 # Scan a React or Vue project
-npx uic scan ./my-app
+npx uicontract scan ./my-app
 
 # Assign stable hierarchical IDs
-npx uic name
+npx uicontract name
 
 # Preview annotation (no files changed)
-npx uic annotate --dry-run
+npx uicontract annotate --dry-run
 
 # Apply data-agent-id attributes to source files
-npx uic annotate
+npx uicontract annotate
 
 # Query the manifest
-npx uic find "login"
-npx uic describe settings.billing.pause-subscription.button
-npx uic list --type button
+npx uicontract find "login"
+npx uicontract describe settings.billing.pause-subscription.button
+npx uicontract list --type button
 
 # Detect breaking UI changes in CI
-npx uic diff
+npx uicontract diff
 ```
 
 ---
 
 ## What UIC Produces
 
-**1. A manifest** — every interactive element in your app, with stable IDs:
+**1. A manifest** - every interactive element in your app, with stable IDs:
 
 ```jsonc
 {
@@ -60,7 +60,7 @@ npx uic diff
 }
 ```
 
-**2. Annotated source** — `data-agent-id` attributes in your components:
+**2. Annotated source** - `data-agent-id` attributes in your components:
 
 ```tsx
 <button
@@ -71,7 +71,7 @@ npx uic diff
 </button>
 ```
 
-**3. A diff gate** — CI blocks merges that silently remove or rename UI elements:
+**3. A diff gate** - CI blocks merges that silently remove or rename UI elements:
 
 ```
 BREAKING: 2 elements removed
@@ -86,9 +86,25 @@ BREAKING: 2 elements removed
 | Problem | UIC Solution |
 |---------|-------------|
 | Browser automation breaks on class/text changes | Stable `data-agent-id` selectors survive refactors |
-| AI agents can't discover what's clickable | `manifest.json` gives agents a typed inventory |
-| Silent UI regressions reach production | `uic diff` in CI blocks breaking changes |
-| Accessibility audits require manual mapping | `uic list` generates a complete element inventory |
+| AI agents cannot discover what's clickable | `manifest.json` gives agents a typed inventory |
+| Silent UI regressions reach production | `uicontract diff` in CI blocks breaking changes |
+| Accessibility audits require manual mapping | `uicontract list` generates a complete element inventory |
+
+---
+
+## How It Works
+
+UIC follows a four-step pipeline:
+
+**1. Discover** - The parser walks your source AST (Babel for React/TSX, `@vue/compiler-dom` for Vue SFCs) and finds every interactive element: `<button>`, `<a>`, `<input>`, `<select>`, `<textarea>`, and any element with an `onClick`, `onChange`, or `onSubmit` handler. No runtime execution required.
+
+**2. Name** - The namer derives a stable hierarchical ID from four signals: route (inferred from file-based routing), component name, element label (aria-label, children text, or htmlFor), and element type. Example: `/settings/billing` + `BillingSettings` + `"Pause subscription"` + `button` produces `settings.billing.pause-subscription.button`. The same source always produces the same ID.
+
+**3. Annotate** - The annotator inserts `data-agent-id="<id>"` directly into source files at the exact line and column the parser recorded. Run `--dry-run` to preview a unified diff patch without touching files. The annotator requires a clean git state and creates `.uic-backup/` before writing.
+
+**4. Query** - AI agents, test runners, and CI scripts read `manifest.json` to look up elements by label, route, component, or ID. The manifest is framework-agnostic JSON that any tool can consume.
+
+Agent IDs survive refactors because they are recomputed from source structure, not from runtime DOM state. If you rename a CSS class or restructure a component file, the ID stays the same. If you change the semantic meaning (route, label, type), `uicontract diff` catches it in CI before it reaches production.
 
 ---
 
@@ -105,18 +121,18 @@ BREAKING: 2 elements removed
 
 UIC agent IDs work with any browser automation tool:
 
-```bash
-# Playwright
+```js
+// Playwright
 await page.locator('[data-agent-id="settings.billing.pause-subscription.button"]').click();
 
-# Cypress
+// Cypress
 cy.get('[data-agent-id="settings.billing.pause-subscription.button"]').click();
 
-# CSS selector
+// CSS selector
 document.querySelector('[data-agent-id="settings.billing.pause-subscription.button"]')
 ```
 
-For AI agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
+For AI coding agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
 
 ---
 
@@ -124,12 +140,13 @@ For AI agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
 
 | Package | npm | Description |
 |---------|-----|-------------|
-| [`uicontract`](packages/cli) | `npm i uicontract` | CLI — all commands |
+| [`uicontract`](packages/cli) | `npm i uicontract` | CLI - all commands |
 | [`@uicontract/core`](packages/core) | `npm i @uicontract/core` | Types, schema, validation, logger, errors |
 | [`@uicontract/parser-react`](packages/parser-react) | `npm i @uicontract/parser-react` | React/Next.js AST parser |
 | [`@uicontract/parser-vue`](packages/parser-vue) | `npm i @uicontract/parser-vue` | Vue/Nuxt SFC parser |
 | [`@uicontract/namer`](packages/namer) | `npm i @uicontract/namer` | Hierarchical ID naming engine |
 | [`@uicontract/annotator`](packages/annotator) | `npm i @uicontract/annotator` | Source code annotator |
+| [`@uicontract/skill`](packages/skill) | `npm i @uicontract/skill` | Agent skill files for AI coding tools |
 
 ---
 

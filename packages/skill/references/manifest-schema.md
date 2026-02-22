@@ -1,6 +1,6 @@
 # Manifest Schema Reference
 
-The manifest is a JSON file produced by running `npx uic scan <dir>` followed by `npx uic name`. It describes every interactive element in a web application, giving each a stable hierarchical ID that browser automation tools can target.
+The manifest is a JSON file produced by running `npx uicontract scan <dir>` followed by `npx uicontract name`. It describes every interactive element in a web application, giving each a stable hierarchical ID that browser automation tools can target.
 
 ## Top-Level Structure
 

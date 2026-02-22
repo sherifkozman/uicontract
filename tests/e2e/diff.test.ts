@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic diff (e2e)', () => {
+describe('uicontract diff (e2e)', () => {
   it('exits 0 when comparing identical manifests', async () => {
     const tmp = await tempDir();
     const manifest = path.join(tmp, 'manifest.json');

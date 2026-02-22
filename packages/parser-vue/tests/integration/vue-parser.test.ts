@@ -35,10 +35,10 @@ describe('VueParser.detect()', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Discovery — vue-app fixture
+// Discovery - vue-app fixture
 // ---------------------------------------------------------------------------
 
-describe('VueParser integration — vue-app', () => {
+describe('VueParser integration - vue-app', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'vue-app');
 
   it('discovers at least 15 interactive elements across all components', async () => {
@@ -195,7 +195,7 @@ describe('VueParser integration — vue-app', () => {
 // Golden file test
 // ---------------------------------------------------------------------------
 
-describe('VueParser golden file — vue-app', () => {
+describe('VueParser golden file - vue-app', () => {
   const fixtureDir = path.join(FIXTURES_DIR, 'vue-app');
 
   it('matches the committed snapshot for vue-app', async () => {

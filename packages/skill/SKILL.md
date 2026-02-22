@@ -10,12 +10,12 @@ UIC makes web app UIs machine-readable with stable hierarchical IDs, so agents c
 ## Quick Start
 
 ```bash
-npx uic scan ./src -o manifest.json
-npx uic name manifest.json -o manifest.json
-npx uic find "login" --json
-npx uic describe <agent-id> --json
-npx uic list --type button --json
-npx uic diff old.json new.json --json
+npx uicontract scan ./src -o manifest.json
+npx uicontract name manifest.json -o manifest.json
+npx uicontract find "login" --json
+npx uicontract describe <agent-id> --json
+npx uicontract list --type button --json
+npx uicontract diff old.json new.json --json
 ```
 
 ## Core Workflow
@@ -25,8 +25,8 @@ npx uic diff old.json new.json --json
 Check for an existing `manifest.json` in the project root. If none exists, generate one:
 
 ```bash
-npx uic scan ./src -o manifest.json
-npx uic name manifest.json -o manifest.json
+npx uicontract scan ./src -o manifest.json
+npx uicontract name manifest.json -o manifest.json
 ```
 
 ### 2. Find
@@ -34,9 +34,9 @@ npx uic name manifest.json -o manifest.json
 Search for elements by description. Fuzzy matching is enabled by default:
 
 ```bash
-npx uic find "pause subscription" --json
-npx uic find "pase subscribtion" --json   # fuzzy match still finds it
-npx uic find "billing" --type button --json
+npx uicontract find "pause subscription" --json
+npx uicontract find "pase subscribtion" --json   # fuzzy match still finds it
+npx uicontract find "billing" --type button --json
 ```
 
 ### 3. Target
@@ -64,7 +64,7 @@ See [references/browser-tool-bridge.md](references/browser-tool-bridge.md) for a
 Compare the current manifest against a baseline to detect breaking changes:
 
 ```bash
-npx uic diff baseline.json current.json --json
+npx uicontract diff baseline.json current.json --json
 ```
 
 Exit code 1 means breaking changes were found.
@@ -76,7 +76,7 @@ Exit code 1 means breaking changes were found.
 **scan** -- Discover interactive elements in source code.
 
 ```bash
-npx uic scan <directory> -o manifest.json
+npx uicontract scan <directory> -o manifest.json
 ```
 
 | Flag | Description |
@@ -89,7 +89,7 @@ npx uic scan <directory> -o manifest.json
 **name** -- Assign stable hierarchical IDs to discovered elements.
 
 ```bash
-npx uic name manifest.json -o manifest.json
+npx uicontract name manifest.json -o manifest.json
 ```
 
 | Flag | Description |
@@ -101,8 +101,8 @@ npx uic name manifest.json -o manifest.json
 **annotate** -- Insert `data-agent-id` attributes into source files.
 
 ```bash
-npx uic annotate manifest.json --dry-run
-npx uic annotate manifest.json --write
+npx uicontract annotate manifest.json --dry-run
+npx uicontract annotate manifest.json --write
 ```
 
 | Flag | Description |
@@ -116,7 +116,7 @@ npx uic annotate manifest.json --write
 **find** -- Search for elements by description.
 
 ```bash
-npx uic find <query> --json
+npx uicontract find <query> --json
 ```
 
 | Flag | Description |
@@ -129,7 +129,7 @@ npx uic find <query> --json
 **describe** -- Show detailed info for one element.
 
 ```bash
-npx uic describe <agent-id> --json
+npx uicontract describe <agent-id> --json
 ```
 
 | Flag | Description |
@@ -140,7 +140,7 @@ npx uic describe <agent-id> --json
 **list** -- List elements with optional filters.
 
 ```bash
-npx uic list --json
+npx uicontract list --json
 ```
 
 | Flag | Description |
@@ -158,7 +158,7 @@ npx uic list --json
 **diff** -- Compare two manifests for breaking changes.
 
 ```bash
-npx uic diff <old-manifest> <new-manifest> --json
+npx uicontract diff <old-manifest> <new-manifest> --json
 ```
 
 | Flag | Description |
@@ -189,7 +189,7 @@ UIC + agent-browser, three steps:
 **Step 1 -- Find the element:**
 
 ```bash
-npx uic find "pause subscription" --json
+npx uicontract find "pause subscription" --json
 ```
 
 **Step 2 -- Navigate to the page:**
@@ -210,8 +210,8 @@ agent-browser find testid "settings.billing.pause-subscription.button" click
 - Never hardcode CSS selectors when an agent ID is available.
 - Check `conditional: true` elements -- they may not be in the DOM without the right app state.
 - Check `dynamic: true` elements -- their count depends on runtime data.
-- Run `npx uic diff` before and after changes to catch regressions.
-- Run `npx uic scan` after UI changes to keep the manifest current.
+- Run `npx uicontract diff` before and after changes to catch regressions.
+- Run `npx uicontract scan` after UI changes to keep the manifest current.
 - Commit the baseline manifest to version control for CI diffing.
 
 ## References

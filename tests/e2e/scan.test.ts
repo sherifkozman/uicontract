@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic scan (e2e)', () => {
+describe('uicontract scan (e2e)', () => {
   it('produces valid JSON manifest for react fixture', async () => {
     const tmp = await tempDir();
     const outFile = path.join(tmp, 'manifest.json');

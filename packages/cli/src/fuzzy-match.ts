@@ -1,5 +1,5 @@
 /**
- * Fuzzy string matching utilities for the `uic find` command.
+ * Fuzzy string matching utilities for the `uicontract find` command.
  *
  * Implements Levenshtein distance and word-level fuzzy matching so that
  * queries such as "pase subscribtion" can find "pause-subscription".

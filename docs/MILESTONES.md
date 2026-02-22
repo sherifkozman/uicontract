@@ -46,10 +46,10 @@
   - Event handler name (onClick={handlePause} -> "handlePause")
   - Existing `data-testid` or `data-agent-id` if present
 - `packages/core`: Manifest v1 schema, types, validation, serialization
-- CLI entry point: `npx uic scan <dir>` outputs manifest.json to stdout or file
+- CLI entry point: `npx uicontract scan <dir>` outputs manifest.json to stdout or file
 
 **Acceptance Criteria**:
-- [ ] `npx uic scan fixtures/react-app` produces valid manifest.json
+- [ ] `npx uicontract scan fixtures/react-app` produces valid manifest.json
 - [ ] Manifest validates against JSON Schema
 - [ ] Parser handles: function components, arrow components, forwardRef, memo
 - [ ] Parser handles: JSX spread props, computed handler names (warns on these)
@@ -87,9 +87,9 @@
   - Produces a diff/patch per file
   - Can write in-place or output patch files
 - CLI commands:
-  - `npx uic name <manifest.json>` -- adds names to manifest, outputs named manifest
-  - `npx uic annotate <dir>` -- writes data-agent-id into source files
-  - `npx uic annotate --dry-run <dir>` -- outputs patch without modifying files
+  - `npx uicontract name <manifest.json>` -- adds names to manifest, outputs named manifest
+  - `npx uicontract annotate <dir>` -- writes data-agent-id into source files
+  - `npx uicontract annotate --dry-run <dir>` -- outputs patch without modifying files
 
 **Acceptance Criteria**:
 - [ ] Deterministic namer produces stable names (same input -> same output, every time)
@@ -120,26 +120,26 @@
 
 **Scope**:
 - CLI commands:
-  - `npx uic find <query>` -- fuzzy search by name, label, route, handler
-  - `npx uic describe <agent-id>` -- full details of one element
-  - `npx uic list` -- all elements, filterable by route/component/type
-  - `npx uic list --routes` -- all routes with element counts
-  - `npx uic list --components` -- all components with element counts
+  - `npx uicontract find <query>` -- fuzzy search by name, label, route, handler
+  - `npx uicontract describe <agent-id>` -- full details of one element
+  - `npx uicontract list` -- all elements, filterable by route/component/type
+  - `npx uicontract list --routes` -- all routes with element counts
+  - `npx uicontract list --components` -- all components with element counts
 - Agent skill files:
-  - `packages/skill/claude-code.md` -- instructions for Claude Code agents
+  - `packages/skill/SKILL.md` -- instructions for AI coding agents
   - `packages/skill/universal.md` -- framework-agnostic instructions any IDE agent can follow
   - Skill describes: how to run uic, how to interpret manifest, how to use find/describe
 - Help text for every command (`--help`)
 
 **Acceptance Criteria**:
-- [ ] `npx uic find "pause"` returns matching elements with agent-id, file:line, label
-- [ ] `npx uic find` with no manifest present gives clear error with instructions
-- [ ] `npx uic describe billing.pause.button` returns full element details
-- [ ] `npx uic list --type button` filters correctly
-- [ ] Fuzzy matching works: `npx uic find "pase subscribtion"` finds "pause-subscription"
+- [ ] `npx uicontract find "pause"` returns matching elements with agent-id, file:line, label
+- [ ] `npx uicontract find` with no manifest present gives clear error with instructions
+- [ ] `npx uicontract describe billing.pause.button` returns full element details
+- [ ] `npx uicontract list --type button` filters correctly
+- [ ] Fuzzy matching works: `npx uicontract find "pase subscribtion"` finds "pause-subscription"
 - [ ] All commands have `--json` output flag for machine consumption
 - [ ] All commands have `--help` that matches man page
-- [ ] Agent skill file is tested: give it to Claude Code, ask it to find an element, verify it succeeds
+- [ ] Agent skill file is tested: give it to an AI coding agent, ask it to find an element, verify it succeeds
 - [ ] Integration test: scan fixture -> find element -> verify output matches expected
 
 **Dependencies**: Phase 1 (Phase 2 optional -- query works with or without AI names)
@@ -157,7 +157,7 @@
 **Goal**: Teams can detect breaking UI contract changes in PRs before merge.
 
 **Scope**:
-- `npx uic diff <old-manifest> <new-manifest>` -- reports:
+- `npx uicontract diff <old-manifest> <new-manifest>` -- reports:
   - Added elements
   - Removed elements (BREAKING)
   - Renamed elements (BREAKING)
@@ -165,22 +165,22 @@
   - Changed route (BREAKING)
   - Changed label (informational)
 - Exit codes: 0 = no breaking changes, 1 = breaking changes found
-- `npx uic diff --allow-breaking <reason>` -- explicit override with reason logged
+- `npx uicontract diff --allow-breaking <reason>` -- explicit override with reason logged
 - `.uicrc.json` config file:
   - `protectedScopes`: list of ID prefixes that require explicit approval to change
   - `breakingChangePolicy`: "block" | "warn"
 - GitHub Action (or generic CI script):
-  - Runs `uic scan` on PR branch
-  - Runs `uic diff` against base branch manifest
+  - Runs `uicontract scan` on PR branch
+  - Runs `uicontract diff` against base branch manifest
   - Posts comment with diff summary
   - Blocks merge if breaking changes and no override
 
 **Acceptance Criteria**:
-- [ ] `uic diff` correctly categorizes: additions, removals, renames, type changes
+- [ ] `uicontract diff` correctly categorizes: additions, removals, renames, type changes
 - [ ] Protected scope violation exits non-zero even with `--allow-breaking`
 - [ ] CI script works in GitHub Actions (tested in this repo's own CI)
 - [ ] PR comment is readable and actionable (not a wall of JSON)
-- [ ] Dogfooding: UIC's own CI runs `uic diff` on its fixture manifests
+- [ ] Dogfooding: UIC's own CI runs `uicontract diff` on its fixture manifests
 - [ ] Integration test: modify fixture, generate new manifest, diff, verify output
 
 **Dependencies**: Phase 1
@@ -212,7 +212,7 @@
 - `packages/core`: parser interface contract (shared interface both parsers implement)
 
 **Acceptance Criteria**:
-- [ ] `npx uic scan` auto-detects framework (React vs Vue) or accepts `--framework` flag
+- [ ] `npx uicontract scan` auto-detects framework (React vs Vue) or accepts `--framework` flag
 - [ ] Vue fixture app produces valid manifest
 - [ ] Same manifest schema for both frameworks (manifests are framework-agnostic)
 - [ ] Conditional elements flagged with `conditional: true` in manifest
@@ -259,7 +259,7 @@
 - [ ] A third-party parser can be registered and used via config
 - [ ] Documentation site deploys and is navigable
 - [ ] "Write a parser" tutorial is followable end-to-end
-- [ ] Example repos have CI that runs `uic scan`, `uic diff`
+- [ ] Example repos have CI that runs `uicontract scan`, `uicontract diff`
 - [ ] CONTRIBUTING.md exists and covers: setup, testing, PR process, RFC process
 - [ ] At least 2 integration guides (Playwright + one agent framework) published
 

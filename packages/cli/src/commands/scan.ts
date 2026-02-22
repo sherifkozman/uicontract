@@ -1,5 +1,5 @@
 /**
- * `uic scan` command — discovers interactive elements in a project and
+ * `uicontract scan` command - discovers interactive elements in a project and
  * emits a UIC manifest.
  *
  * stdout: manifest JSON (or summary when --output is used)
@@ -45,7 +45,7 @@ try {
 // ---------------------------------------------------------------------------
 
 export const SCAN_HELP = `\
-uic scan <directory> [options]
+uicontract scan <directory> [options]
 
 Scan a project directory for interactive UI elements and emit a manifest.
 
@@ -61,9 +61,9 @@ OPTIONS
   --help, -h             Show this help message.
 
 EXAMPLES
-  uic scan ./my-app
-  uic scan ./my-app --framework react --output manifest.json
-  uic scan ./my-app --verbose
+  uicontract scan ./my-app
+  uicontract scan ./my-app --framework react --output manifest.json
+  uicontract scan ./my-app --verbose
 
 Run "uicontract --help" for the full list of commands.
 `;
@@ -213,7 +213,7 @@ export function generateTempId(el: RawElement, index: number): string {
 // ---------------------------------------------------------------------------
 
 /**
- * Entry point for `uic scan`.
+ * Entry point for `uicontract scan`.
  *
  * @param args - raw CLI args after the "scan" subcommand has been stripped
  * @returns exit code (0 = success, 1 = failure)
@@ -266,7 +266,7 @@ export async function scanCommand(args: string[]): Promise<number> {
       }
     }
   } catch (err) {
-    // Config errors should not block scanning — warn and continue
+    // Config errors should not block scanning - warn and continue
     const message = err instanceof Error ? err.message : String(err);
     logger.warn(`Failed to load config/plugins: ${message}`);
   }

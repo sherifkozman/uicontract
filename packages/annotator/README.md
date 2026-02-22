@@ -27,10 +27,10 @@ Most users interact with the annotator through the CLI:
 
 ```bash
 # Always preview before writing
-npx uic annotate --dry-run
+npx uicontract annotate --dry-run
 
 # Write data-agent-id attributes to source files
-npx uic annotate
+npx uicontract annotate
 ```
 
 ## API
@@ -45,7 +45,7 @@ npx uic annotate
 
 ## Part of UIC
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) — making web app UIs machine-readable.
+This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

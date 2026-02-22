@@ -1,5 +1,5 @@
 /**
- * @uicontract/parser-react — React/JSX parser for UIC.
+ * @uicontract/parser-react - React/JSX parser for UIC.
  * Implements the Parser interface from @uicontract/core.
  */
 
@@ -25,7 +25,7 @@ async function detectReact(dir: string): Promise<boolean> {
     };
     if ('react' in deps) return true;
   } catch {
-    // No package.json or unreadable — fall through to file check
+    // No package.json or unreadable - fall through to file check
   }
 
   // Fallback: any .tsx or .jsx file present

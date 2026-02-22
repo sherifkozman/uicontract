@@ -1,5 +1,5 @@
 /**
- * `uic list` command — list all elements in a manifest with filtering.
+ * `uicontract list` command - list all elements in a manifest with filtering.
  *
  * stdout: element listing (human-readable or JSON)
  * stderr: logs, errors, help text
@@ -15,7 +15,7 @@ import type { ManifestElement } from '@uicontract/core';
 // ---------------------------------------------------------------------------
 
 export const LIST_HELP = `\
-uic list [options]
+uicontract list [options]
 
 List all interactive UI elements in a manifest.
 
@@ -30,13 +30,13 @@ OPTIONS
   --help, -h             Show this help message
 
 EXAMPLES
-  uic list
-  uic list --type button
-  uic list --route /settings/billing
-  uic list --component LoginForm
-  uic list --routes
-  uic list --components
-  uic list --json --manifest dist/manifest.json
+  uicontract list
+  uicontract list --type button
+  uicontract list --route /settings/billing
+  uicontract list --component LoginForm
+  uicontract list --routes
+  uicontract list --components
+  uicontract list --json --manifest dist/manifest.json
 
 Run "uicontract --help" for the full list of commands.
 `;

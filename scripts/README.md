@@ -3,7 +3,7 @@
 ## validate-oss.sh
 
 Validates UIC against any public OSS repository by shallow-cloning it, running
-`uic scan` and `uic name`, and printing a summary report with element counts,
+`uicontract scan` and `uicontract name`, and printing a summary report with element counts,
 scan duration, warning counts, and duplicate ID detection.
 
 ### Prerequisites
@@ -46,10 +46,10 @@ pnpm build
 1. Validates arguments (repo URL and framework name are required).
 2. Locates the built UIC binary at `packages/cli/dist/bin/uic.js`.
 3. Creates a temporary directory and shallow-clones the repository (`--depth 1`).
-4. Runs `uic scan` with the specified framework and records scan duration.
+4. Runs `uicontract scan` with the specified framework and records scan duration.
 5. Counts warnings emitted during the scan.
 6. Extracts element count and files-scanned from the generated manifest.
-7. Runs `uic name` on the manifest and checks for duplicate agent IDs.
+7. Runs `uicontract name` on the manifest and checks for duplicate agent IDs.
 8. Prints a summary report to stdout.
 9. Cleans up the temporary directory on exit.
 

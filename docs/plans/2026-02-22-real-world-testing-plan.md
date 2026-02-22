@@ -4,9 +4,9 @@
 
 **Goal:** Add 15-20 e2e subprocess tests, two richer fixture apps, and an OSS validation script to verify UIC works against real-world code.
 
-**Architecture:** Three parallel tracks — (1) e2e test suite in `tests/e2e/` using Vitest + `execFile` subprocess calls against the real CLI binary, (2) two new fixture apps (`fixtures/react-dashboard/` and `fixtures/vue-storefront/`) that exercise patterns not covered by existing fixtures, (3) a validation script `scripts/validate-oss.sh` for running UIC against cloned OSS repos.
+**Architecture:** Three parallel tracks - (1) e2e test suite in `tests/e2e/` using Vitest + `execFile` subprocess calls against the real CLI binary, (2) two new fixture apps (`fixtures/react-dashboard/` and `fixtures/vue-storefront/`) that exercise patterns not covered by existing fixtures, (3) a validation script `scripts/validate-oss.sh` for running UIC against cloned OSS repos.
 
-**Tech Stack:** Vitest, Node.js `node:child_process` (execFile only — never exec), existing UIC CLI binary at `packages/cli/dist/bin/uic.js`, React/Next.js (fixtures), Vue/Nuxt (fixtures), Bash (validation script).
+**Tech Stack:** Vitest, Node.js `node:child_process` (execFile only - never exec), existing UIC CLI binary at `packages/cli/dist/bin/uic.js`, React/Next.js (fixtures), Vue/Nuxt (fixtures), Bash (validation script).
 
 ---
 
@@ -80,7 +80,7 @@ git commit -m "test: add e2e subprocess helpers (runUic, loadManifest, tempDir)"
 
 ---
 
-### Task 2: E2E — Scan Command Tests (3 tests)
+### Task 2: E2E - Scan Command Tests (3 tests)
 
 **Files:**
 - Create: `tests/e2e/scan.test.ts`
@@ -95,7 +95,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic scan (e2e)', () => {
+describe('uicontract scan (e2e)', () => {
   it('produces valid JSON manifest for react fixture', async () => {
     const tmp = await tempDir();
     const outFile = path.join(tmp, 'manifest.json');
@@ -150,7 +150,7 @@ git commit -m "test: add e2e scan command tests (valid JSON, --framework, error 
 
 ---
 
-### Task 3: E2E — Name Command Tests (2 tests)
+### Task 3: E2E - Name Command Tests (2 tests)
 
 **Files:**
 - Create: `tests/e2e/name.test.ts`
@@ -165,7 +165,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic name (e2e)', () => {
+describe('uicontract name (e2e)', () => {
   it('produces stable deterministic output across two runs', async () => {
     const tmp = await tempDir();
     const scanOut = path.join(tmp, 'scan.json');
@@ -214,7 +214,7 @@ git commit -m "test: add e2e name command tests (deterministic, no duplicates)"
 
 ---
 
-### Task 4: E2E — Annotate Command Tests (2 tests)
+### Task 4: E2E - Annotate Command Tests (2 tests)
 
 **Files:**
 - Create: `tests/e2e/annotate.test.ts`
@@ -229,7 +229,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic annotate (e2e)', () => {
+describe('uicontract annotate (e2e)', () => {
   it('--dry-run produces unified diff output', async () => {
     const tmp = await tempDir();
     const scanOut = path.join(tmp, 'scan.json');
@@ -275,7 +275,7 @@ git commit -m "test: add e2e annotate command tests (dry-run diff, data-agent-id
 
 ---
 
-### Task 5: E2E — Query Command Tests (3 tests)
+### Task 5: E2E - Query Command Tests (3 tests)
 
 **Files:**
 - Create: `tests/e2e/query.test.ts`
@@ -354,7 +354,7 @@ git commit -m "test: add e2e query command tests (find, describe, list --type)"
 
 ---
 
-### Task 6: E2E — Diff Command Tests (2 tests)
+### Task 6: E2E - Diff Command Tests (2 tests)
 
 **Files:**
 - Create: `tests/e2e/diff.test.ts`
@@ -369,7 +369,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic diff (e2e)', () => {
+describe('uicontract diff (e2e)', () => {
   it('exits 0 when comparing identical manifests', async () => {
     const tmp = await tempDir();
     const manifest = path.join(tmp, 'manifest.json');
@@ -420,7 +420,7 @@ git commit -m "test: add e2e diff command tests (identical exits 0, removed exit
 
 ---
 
-### Task 7: E2E — Full Pipeline Tests (3 tests)
+### Task 7: E2E - Full Pipeline Tests (3 tests)
 
 **Files:**
 - Create: `tests/e2e/pipeline.test.ts`
@@ -507,7 +507,7 @@ git commit -m "test: add e2e full pipeline tests (React, Vue, cross-framework)"
 
 ---
 
-### Task 8: E2E — Config & Error Tests (2 tests)
+### Task 8: E2E - Config & Error Tests (2 tests)
 
 **Files:**
 - Create: `tests/e2e/config.test.ts`
@@ -531,7 +531,7 @@ describe('uic config & error handling (e2e)', () => {
   it('scan --help exits 0 and prints usage', async () => {
     const result = await runUic(['scan', '--help']);
     expect(result.exitCode).toBe(0);
-    expect(result.stderr).toContain('uic scan');
+    expect(result.stderr).toContain('uicontract scan');
     expect(result.stderr).toContain('--framework');
     expect(result.stderr).toContain('--output');
   }, 10_000);
@@ -573,7 +573,7 @@ git commit -m "test: fix e2e test adjustments after full suite run"
 
 ---
 
-### Task 10: React Dashboard Fixture — Project Setup
+### Task 10: React Dashboard Fixture - Project Setup
 
 **Files:**
 - Create: `fixtures/react-dashboard/package.json`
@@ -607,15 +607,15 @@ git commit -m "fixture: scaffold react-dashboard project structure"
 
 ---
 
-### Task 11: React Dashboard — Navigation & Layout (~8 elements)
+### Task 11: React Dashboard - Navigation & Layout (~8 elements)
 
 **Files:**
 - Create: `fixtures/react-dashboard/src/components/Sidebar.tsx`
 - Create: `fixtures/react-dashboard/src/components/Breadcrumbs.tsx`
 
-**Step 1: Write Sidebar** — nav with toggle button, 4 nav links.
+**Step 1: Write Sidebar** - nav with toggle button, 4 nav links.
 
-**Step 2: Write Breadcrumbs** — dynamic breadcrumb links.
+**Step 2: Write Breadcrumbs** - dynamic breadcrumb links.
 
 Target: ~8 interactive elements (1 toggle button + 4 nav links + breadcrumb links).
 
@@ -628,12 +628,12 @@ git commit -m "fixture: add react-dashboard Sidebar and Breadcrumbs (~8 elements
 
 ---
 
-### Task 12: React Dashboard — Data Table (~10 elements)
+### Task 12: React Dashboard - Data Table (~10 elements)
 
 **Files:**
 - Create: `fixtures/react-dashboard/src/components/DataTable.tsx`
 
-**Step 1: Write DataTable** — filter input, sort select, 3 sort header buttons, per-row edit/delete buttons (dynamic), pagination prev/next buttons, conditional delete confirmation modal with confirm/cancel buttons.
+**Step 1: Write DataTable** - filter input, sort select, 3 sort header buttons, per-row edit/delete buttons (dynamic), pagination prev/next buttons, conditional delete confirmation modal with confirm/cancel buttons.
 
 Target: ~10 interactive elements (filter input, sort select, 3 column headers, edit button, delete button, prev/next pagination, confirm/cancel modal buttons).
 
@@ -646,12 +646,12 @@ git commit -m "fixture: add react-dashboard DataTable (~10 elements)"
 
 ---
 
-### Task 13: React Dashboard — Multi-Step Form (~10 elements)
+### Task 13: React Dashboard - Multi-Step Form (~10 elements)
 
 **Files:**
 - Create: `fixtures/react-dashboard/src/components/WizardForm.tsx`
 
-**Step 1: Write WizardForm** — 3-step form wizard. Step 1: name input, email input, Next button. Step 2: role select, checkbox, Back/Next buttons. Step 3: Back button, Submit button. All steps are conditional.
+**Step 1: Write WizardForm** - 3-step form wizard. Step 1: name input, email input, Next button. Step 2: role select, checkbox, Back/Next buttons. Step 3: Back button, Submit button. All steps are conditional.
 
 Target: ~10 interactive elements across 3 conditional fieldsets.
 
@@ -664,15 +664,15 @@ git commit -m "fixture: add react-dashboard WizardForm (~10 elements)"
 
 ---
 
-### Task 14: React Dashboard — Role-Based UI & Dynamic Route (~12 elements)
+### Task 14: React Dashboard - Role-Based UI & Dynamic Route (~12 elements)
 
 **Files:**
 - Create: `fixtures/react-dashboard/src/components/AdminPanel.tsx`
 - Create: `fixtures/react-dashboard/app/dashboard/[id]/edit/page.tsx`
 
-**Step 1: Write AdminPanel** — conditional admin section (export, reset cache, bulk actions with nested conditional), conditional moderator section (export report, moderation queue link), always-visible links.
+**Step 1: Write AdminPanel** - conditional admin section (export, reset cache, bulk actions with nested conditional), conditional moderator section (export report, moderation queue link), always-visible links.
 
-**Step 2: Write dynamic route edit page** — form with title input, description textarea, save/cancel buttons.
+**Step 2: Write dynamic route edit page** - form with title input, description textarea, save/cancel buttons.
 
 Target: ~12 interactive elements with role-based conditional rendering and dynamic route.
 
@@ -685,7 +685,7 @@ git commit -m "fixture: add react-dashboard AdminPanel and dynamic edit page (~1
 
 ---
 
-### Task 15: Vue Storefront Fixture — Project Setup
+### Task 15: Vue Storefront Fixture - Project Setup
 
 **Files:**
 - Create: `fixtures/vue-storefront/package.json`
@@ -719,18 +719,18 @@ git commit -m "fixture: scaffold vue-storefront project structure"
 
 ---
 
-### Task 16: Vue Storefront — Product Listing & Filter (~12 elements)
+### Task 16: Vue Storefront - Product Listing & Filter (~12 elements)
 
 **Files:**
 - Create: `fixtures/vue-storefront/src/components/ProductCard.vue`
 - Create: `fixtures/vue-storefront/src/components/FilterSidebar.vue`
 - Create: `fixtures/vue-storefront/pages/products/index.vue`
 
-**Step 1: Write ProductCard.vue** (`<script setup>`) — product link, add-to-cart button, conditional quick-buy button.
+**Step 1: Write ProductCard.vue** (`<script setup>`) - product link, add-to-cart button, conditional quick-buy button.
 
-**Step 2: Write FilterSidebar.vue** (`<script setup>`) — checkbox filters in v-for, range input, sort select, apply/reset buttons.
+**Step 2: Write FilterSidebar.vue** (`<script setup>`) - checkbox filters in v-for, range input, sort select, apply/reset buttons.
 
-**Step 3: Write products index page** — search input, view cart link.
+**Step 3: Write products index page** - search input, view cart link.
 
 Target: ~12 interactive elements.
 
@@ -743,15 +743,15 @@ git commit -m "fixture: add vue-storefront product listing and filter sidebar (~
 
 ---
 
-### Task 17: Vue Storefront — Cart & Checkout (~15 elements)
+### Task 17: Vue Storefront - Cart & Checkout (~15 elements)
 
 **Files:**
 - Create: `fixtures/vue-storefront/src/components/ShoppingCart.vue`
 - Create: `fixtures/vue-storefront/src/components/CheckoutForm.vue`
 
-**Step 1: Write ShoppingCart.vue** (Options API — intentional mix) — per-item quantity buttons (decrease/increase) in v-for, quantity input, remove button, clear cart button, checkout link.
+**Step 1: Write ShoppingCart.vue** (Options API - intentional mix) - per-item quantity buttons (decrease/increase) in v-for, quantity input, remove button, clear cart button, checkout link.
 
-**Step 2: Write CheckoutForm.vue** (`<script setup>`) — name, address, city inputs, country select, payment method select, terms checkbox, submit/cancel buttons.
+**Step 2: Write CheckoutForm.vue** (`<script setup>`) - name, address, city inputs, country select, payment method select, terms checkbox, submit/cancel buttons.
 
 Target: ~15 interactive elements with mixed Options API and script setup.
 
@@ -764,12 +764,12 @@ git commit -m "fixture: add vue-storefront ShoppingCart and CheckoutForm (~15 el
 
 ---
 
-### Task 18: Vue Storefront — Product Detail (~5 elements)
+### Task 18: Vue Storefront - Product Detail (~5 elements)
 
 **Files:**
 - Create: `fixtures/vue-storefront/pages/products/[slug].vue`
 
-**Step 1: Write product detail page** — size select, add-to-cart button, conditional wishlist button (v-if), back link.
+**Step 1: Write product detail page** - size select, add-to-cart button, conditional wishlist button (v-if), back link.
 
 Target: ~5 interactive elements with Nuxt dynamic route.
 
@@ -815,7 +815,7 @@ git commit -m "fixture: verify react-dashboard and vue-storefront scan successfu
 
 **Step 1: Write the validation script**
 
-Bash script that: accepts repo URL + framework args, shallow-clones the repo, runs `uic scan`, checks exit code, counts elements and warnings, runs `uic name`, checks for duplicate IDs, prints summary.
+Bash script that: accepts repo URL + framework args, shallow-clones the repo, runs `uicontract scan`, checks exit code, counts elements and warnings, runs `uicontract name`, checks for duplicate IDs, prints summary.
 
 Uses `node` directly (not `exec` with interpolated strings) for JSON processing.
 
@@ -854,7 +854,7 @@ git commit -m "chore: final cleanup after real-world testing implementation"
 
 | Task | What | Tests Added |
 |------|------|-------------|
-| 1 | E2E helpers module | — |
+| 1 | E2E helpers module | - |
 | 2 | Scan e2e tests | 3 |
 | 3 | Name e2e tests | 2 |
 | 4 | Annotate e2e tests | 2 |
@@ -862,12 +862,12 @@ git commit -m "chore: final cleanup after real-world testing implementation"
 | 6 | Diff e2e tests | 2 |
 | 7 | Pipeline e2e tests | 3 |
 | 8 | Config e2e tests | 2 |
-| 9 | Full e2e verification | — |
-| 10-14 | React dashboard fixture | — |
-| 15-18 | Vue storefront fixture | — |
-| 19 | Verify fixtures scan | — |
-| 20 | OSS validation script | — |
-| 21 | Final verification | — |
+| 9 | Full e2e verification | - |
+| 10-14 | React dashboard fixture | - |
+| 15-18 | Vue storefront fixture | - |
+| 19 | Verify fixtures scan | - |
+| 20 | OSS validation script | - |
+| 21 | Final verification | - |
 
 **Total new tests: ~17 e2e tests**
 **Total new fixture elements: ~70-90 across two apps**

@@ -14,7 +14,7 @@ UIC (UI Contracts) is a CLI tool and agent skill that makes web app UIs machine-
 ### Every PR Must
 
 1. Pass `pnpm build && pnpm lint && pnpm test` with zero errors and zero warnings.
-2. Pass `npx uic diff` on UIC's own fixture manifests (dogfooding). If fixture manifests change, the diff must be reviewed and committed intentionally.
+2. Pass `npx uicontract diff` on UIC's own fixture manifests (dogfooding). If fixture manifests change, the diff must be reviewed and committed intentionally.
 3. Include tests for any new or changed behavior. No exceptions.
 4. Have zero `any` types. Use `unknown` + type narrowing instead.
 5. Not add a dependency without a justification comment in the PR description explaining why it's necessary and what alternatives were considered.
@@ -88,7 +88,7 @@ packages/<name>/
 - **Types/Interfaces**: `PascalCase` (e.g., `ManifestElement`, `ParserPlugin`)
 - **Functions**: `camelCase` (e.g., `discoverElements`, `generateManifest`)
 - **Constants**: `SCREAMING_SNAKE_CASE` for true constants (e.g., `MAX_SCAN_DEPTH`)
-- **CLI commands**: `kebab-case` (e.g., `uic scan`, `uic find`)
+- **CLI commands**: `kebab-case` (e.g., `uicontract scan`, `uicontract find`)
 - **Agent IDs**: `dot.separated.kebab-case` (e.g., `settings.billing.pause-subscription.button`)
 - **Test files**: mirror source file name with `.test.ts` suffix
 
@@ -102,7 +102,7 @@ packages/<name>/
 ```typescript
 // Good
 throw new UicError('MANIFEST_NOT_FOUND', {
-  message: `No manifest.json found at ${path}. Run "npx uic scan <dir>" first.`,
+  message: `No manifest.json found at ${path}. Run "npx uicontract scan <dir>" first.`,
   path,
 });
 
@@ -168,11 +168,11 @@ Six layers. Each layer depends only on the layers below it. No circular dependen
 
 ```
                     +-----------------+
-                    |   Governance    |  npx uic diff, CI integration
+                    |   Governance    |  npx uicontract diff, CI integration
                     +-----------------+
                             |
                     +-----------------+
-                    |     Query       |  npx uic find/describe/list
+                    |     Query       |  npx uicontract find/describe/list
                     +-----------------+
                             |
               +-------------+-------------+
@@ -244,7 +244,7 @@ Six layers. Each layer depends only on the layers below it. No circular dependen
 
 **Golden file tests**: Fixture app manifest committed as snapshot. Parser changes that alter manifest output are caught and must be intentionally updated.
 
-**E2E tests**: Full pipeline -- `uic scan <fixture>` -> `uic name` -> `uic annotate --dry-run` -> verify patch -> `uic diff` against baseline.
+**E2E tests**: Full pipeline -- `uicontract scan <fixture>` -> `uicontract name` -> `uicontract annotate --dry-run` -> verify patch -> `uicontract diff` against baseline.
 
 **AI naming tests**: Test structure (returns string, follows naming pattern, no duplicates) not content. AI tests are marked with `test.skip` in CI and run manually/on-demand.
 
@@ -320,7 +320,7 @@ Full schema: `packages/core/src/schema/manifest.v1.schema.json`
 ## 8. Security
 
 - **No secrets in manifests.** Manifests contain file paths, component names, and labels. Never API keys, tokens, or user data.
-- **`data-agent-id` in production**: By default, attributes persist in production builds. Document how to strip them via Babel/SWC plugin if desired. Provide a `uic strip` command for manual removal.
+- **`data-agent-id` in production**: By default, attributes persist in production builds. Document how to strip them via Babel/SWC plugin if desired. Provide a `uicontract strip` command for manual removal.
 - **Supply chain**: `pnpm-lock.yaml` must be committed. Dependabot or Renovate enabled. New dependencies require justification in PR description. Run `pnpm audit` in CI.
 - **Source annotator safety**: Annotator creates `.uic-backup/` before modifying files. `--dry-run` is documented as the recommended first step. Annotator refuses to run on uncommitted changes (requires clean git state).
 
@@ -333,7 +333,7 @@ Full schema: `packages/core/src/schema/manifest.v1.schema.json`
 1. **Issue first.** All work starts with a GitHub issue. Bug reports, feature requests, and questions.
 2. **Discussion for non-trivial changes.** Before writing code for new features or architectural changes, open a Discussion or comment on the issue with your proposed approach.
 3. **Fork and PR.** Fork the repo, create a feature branch, submit a PR against `main`.
-4. **PR requirements**: All CI checks pass. At least one maintainer review. Changeset included if the change affects published packages. `uic diff` passes on fixture manifests.
+4. **PR requirements**: All CI checks pass. At least one maintainer review. Changeset included if the change affects published packages. `uicontract diff` passes on fixture manifests.
 5. **Review turnaround**: Maintainers aim to review within 3 business days.
 
 ### RFC Process
@@ -378,7 +378,7 @@ pnpm lint
 pnpm typecheck
 
 # Scan the fixture app (after building)
-npx uic scan fixtures/react-app
+npx uicontract scan fixtures/react-app
 ```
 
 ### Monorepo Structure

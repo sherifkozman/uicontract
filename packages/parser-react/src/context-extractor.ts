@@ -148,7 +148,7 @@ function findAttr(node: t.JSXOpeningElement, name: string): t.JSXAttribute | und
   return undefined;
 }
 
-/** Extract visible text from JSX children (shallow — only literals). */
+/** Extract visible text from JSX children (shallow - only literals). */
 function childrenText(jsxElement: t.JSXElement): string | null {
   const texts: string[] = [];
   for (const child of jsxElement.children) {
@@ -176,7 +176,7 @@ export function extractLabel(openingPath: NodePath<t.JSXOpeningElement>): string
     if (val) return val;
   }
 
-  // 2. children text — need access to the parent JSXElement
+  // 2. children text - need access to the parent JSXElement
   const parent = openingPath.parent;
   if (t.isJSXElement(parent)) {
     const text = childrenText(parent);

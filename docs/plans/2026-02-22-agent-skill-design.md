@@ -1,4 +1,4 @@
-# UIC Agent Skill — Design Document
+# UIC Agent Skill - Design Document
 
 ## Goal
 
@@ -8,7 +8,7 @@ Build a proper Claude Code skill that teaches agents how to use UIC manifests to
 
 **Approach B: SKILL.md + Progressive References**
 
-Lean SKILL.md (~1500 words) with the core agent loop. Detailed content in `references/` loaded on demand. Follows the same pattern as `agent-browser` — quick start, core workflow, command reference, examples, deep-dive references.
+Lean SKILL.md (~1500 words) with the core agent loop. Detailed content in `references/` loaded on demand. Follows the same pattern as `agent-browser` - quick start, core workflow, command reference, examples, deep-dive references.
 
 **Target consumer:** Claude Code agents (not MCP server).
 
@@ -53,24 +53,24 @@ description: Use when automating browser interactions with a web app that has a 
 **1. Quick start** (5 commands)
 
 ```bash
-npx uic scan ./src -o manifest.json    # Discover all UI elements
-npx uic find "login" --json            # Find elements by description
-npx uic describe <agent-id> --json     # Full details of one element
-npx uic list --type button --json      # List all buttons
-npx uic diff old.json new.json --json  # Detect breaking changes
+npx uicontract scan ./src -o manifest.json    # Discover all UI elements
+npx uicontract find "login" --json            # Find elements by description
+npx uicontract describe <agent-id> --json     # Full details of one element
+npx uicontract list --type button --json      # List all buttons
+npx uicontract diff old.json new.json --json  # Detect breaking changes
 ```
 
 **2. Core workflow** (4 steps)
 
-1. **Discover** — Check if project has `manifest.json`. If not, run `npx uic scan <dir> -o manifest.json && npx uic name manifest.json -o manifest.json`.
-2. **Find** — Use `npx uic find "<description>" --json` to locate the element matching the user's intent. Returns agentId, type, label, route.
-3. **Target** — Use whatever browser tool is available:
+1. **Discover** - Check if project has `manifest.json`. If not, run `npx uicontract scan <dir> -o manifest.json && npx uicontract name manifest.json -o manifest.json`.
+2. **Find** - Use `npx uicontract find "<description>" --json` to locate the element matching the user's intent. Returns agentId, type, label, route.
+3. **Target** - Use whatever browser tool is available:
    - agent-browser: `agent-browser find testid "<agentId>" click`
    - CSS selector: `[data-agent-id="<agentId>"]`
    - Playwright MCP: configure `--test-id-attribute=data-agent-id`
-4. **Verify** — Run `npx uic diff baseline.json current.json` to check for regressions.
+4. **Verify** - Run `npx uicontract diff baseline.json current.json` to check for regressions.
 
-**3. Command reference** — organized by category:
+**3. Command reference** - organized by category:
 
 - **Discovery**: `scan`, `name`, `annotate`
 - **Query**: `find` (fuzzy + exact), `describe`, `list` (with `--type`, `--route`, `--component`, `--routes`, `--components`)
@@ -92,7 +92,7 @@ Each command with flags, examples, and expected output shape.
 
 ```bash
 # Step 1: Find the element
-npx uic find "pause subscription" --json
+npx uicontract find "pause subscription" --json
 # → [{"agentId": "settings.billing.pause-subscription.button", "type": "button", ...}]
 
 # Step 2: Navigate to the page
@@ -105,10 +105,10 @@ agent-browser find testid "settings.billing.pause-subscription.button" click
 **6. Key rules**
 
 - Always use `--json` output for machine parsing
-- Never hardcode selectors — always look up from manifest
+- Never hardcode selectors - always look up from manifest
 - Check `conditional: true` elements may not be visible
 - Check `dynamic: true` elements may have variable content
-- Run `uic diff` before/after to verify no breaking changes
+- Run `uicontract diff` before/after to verify no breaking changes
 
 **7. References table**
 
@@ -140,10 +140,10 @@ Includes: hierarchical selector patterns (prefix, substring, suffix), tips for c
 
 Concrete multi-step automation recipes using UIC CLI + agent-browser:
 
-1. **Form fill** — scan manifest → filter by route → iterate inputs → fill each → submit
-2. **Navigation test** — list routes from manifest → navigate each → verify elements exist on page
-3. **Regression check** — diff baseline vs current manifest → report breaking changes → fail CI if breaking
-4. **Full annotation pipeline** — scan → name → annotate --write → re-scan → verify round-trip
+1. **Form fill** - scan manifest → filter by route → iterate inputs → fill each → submit
+2. **Navigation test** - list routes from manifest → navigate each → verify elements exist on page
+3. **Regression check** - diff baseline vs current manifest → report breaking changes → fail CI if breaking
+4. **Full annotation pipeline** - scan → name → annotate --write → re-scan → verify round-trip
 
 Each recipe is a concrete bash sequence with expected outputs.
 
@@ -151,30 +151,30 @@ Each recipe is a concrete bash sequence with expected outputs.
 
 Full manifest.json structure with field-by-field documentation:
 
-- `agentId` — stable hierarchical identifier, use as selector target
-- `type` — element type (button, input, select, a, form, textarea)
-- `label` — human-readable description of the element
-- `route` — URL path where element appears (null if unknown)
-- `handler` — event handler function name (useful for understanding what clicking does)
-- `conditional` — if true, element may not be visible (behind auth, feature flag, etc.)
-- `dynamic` — if true, element is rendered from dynamic data (list items, etc.)
-- `filePath`, `line`, `column` — source location (for debugging)
-- `componentName` — React/Vue component containing this element
+- `agentId` - stable hierarchical identifier, use as selector target
+- `type` - element type (button, input, select, a, form, textarea)
+- `label` - human-readable description of the element
+- `route` - URL path where element appears (null if unknown)
+- `handler` - event handler function name (useful for understanding what clicking does)
+- `conditional` - if true, element may not be visible (behind auth, feature flag, etc.)
+- `dynamic` - if true, element is rendered from dynamic data (list items, etc.)
+- `filePath`, `line`, `column` - source location (for debugging)
+- `componentName` - React/Vue component containing this element
 
 ---
 
 ## Testing
 
-1. **Frontmatter validation** — verify SKILL.md has valid YAML frontmatter with required `name` and `description` fields
-2. **Reference link verification** — all links in SKILL.md resolve to existing files
-3. **Command accuracy** — every CLI command in examples runs successfully against `fixtures/react-dashboard`
-4. **Integration test** — E2E test that runs the quick-start sequence (scan → find → describe → list → diff) and verifies outputs
+1. **Frontmatter validation** - verify SKILL.md has valid YAML frontmatter with required `name` and `description` fields
+2. **Reference link verification** - all links in SKILL.md resolve to existing files
+3. **Command accuracy** - every CLI command in examples runs successfully against `fixtures/react-dashboard`
+4. **Integration test** - E2E test that runs the quick-start sequence (scan → find → describe → list → diff) and verifies outputs
 
 ---
 
 ## What This Does NOT Include
 
-- **No MCP server** — agents use subprocess CLI, not MCP tools
-- **No TypeScript SDK** — the skill is markdown instructions, not a JS library
-- **No runtime dependency** — UIC is a dev-time tool; the skill teaches agents to use CLI output
-- **No Stagehand/natural-language integration** — UIC provides deterministic selectors, which are more reliable than NL targeting
+- **No MCP server** - agents use subprocess CLI, not MCP tools
+- **No TypeScript SDK** - the skill is markdown instructions, not a JS library
+- **No runtime dependency** - UIC is a dev-time tool; the skill teaches agents to use CLI output
+- **No Stagehand/natural-language integration** - UIC provides deterministic selectors, which are more reliable than NL targeting

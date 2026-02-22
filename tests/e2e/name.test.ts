@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import { runUic, tempDir } from './helpers.js';
 
-describe('uic name (e2e)', () => {
+describe('uicontract name (e2e)', () => {
   it('produces stable deterministic output across two runs', async () => {
     const tmp = await tempDir();
     const scanOut = path.join(tmp, 'scan.json');

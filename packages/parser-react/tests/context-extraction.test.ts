@@ -96,10 +96,10 @@ describe('component name extraction', () => {
       `export default (() => <button>click</button>)`,
       '/p/src/Anon.tsx',
     );
-    // No variable assignment, no function name — componentName may be null
+    // No variable assignment, no function name - componentName may be null
     // We just verify it doesn't crash and returns an element
     expect(elements).toHaveLength(1);
-    // The component name is either null or a string — not undefined
+    // The component name is either null or a string - not undefined
     expect(elements[0]!.componentName === null || typeof elements[0]!.componentName === 'string').toBe(true);
   });
 });
@@ -325,7 +325,7 @@ describe('handler extraction', () => {
          return <button onClick={handlers.click}>Click</button>;
        }`,
     );
-    // Member expression on a variable, not 'this' — returns the property name
+    // Member expression on a variable, not 'this' - returns the property name
     // Actually per implementation, MemberExpression returns property name
     expect(typeof elements[0]!.handler === 'string' || elements[0]!.handler === null).toBe(true);
   });

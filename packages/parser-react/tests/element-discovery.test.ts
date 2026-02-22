@@ -74,7 +74,7 @@ describe('element discovery', () => {
   });
 
   // ---------------------------------------------------------------------------
-  // Generic elements — only interactive when they have event handlers
+  // Generic elements - only interactive when they have event handlers
   // ---------------------------------------------------------------------------
 
   describe('generic elements with event handlers', () => {
@@ -118,7 +118,7 @@ describe('element discovery', () => {
   });
 
   // ---------------------------------------------------------------------------
-  // Custom React components (uppercase) — must NOT be discovered
+  // Custom React components (uppercase) - must NOT be discovered
   // ---------------------------------------------------------------------------
 
   describe('custom React components (uppercase tags)', () => {

@@ -42,7 +42,7 @@ The namer is deterministic: the same element always receives the same ID across 
 
 ## Part of UIC
 
-This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) — making web app UIs machine-readable.
+This package is part of [UIC (UI Contracts)](https://github.com/sherifkozman/uicontract) - making web app UIs machine-readable.
 
 ## License
 

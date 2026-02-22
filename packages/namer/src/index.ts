@@ -1,5 +1,5 @@
 /**
- * @uicontract/namer — naming engine for UIC elements.
+ * @uicontract/namer - naming engine for UIC elements.
  *
  * Takes RawElements discovered by a parser and assigns stable,
  * hierarchical agentIds using deterministic rules (with an optional

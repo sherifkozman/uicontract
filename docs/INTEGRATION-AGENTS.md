@@ -15,8 +15,8 @@ UIC makes web UIs machine-readable by scanning source code and generating a mani
 
 UIC ships with pre-built skill files that teach agents the available commands:
 
-- `packages/skill/universal.md` — framework-agnostic skill for any agent
-- `packages/skill/claude-code.md` — optimized for Claude Code
+- `packages/skill/universal.md` - framework-agnostic skill for any agent
+- `packages/skill/SKILL.md` - optimized for AI coding agents
 
 These files describe the UIC CLI commands, typical workflows, and tips for programmatic usage. Install them as agent context or system prompts.
 
@@ -25,7 +25,7 @@ These files describe the UIC CLI commands, typical workflows, and tips for progr
 ### 1. Scan the Project
 
 ```bash
-npx uic scan ./src -o manifest.json
+npx uicontract scan ./src -o manifest.json
 ```
 
 The agent scans the project to discover all interactive elements.
@@ -34,13 +34,13 @@ The agent scans the project to discover all interactive elements.
 
 ```bash
 # Find elements related to a task
-npx uic find "login" --json
+npx uicontract find "login" --json
 
 # List all form elements
-npx uic list --type form --json
+npx uicontract list --type form --json
 
 # Get details about a specific element
-npx uic describe settings.billing.pause-subscription.button --json
+npx uicontract describe settings.billing.pause-subscription.button --json
 ```
 
 The `--json` flag returns machine-parseable output for programmatic consumption.
@@ -68,7 +68,7 @@ page.locator('[data-agent-id="checkout.submit-order.button"]')
 
 ```bash
 # Compare current UI against a baseline
-npx uic diff baseline.json manifest.json --json
+npx uicontract diff baseline.json manifest.json --json
 ```
 
 Agents can check for regressions before executing a workflow that depends on specific elements.
@@ -161,10 +161,10 @@ Each segment uses `kebab-case` and the full ID matches the pattern `^[a-z][a-z0-
 ### Use `--json` for All Programmatic Output
 
 ```bash
-npx uic find "login" --json    # Returns JSON array
-npx uic list --json             # Returns JSON array
-npx uic describe <id> --json   # Returns JSON object
-npx uic diff a.json b.json --json  # Returns JSON object
+npx uicontract find "login" --json    # Returns JSON array
+npx uicontract list --json             # Returns JSON array
+npx uicontract describe <id> --json   # Returns JSON object
+npx uicontract diff a.json b.json --json  # Returns JSON object
 ```
 
 ### Use Fuzzy Search
@@ -172,7 +172,7 @@ npx uic diff a.json b.json --json  # Returns JSON object
 UIC supports fuzzy matching by default. Agents can search with approximate terms:
 
 ```bash
-npx uic find "pase subscribtion"  # Finds "pause-subscription"
+npx uicontract find "pase subscribtion"  # Finds "pause-subscription"
 ```
 
 Use `--exact` when you know the precise term and want to avoid false positives.
@@ -182,15 +182,15 @@ Use `--exact` when you know the precise term and want to avoid false positives.
 Before running a workflow that depends on specific elements, verify they still exist:
 
 ```bash
-npx uic describe checkout.submit-order.button --json
+npx uicontract describe checkout.submit-order.button --json
 ```
 
 If the element is not found, the agent should re-scan or report the issue.
 
 ### Keep the Manifest Updated
 
-Run `npx uic scan` after any UI changes to keep the manifest in sync with the codebase.
+Run `npx uicontract scan` after any UI changes to keep the manifest in sync with the codebase.
 
 ### Commit the Baseline Manifest
 
-Store `manifest.json` in version control so `uic diff` can detect changes in pull requests.
+Store `manifest.json` in version control so `uicontract diff` can detect changes in pull requests.
