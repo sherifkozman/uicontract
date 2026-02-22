@@ -65,7 +65,7 @@ EXAMPLES
   uic scan ./my-app --framework react --output manifest.json
   uic scan ./my-app --verbose
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -141,7 +141,7 @@ export function parseScanArgs(args: string[]): ScanArgs | ScanArgsError {
     }
 
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic scan --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract scan --help" for usage.` };
     }
 
     if (arg !== undefined) {
@@ -150,13 +150,13 @@ export function parseScanArgs(args: string[]): ScanArgs | ScanArgsError {
   }
 
   if (!help && positionals.length === 0) {
-    return { error: 'Missing required argument <directory>. Run "uic scan --help" for usage.' };
+    return { error: 'Missing required argument <directory>. Run "uicontract scan --help" for usage.' };
   }
 
   const dir = positionals[0];
   if (positionals.length > 1) {
     return {
-      error: `Unexpected argument: "${positionals[1] ?? ''}". Run "uic scan --help" for usage.`,
+      error: `Unexpected argument: "${positionals[1] ?? ''}". Run "uicontract scan --help" for usage.`,
     };
   }
 
@@ -280,7 +280,7 @@ export async function scanCommand(args: string[]): Promise<number> {
       process.stderr.write(
         `Error: No parser registered for framework "${parsed.framework}". ` +
           `Available: ${available}. ` +
-          `Run "uic scan --help" for usage.\n`,
+          `Run "uicontract scan --help" for usage.\n`,
       );
       return 1;
     }

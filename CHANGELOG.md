@@ -16,7 +16,7 @@ Initial public release of UIC (UI Contracts).
 
 | Package | Version |
 |---------|---------|
-| `uic` | 0.1.0 |
+| `uicontract` | 0.1.0 |
 | `@uicontract/core` | 0.1.0 |
 | `@uicontract/parser-react` | 0.1.0 |
 | `@uicontract/parser-vue` | 0.1.0 |

@@ -320,7 +320,7 @@ export function buildManifest(options: {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     generator: {
-      name: '@uicontract/cli',
+      name: 'uicontract',
       version: options.generatorVersion,
     },
     metadata: {

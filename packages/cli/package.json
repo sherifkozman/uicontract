@@ -1,5 +1,5 @@
 {
-  "name": "uic",
+  "name": "uicontract",
   "version": "0.1.0",
   "description": "CLI tool that makes web app UIs machine-readable for AI agents",
   "type": "module",
@@ -27,7 +27,10 @@
     }
   },
   "bin": {
-    "uic": "./dist/bin/uic.js"
+    "uicontract": "./dist/bin/uic.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist",

@@ -43,7 +43,7 @@ EXAMPLES
   uic diff old.json new.json --allow-breaking "Intentional redesign of nav"
   uic diff old.json new.json --config ./my-config.json
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -142,7 +142,7 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic diff --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract diff --help" for usage.` };
     }
     if (arg !== undefined) {
       positionals.push(arg);
@@ -154,7 +154,7 @@ export function parseDiffArgs(args: string[]): DiffArgs | DiffArgsError {
   }
 
   if (positionals.length > 2) {
-    return { error: `Unexpected argument: "${positionals[2] ?? ''}". Run "uic diff --help" for usage.` };
+    return { error: `Unexpected argument: "${positionals[2] ?? ''}". Run "uicontract diff --help" for usage.` };
   }
 
   return {

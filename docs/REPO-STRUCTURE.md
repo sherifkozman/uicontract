@@ -120,7 +120,7 @@ uic/
 │   │   │       └── full-pipeline.integration.test.ts
 │   │   ├── bin/
 │   │   │   └── uic.ts                 -- Shebang entry point
-│   │   ├── package.json               -- bin: { "uic": "./bin/uic.ts" }
+│   │   ├── package.json               -- bin: { "uicontract": "./bin/uic.ts" }
 │   │   ├── tsconfig.json
 │   │   └── README.md
 │   │

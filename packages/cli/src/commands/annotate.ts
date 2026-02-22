@@ -41,7 +41,7 @@ EXAMPLES
   uic annotate --write --backup-dir ./my-backup
   uic annotate --json
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -107,10 +107,10 @@ export function parseAnnotateArgs(args: string[]): AnnotateArgs | AnnotateArgsEr
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic annotate --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract annotate --help" for usage.` };
     }
     if (arg !== undefined) {
-      return { error: `Unexpected argument: "${arg}". "uic annotate" takes no positional arguments.` };
+      return { error: `Unexpected argument: "${arg}". "uicontract annotate" takes no positional arguments.` };
     }
   }
 
@@ -178,7 +178,7 @@ export async function annotateCommand(args: string[]): Promise<number> {
     const message = err instanceof Error ? err.message : String(err);
     process.stderr.write(
       `Error: Failed to load manifest "${manifestPath}": ${message}\n` +
-        `Run "uic scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
+        `Run "uicontract scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
     );
     return 1;
   }

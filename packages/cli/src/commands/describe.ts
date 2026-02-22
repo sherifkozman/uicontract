@@ -32,7 +32,7 @@ EXAMPLES
   uic describe login.email.input --json
   uic describe nav.home.a --manifest dist/manifest.json
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ export function parseDescribeArgs(args: string[]): DescribeArgs | DescribeArgsEr
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic describe --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract describe --help" for usage.` };
     }
     if (arg !== undefined) {
       positionals.push(arg);
@@ -85,7 +85,7 @@ export function parseDescribeArgs(args: string[]): DescribeArgs | DescribeArgsEr
   }
 
   if (!help && positionals.length === 0) {
-    return { error: 'Missing required argument <agent-id>. Run "uic describe --help" for usage.' };
+    return { error: 'Missing required argument <agent-id>. Run "uicontract describe --help" for usage.' };
   }
 
   if (positionals.length > 1) {
@@ -151,7 +151,7 @@ export async function describeCommand(args: string[]): Promise<number> {
   } catch {
     process.stderr.write(
       `Error: Manifest not found at "${manifestPath}". ` +
-        `Run "uic scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
+        `Run "uicontract scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
     );
     return 1;
   }
@@ -170,7 +170,7 @@ export async function describeCommand(args: string[]): Promise<number> {
   if (element === undefined) {
     process.stderr.write(
       `Error: No element found with agent ID "${agentId}". ` +
-        `Run "uic list" to see all available elements, or "uic find <query>" to search.\n`,
+        `Run "uicontract list" to see all available elements, or "uicontract find <query>" to search.\n`,
     );
     return 1;
   }

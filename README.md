@@ -1,8 +1,8 @@
 # UIC — UI Contracts
 
-[![npm](https://img.shields.io/npm/v/uic)](https://www.npmjs.com/package/uic)
-[![license](https://img.shields.io/npm/l/uic)](LICENSE)
-[![node](https://img.shields.io/node/v/uic)](package.json)
+[![npm](https://img.shields.io/npm/v/uicontract)](https://www.npmjs.com/package/uicontract)
+[![license](https://img.shields.io/npm/l/uicontract)](LICENSE)
+[![node](https://img.shields.io/node/v/uicontract)](package.json)
 [![CI](https://github.com/sherifkozman/uicontract/actions/workflows/ci.yml/badge.svg)](https://github.com/sherifkozman/uicontract/actions)
 
 **Make web app UIs machine-readable.**
@@ -124,7 +124,7 @@ For AI agents, see [`packages/skill/SKILL.md`](packages/skill/SKILL.md).
 
 | Package | npm | Description |
 |---------|-----|-------------|
-| [`uic`](packages/cli) | `npm i uic` | CLI — all commands |
+| [`uicontract`](packages/cli) | `npm i uicontract` | CLI — all commands |
 | [`@uicontract/core`](packages/core) | `npm i @uicontract/core` | Types, schema, validation, logger, errors |
 | [`@uicontract/parser-react`](packages/parser-react) | `npm i @uicontract/parser-react` | React/Next.js AST parser |
 | [`@uicontract/parser-vue`](packages/parser-vue) | `npm i @uicontract/parser-vue` | Vue/Nuxt SFC parser |

@@ -38,7 +38,7 @@ EXAMPLES
   uic find "settings" --exact           # strict substring match only
   uic find "settings" --manifest dist/manifest.json --json
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -104,7 +104,7 @@ export function parseFindArgs(args: string[]): FindArgs | FindArgsError {
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic find --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract find --help" for usage.` };
     }
     if (arg !== undefined) {
       positionals.push(arg);
@@ -112,7 +112,7 @@ export function parseFindArgs(args: string[]): FindArgs | FindArgsError {
   }
 
   if (!help && positionals.length === 0) {
-    return { error: 'Missing required argument <query>. Run "uic find --help" for usage.' };
+    return { error: 'Missing required argument <query>. Run "uicontract find --help" for usage.' };
   }
 
   if (positionals.length > 1) {
@@ -201,7 +201,7 @@ export async function findCommand(args: string[]): Promise<number> {
   } catch {
     process.stderr.write(
       `Error: Manifest not found at "${manifestPath}". ` +
-        `Run "uic scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
+        `Run "uicontract scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
     );
     return 1;
   }

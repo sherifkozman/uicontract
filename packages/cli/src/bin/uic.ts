@@ -36,7 +36,7 @@ GLOBAL OPTIONS
   --version, -V       Print the uic version and exit
   --help, -h          Show this help message
 
-Run "uic <command> --help" for command-specific help.
+Run "uicontract <command> --help" for command-specific help.
   e.g. uic scan --help
 `;
 
@@ -94,12 +94,12 @@ async function main(): Promise<void> {
 
   // Unknown command
   process.stderr.write(
-    `Error: Unknown command "${command}". Run "uic --help" for the list of commands.\n`,
+    `Error: Unknown command "${command}". Run "uicontract --help" for the list of commands.\n`,
   );
 
   // Provide a hint if the user forgot to specify a subcommand and passed a path
   if (command.startsWith('.') || command.startsWith('/')) {
-    process.stderr.write(`Hint: Did you mean "uic scan ${command}"?\n`);
+    process.stderr.write(`Hint: Did you mean "uicontract scan ${command}"?\n`);
   }
 
   process.exit(1);

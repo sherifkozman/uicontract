@@ -38,7 +38,7 @@ EXAMPLES
   uic list --components
   uic list --json --manifest dist/manifest.json
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -126,11 +126,11 @@ export function parseListArgs(args: string[]): ListArgs | ListArgsError {
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic list --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract list --help" for usage.` };
     }
     // list takes no positional args
     if (arg !== undefined) {
-      return { error: `Unexpected argument: "${arg}". "uic list" takes no positional arguments.` };
+      return { error: `Unexpected argument: "${arg}". "uicontract list" takes no positional arguments.` };
     }
   }
 
@@ -226,7 +226,7 @@ export async function listCommand(args: string[]): Promise<number> {
   } catch {
     process.stderr.write(
       `Error: Manifest not found at "${manifestPath}". ` +
-        `Run "uic scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
+        `Run "uicontract scan <dir>" first to generate a manifest, or specify --manifest <path>.\n`,
     );
     return 1;
   }

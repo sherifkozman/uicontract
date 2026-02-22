@@ -21,7 +21,7 @@ uic name <manifest> [options]
 Assign stable, hierarchical agent IDs to elements in a manifest.
 
 ARGUMENTS
-  <manifest>             Path to a manifest.json produced by "uic scan"
+  <manifest>             Path to a manifest.json produced by "uicontract scan"
 
 OPTIONS
   --output, -o <file>    Write named manifest to a file instead of stdout
@@ -36,7 +36,7 @@ EXAMPLES
   uic name manifest.json --ai
   uic name manifest.json --ai --ai-timeout 10000
 
-Run "uic --help" for the full list of commands.
+Run "uicontract --help" for the full list of commands.
 `;
 
 // ---------------------------------------------------------------------------
@@ -102,7 +102,7 @@ export function parseNameArgs(args: string[]): NameArgs | NameArgsError {
       continue;
     }
     if (arg !== undefined && arg.startsWith('-')) {
-      return { error: `Unknown option: ${arg}. Run "uic name --help" for usage.` };
+      return { error: `Unknown option: ${arg}. Run "uicontract name --help" for usage.` };
     }
     if (arg !== undefined) {
       positionals.push(arg);
@@ -110,11 +110,11 @@ export function parseNameArgs(args: string[]): NameArgs | NameArgsError {
   }
 
   if (!help && positionals.length === 0) {
-    return { error: 'Missing required argument <manifest>. Run "uic name --help" for usage.' };
+    return { error: 'Missing required argument <manifest>. Run "uicontract name --help" for usage.' };
   }
 
   if (positionals.length > 1) {
-    return { error: `Unexpected argument: "${positionals[1] ?? ''}". Run "uic name --help" for usage.` };
+    return { error: `Unexpected argument: "${positionals[1] ?? ''}". Run "uicontract name --help" for usage.` };
   }
 
   return { manifest: positionals[0], output, ai, aiTimeout, json, help };

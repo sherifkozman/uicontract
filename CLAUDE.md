@@ -273,7 +273,7 @@ Six layers. Each layer depends only on the layers below it. No circular dependen
 {
   "schemaVersion": "1.0",
   "generatedAt": "2026-02-21T00:00:00Z",
-  "generator": { "name": "uic", "version": "0.1.0" },
+  "generator": { "name": "uicontract", "version": "0.1.0" },
   "metadata": {
     "framework": "react",
     "projectRoot": "/path/to/project",
