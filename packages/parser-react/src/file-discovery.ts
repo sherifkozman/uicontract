@@ -15,6 +15,12 @@ const DEFAULT_EXCLUDE = [
   '**/build/**',
   '**/.cache/**',
   '**/coverage/**',
+  '**/__tests__/**',
+  '**/*.test.*',
+  '**/*.spec.*',
+  '**/*.stories.*',
+  '**/vitest.setup.*',
+  '**/jest.setup.*',
 ];
 const DEFAULT_MAX_DEPTH = 20;
 
@@ -28,11 +34,21 @@ function globToRegex(glob: string): RegExp {
   while (i < glob.length) {
     const char = glob[i];
     if (char === '*' && glob[i + 1] === '*') {
-      // ** matches any number of path segments including none
-      pattern += '(?:.+/)?';
       i += 2;
       // skip trailing slash if present
       if (glob[i] === '/') i++;
+
+      if (i >= glob.length) {
+        // ** at end of pattern: match any remaining path (including files)
+        // Remove preceding / since (?:/.*)? already includes it
+        if (pattern.endsWith('/')) {
+          pattern = pattern.slice(0, -1);
+        }
+        pattern += '(?:/.*)?';
+      } else {
+        // ** in middle: match zero or more path segments
+        pattern += '(?:.+/)?';
+      }
     } else if (char === '*') {
       // * matches any character except /
       pattern += '[^/]*';
