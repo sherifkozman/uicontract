@@ -12,6 +12,7 @@ export interface AnnotationTarget {
   line: number; // 1-based line where the JSX element starts
   column: number; // 1-based column
   type: string; // element type (button, input, etc.)
+  sourceTagName: string | null; // original JSX tag name for componentMap elements
 }
 
 /** Result of annotating a single source string. */
@@ -212,7 +213,8 @@ export function annotateSource(
 
     // No existing attribute -- insert after the tag name
     const targetLine = lines[lineIdx]!;
-    const insertIdx = findTagNameEnd(targetLine, target.column, target.type);
+    const tagNameToMatch = target.sourceTagName ?? target.type;
+    const insertIdx = findTagNameEnd(targetLine, target.column, tagNameToMatch);
 
     if (insertIdx === null) {
       continue;

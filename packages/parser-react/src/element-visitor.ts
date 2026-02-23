@@ -157,6 +157,7 @@ export function parseFile(
         conditional,
         dynamic,
         directive,
+        sourceTagName: mappedType ? tagName : null,
       });
     },
   });

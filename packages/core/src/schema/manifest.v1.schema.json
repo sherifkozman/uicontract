@@ -129,6 +129,10 @@
             "type": ["string", "null"],
             "enum": ["use client", "use server", null],
             "description": "React Server Component directive detected at file level."
+          },
+          "sourceTagName": {
+            "type": ["string", "null"],
+            "description": "Original JSX tag name in source code. Non-null for componentMap elements (e.g., \"Button\")."
           }
         }
       }

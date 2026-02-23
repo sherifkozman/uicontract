@@ -367,5 +367,39 @@ describe('element discovery', () => {
       );
       expect(elements).toHaveLength(0);
     });
+
+    it('sets sourceTagName to component name for mapped components', () => {
+      const elements = parseWithMap(
+        `export default function App() { return <Button onClick={handle}>Click</Button>; }`,
+        { Button: 'button' },
+      );
+      expect(elements).toHaveLength(1);
+      expect(elements[0]!.sourceTagName).toBe('Button');
+    });
+
+    it('sets sourceTagName to null for native elements', () => {
+      const elements = parse(
+        `export default function App() { return <button>Click</button>; }`,
+      );
+      expect(elements).toHaveLength(1);
+      expect(elements[0]!.sourceTagName).toBeNull();
+    });
+
+    it('native elements alongside mapped components have correct sourceTagName values', () => {
+      const elements = parseWithMap(
+        `export default function App() {
+          return (
+            <div>
+              <button>Native</button>
+              <IconButton onClick={handle}>Mapped</IconButton>
+            </div>
+          );
+        }`,
+        { IconButton: 'button' },
+      );
+      expect(elements).toHaveLength(2);
+      expect(elements[0]!.sourceTagName).toBeNull(); // native button
+      expect(elements[1]!.sourceTagName).toBe('IconButton'); // mapped component
+    });
   });
 });

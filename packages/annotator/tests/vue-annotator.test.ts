@@ -15,7 +15,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'app.click.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'app.click.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -38,8 +38,8 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'form.email.input', line: 3, column: 5, type: 'input' },
-      { agentId: 'form.submit.button', line: 4, column: 5, type: 'button' },
+      { agentId: 'form.email.input', line: 3, column: 5, type: 'input', sourceTagName: null },
+      { agentId: 'form.submit.button', line: 4, column: 5, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -61,7 +61,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.input', line: 2, column: 3, type: 'input' },
+      { agentId: 'test.input', line: 2, column: 3, type: 'input', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -80,7 +80,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'form.save.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'form.save.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -104,7 +104,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'form.save.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'form.save.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -122,7 +122,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'test.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -140,7 +140,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'new.id', line: 2, column: 3, type: 'button' },
+      { agentId: 'new.id', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -167,7 +167,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'test.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -200,7 +200,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'cond.button', line: 2, column: 3, type: 'button' },
+      { agentId: 'cond.button', line: 2, column: 3, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);
@@ -219,7 +219,7 @@ describe('annotateVueSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'nav.home.a', line: 2, column: 3, type: 'a' },
+      { agentId: 'nav.home.a', line: 2, column: 3, type: 'a', sourceTagName: null },
     ];
 
     const result = annotateVueSource(source, targets);

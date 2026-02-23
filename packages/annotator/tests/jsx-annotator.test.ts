@@ -5,7 +5,7 @@ describe('annotateSource', () => {
   it('inserts attribute on a simple self-closing tag', () => {
     const source = '<input />';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.input', line: 1, column: 1, type: 'input' },
+      { agentId: 'test.input', line: 1, column: 1, type: 'input', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -19,7 +19,7 @@ describe('annotateSource', () => {
   it('inserts attribute on an open tag', () => {
     const source = '<button>Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.button', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -34,7 +34,7 @@ describe('annotateSource', () => {
   it('inserts attribute on a tag with existing attributes', () => {
     const source = '<button className="btn">Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.btn', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.btn', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -48,7 +48,7 @@ describe('annotateSource', () => {
   it('skips when correct data-agent-id already present', () => {
     const source = '<button data-agent-id="test.button">Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.button', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -62,7 +62,7 @@ describe('annotateSource', () => {
   it('updates when data-agent-id exists with wrong value', () => {
     const source = '<button data-agent-id="old.id">Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'new.id', line: 1, column: 1, type: 'button' },
+      { agentId: 'new.id', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -86,7 +86,7 @@ describe('annotateSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.multiline', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.multiline', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -113,8 +113,8 @@ describe('annotateSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 2, column: 3, type: 'button' },
-      { agentId: 'test.input', line: 3, column: 3, type: 'input' },
+      { agentId: 'test.button', line: 2, column: 3, type: 'button', sourceTagName: null },
+      { agentId: 'test.input', line: 3, column: 3, type: 'input', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -137,8 +137,8 @@ describe('annotateSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'a.btn', line: 1, column: 1, type: 'button' },
-      { agentId: 'b.btn', line: 2, column: 1, type: 'button' },
+      { agentId: 'a.btn', line: 1, column: 1, type: 'button', sourceTagName: null },
+      { agentId: 'b.btn', line: 2, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -162,7 +162,7 @@ describe('annotateSource', () => {
   it('handles indented tags with correct column', () => {
     const source = '    <input type="text" />';
     const targets: AnnotationTarget[] = [
-      { agentId: 'form.email', line: 1, column: 5, type: 'input' },
+      { agentId: 'form.email', line: 1, column: 5, type: 'input', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -176,7 +176,7 @@ describe('annotateSource', () => {
   it('handles self-closing tags without space before />', () => {
     const source = '<input/>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.input', line: 1, column: 1, type: 'input' },
+      { agentId: 'test.input', line: 1, column: 1, type: 'input', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -196,7 +196,7 @@ describe('annotateSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.btn', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.btn', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -221,7 +221,7 @@ describe('annotateSource', () => {
     ].join('\n');
 
     const targets: AnnotationTarget[] = [
-      { agentId: 'new.value', line: 1, column: 1, type: 'button' },
+      { agentId: 'new.value', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -240,7 +240,7 @@ describe('annotateSource', () => {
   it('preserves original source in result', () => {
     const source = '<button>Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 1, column: 1, type: 'button' },
+      { agentId: 'test.button', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -252,7 +252,7 @@ describe('annotateSource', () => {
   it('skips targets with out-of-range line numbers', () => {
     const source = '<button>Click</button>';
     const targets: AnnotationTarget[] = [
-      { agentId: 'test.button', line: 99, column: 1, type: 'button' },
+      { agentId: 'test.button', line: 99, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
@@ -265,13 +265,74 @@ describe('annotateSource', () => {
   it('handles single-quoted data-agent-id values', () => {
     const source = "<button data-agent-id='old.id'>Click</button>";
     const targets: AnnotationTarget[] = [
-      { agentId: 'new.id', line: 1, column: 1, type: 'button' },
+      { agentId: 'new.id', line: 1, column: 1, type: 'button', sourceTagName: null },
     ];
 
     const result = annotateSource(source, targets);
 
     expect(result.annotatedSource).toBe(
       '<button data-agent-id="new.id">Click</button>',
+    );
+    expect(result.annotationsApplied).toBe(1);
+  });
+
+  // ---------------------------------------------------------------------------
+  // sourceTagName: componentMap elements use source tag name for matching
+  // ---------------------------------------------------------------------------
+
+  it('annotates a custom component tag when sourceTagName is provided', () => {
+    const source = '<Button onClick={handle}>Click</Button>';
+    const targets: AnnotationTarget[] = [
+      { agentId: 'test.button', line: 1, column: 1, type: 'button', sourceTagName: 'Button' },
+    ];
+
+    const result = annotateSource(source, targets);
+
+    expect(result.annotatedSource).toBe(
+      '<Button data-agent-id="test.button" onClick={handle}>Click</Button>',
+    );
+    expect(result.modified).toBe(true);
+    expect(result.annotationsApplied).toBe(1);
+  });
+
+  it('annotates a self-closing custom component tag', () => {
+    const source = '<TextInput placeholder="name" />';
+    const targets: AnnotationTarget[] = [
+      { agentId: 'form.name', line: 1, column: 1, type: 'input', sourceTagName: 'TextInput' },
+    ];
+
+    const result = annotateSource(source, targets);
+
+    expect(result.annotatedSource).toBe(
+      '<TextInput data-agent-id="form.name" placeholder="name" />',
+    );
+    expect(result.annotationsApplied).toBe(1);
+  });
+
+  it('native element annotation still works with sourceTagName null', () => {
+    const source = '<button>Click</button>';
+    const targets: AnnotationTarget[] = [
+      { agentId: 'test.native', line: 1, column: 1, type: 'button', sourceTagName: null },
+    ];
+
+    const result = annotateSource(source, targets);
+
+    expect(result.annotatedSource).toBe(
+      '<button data-agent-id="test.native">Click</button>',
+    );
+    expect(result.annotationsApplied).toBe(1);
+  });
+
+  it('updates existing data-agent-id on a custom component tag', () => {
+    const source = '<Button data-agent-id="old.id" onClick={handle}>Click</Button>';
+    const targets: AnnotationTarget[] = [
+      { agentId: 'new.id', line: 1, column: 1, type: 'button', sourceTagName: 'Button' },
+    ];
+
+    const result = annotateSource(source, targets);
+
+    expect(result.annotatedSource).toBe(
+      '<Button data-agent-id="new.id" onClick={handle}>Click</Button>',
     );
     expect(result.annotationsApplied).toBe(1);
   });

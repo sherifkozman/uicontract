@@ -164,6 +164,17 @@ function validateElement(element: unknown, index: number, errors: ValidationErro
       });
     }
   }
+
+  // sourceTagName (optional, but if present must be string or null)
+  if ('sourceTagName' in element) {
+    if (!isStringOrNull(element['sourceTagName'])) {
+      errors.push({
+        path: `${prefix}.sourceTagName`,
+        code: 'INVALID_TYPE',
+        message: 'sourceTagName must be a string or null.',
+      });
+    }
+  }
 }
 
 /** Validate a manifest object against the v1 schema. */
@@ -329,7 +340,7 @@ export function buildManifest(options: {
   }));
 
   return {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     generatedAt: new Date().toISOString(),
     generator: {
       name: 'uicontract',
@@ -370,5 +381,13 @@ export function deserializeManifest(json: string): Manifest {
     );
   }
 
-  return parsed as Manifest;
+  // Normalize optional fields that may be absent in older manifests (pre-1.1)
+  const manifest = parsed as Manifest;
+  for (const el of manifest.elements) {
+    if (el.sourceTagName === undefined) {
+      (el as unknown as Record<string, unknown>)['sourceTagName'] = null;
+    }
+  }
+
+  return manifest;
 }

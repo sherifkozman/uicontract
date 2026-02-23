@@ -65,6 +65,7 @@ function groupByFile(
       line: el.line,
       column: el.column,
       type: el.type,
+      sourceTagName: el.sourceTagName,
     };
 
     if (existing) {

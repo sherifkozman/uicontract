@@ -147,6 +147,7 @@ function toTargets(elements: NamedElement[]): AnnotationTarget[] {
     line: el.line,
     column: el.column,
     type: el.type,
+    sourceTagName: el.sourceTagName,
   }));
 }
 

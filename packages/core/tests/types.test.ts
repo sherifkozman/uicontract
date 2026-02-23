@@ -42,6 +42,7 @@ describe('types', () => {
       conditional: false,
       dynamic: false,
       directive: null,
+      sourceTagName: null,
     };
     expect(el.type).toBe('button');
     expect(el.filePath).toBe('src/App.tsx');
@@ -61,9 +62,29 @@ describe('types', () => {
       conditional: false,
       dynamic: false,
       directive: null,
+      sourceTagName: null,
     };
     expect(el.componentName).toBeNull();
     expect(el.route).toBeNull();
+  });
+
+  it('RawElement sourceTagName holds component name for mapped elements', () => {
+    const el: RawElement = {
+      type: 'button',
+      filePath: 'src/App.tsx',
+      line: 10,
+      column: 5,
+      componentName: 'App',
+      route: '/',
+      label: 'Click',
+      handler: null,
+      attributes: {},
+      conditional: false,
+      dynamic: false,
+      directive: null,
+      sourceTagName: 'Button',
+    };
+    expect(el.sourceTagName).toBe('Button');
   });
 
   it('NamedElement extends RawElement with agentId', () => {
@@ -81,6 +102,7 @@ describe('types', () => {
       conditional: false,
       dynamic: false,
       directive: null,
+      sourceTagName: null,
     };
     expect(el.agentId).toBe('app.submit.button');
   });
@@ -100,6 +122,7 @@ describe('types', () => {
       conditional: false,
       dynamic: false,
       directive: null,
+      sourceTagName: null,
     };
     expect(el.agentId).toBe('app.submit-button');
   });

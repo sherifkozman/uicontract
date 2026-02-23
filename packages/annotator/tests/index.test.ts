@@ -21,6 +21,7 @@ function makeElement(overrides: Partial<NamedElement> & { agentId: string; fileP
     conditional: false,
     dynamic: false,
     directive: null,
+    sourceTagName: null,
     ...overrides,
   };
 }

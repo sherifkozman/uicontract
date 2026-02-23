@@ -15,6 +15,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Select plan",
       "line": 30,
       "route": null,
+      "sourceTagName": null,
       "type": "select",
     },
     {
@@ -29,6 +30,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Pause subscription",
       "line": 40,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -43,6 +45,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Confirm pause",
       "line": 43,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -57,6 +60,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Cancel subscription",
       "line": 48,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -71,6 +75,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Update payment method",
       "line": 50,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -85,6 +90,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": null,
       "line": 15,
       "route": null,
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -99,6 +105,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "you@example.com",
       "line": 17,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -113,6 +120,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Enter password",
       "line": 26,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -127,6 +135,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Sign in",
       "line": 34,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -141,6 +150,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Forgot password?",
       "line": 36,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -155,6 +165,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Home",
       "line": 8,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -169,6 +180,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Settings",
       "line": 9,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -183,6 +195,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Log out",
       "line": 10,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -197,6 +210,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Search",
       "line": 18,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -213,6 +227,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Search",
       "line": 25,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -227,6 +242,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Clear search",
       "line": 26,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -241,6 +257,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": null,
       "line": 20,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -255,6 +272,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": null,
       "line": 28,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -269,6 +287,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Save changes",
       "line": 35,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -283,6 +302,7 @@ exports[`ReactParser golden file - react-app > matches the committed snapshot fo
       "label": "Upload avatar",
       "line": 37,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
   ],
@@ -307,6 +327,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Toggle admin",
       "line": 11,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -321,6 +342,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Delete user",
       "line": 13,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -335,6 +357,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Hide details",
       "line": 16,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -349,6 +372,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Show details",
       "line": 18,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -363,6 +387,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Admin Panel",
       "line": 10,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -377,6 +402,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Admin Link",
       "line": 12,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -391,6 +417,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "User Link",
       "line": 14,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -405,6 +432,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 17,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -419,6 +447,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Default Action",
       "line": 19,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -433,6 +462,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 20,
       "route": null,
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -447,6 +477,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Always visible",
       "line": 21,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -461,6 +492,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Submit",
       "line": 22,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -475,6 +507,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 20,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -489,6 +522,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 13,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -503,6 +537,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Action 1",
       "line": 4,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -517,6 +552,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Action 2",
       "line": 5,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -531,6 +567,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Some link",
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -545,6 +582,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Enter value",
       "line": 8,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -559,6 +597,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Clear",
       "line": 9,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -573,6 +612,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 9,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -587,6 +627,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Open modal",
       "line": 17,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -601,6 +642,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Close modal",
       "line": 22,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -615,6 +657,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Confirm",
       "line": 23,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -629,6 +672,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 17,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -643,6 +687,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": null,
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -657,6 +702,7 @@ exports[`ReactParser golden file - react-edge-cases > matches the committed snap
       "label": "Delete all",
       "line": 11,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
   ],
@@ -681,6 +727,7 @@ exports[`ReactParser golden file - react-minimal > matches the committed snapsho
       "label": "Click me",
       "line": 4,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -695,6 +742,7 @@ exports[`ReactParser golden file - react-minimal > matches the committed snapsho
       "label": "Type here",
       "line": 5,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -709,6 +757,7 @@ exports[`ReactParser golden file - react-minimal > matches the committed snapsho
       "label": "About",
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
   ],

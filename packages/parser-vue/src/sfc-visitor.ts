@@ -213,5 +213,6 @@ function processElement(
     conditional: isConditional(node, ancestors),
     dynamic: isDynamic(ancestors),
     directive: null, // Vue SFCs don't use RSC directives
+    sourceTagName: null, // Vue parser does not support componentMap yet
   });
 }

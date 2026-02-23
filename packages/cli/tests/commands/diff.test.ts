@@ -26,6 +26,7 @@ function makeElement(overrides: Partial<ManifestElement> = {}): ManifestElement 
     conditional: false,
     dynamic: false,
     directive: null,
+    sourceTagName: null,
     ...overrides,
   };
 }

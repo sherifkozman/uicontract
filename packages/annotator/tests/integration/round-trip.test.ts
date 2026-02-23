@@ -91,6 +91,7 @@ describe('Round-trip integration: scan -> name -> annotate -> re-scan', () => {
         line: el.line,
         column: el.column,
         type: el.type,
+        sourceTagName: el.sourceTagName,
       }));
 
       const annotationResult = annotateSource(source, targets);
@@ -146,6 +147,7 @@ describe('Round-trip integration: scan -> name -> annotate -> re-scan', () => {
         line: el.line,
         column: el.column,
         type: el.type,
+        sourceTagName: el.sourceTagName,
       }));
 
       const annotationResult = annotateSource(source, targets);
@@ -155,6 +157,71 @@ describe('Round-trip integration: scan -> name -> annotate -> re-scan', () => {
       expect(annotationResult.annotationsSkipped).toBe(targets.length);
       expect(annotationResult.modified).toBe(false);
     }
+  });
+});
+
+describe('componentMap round-trip: scan -> name -> annotate custom component', () => {
+  let tempDir: string;
+
+  beforeAll(async () => {
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'uic-componentmap-'));
+    // Create a minimal React file with a custom Button component usage
+    await fs.writeFile(
+      path.join(tempDir, 'App.tsx'),
+      `export default function App() {
+  return (
+    <form>
+      <input placeholder="Email" />
+      <Button type="submit">Sign in</Button>
+    </form>
+  );
+}
+`,
+      'utf-8',
+    );
+  });
+
+  afterAll(async () => {
+    await fs.rm(tempDir, { recursive: true, force: true });
+  });
+
+  it('injects data-agent-id into custom component tags via componentMap', async () => {
+    const componentMap = { Button: 'button' as const };
+
+    // Step 1: Scan with componentMap
+    const scanResult = await parser.discover(tempDir, { componentMap });
+    // Should find: form, input, Button (mapped to button)
+    expect(scanResult.elements.length).toBe(3);
+
+    // Verify the Button element has sourceTagName set
+    const buttonEl = scanResult.elements.find((el) => el.sourceTagName === 'Button');
+    expect(buttonEl).toBeDefined();
+    expect(buttonEl!.type).toBe('button');
+
+    // Step 2: Name elements
+    const namedElements = await nameElements(scanResult.elements);
+    expect(namedElements).toHaveLength(3);
+
+    // Step 3: Annotate
+    const source = await fs.readFile(path.join(tempDir, 'App.tsx'), 'utf-8');
+    const targets: AnnotationTarget[] = namedElements.map((el) => ({
+      agentId: el.agentId,
+      line: el.line,
+      column: el.column,
+      type: el.type,
+      sourceTagName: el.sourceTagName,
+    }));
+
+    const result = annotateSource(source, targets);
+
+    // All 3 elements should be annotated (including the custom Button)
+    expect(result.annotationsApplied).toBe(3);
+    expect(result.modified).toBe(true);
+
+    // Verify the annotated source contains data-agent-id on the Button tag
+    expect(result.annotatedSource).toContain('<Button data-agent-id=');
+    expect(result.annotatedSource).toContain('<input data-agent-id=');
+    expect(result.annotatedSource).toContain('<form data-agent-id=');
   });
 });
 

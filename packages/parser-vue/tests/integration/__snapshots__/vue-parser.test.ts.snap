@@ -15,6 +15,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "About",
       "line": 3,
       "route": "/",
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -29,6 +30,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Get Started",
       "line": 4,
       "route": "/",
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -43,6 +45,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 3,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -57,6 +60,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Display Name",
       "line": 4,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -71,6 +75,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 5,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "select",
     },
     {
@@ -85,6 +90,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Save",
       "line": 9,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -99,6 +105,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Delete account",
       "line": 11,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -113,6 +120,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Admin Panel",
       "line": 3,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -127,6 +135,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Request Access",
       "line": 4,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -141,6 +150,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Edit",
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -155,6 +165,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 8,
       "route": null,
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -169,6 +180,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Name",
       "line": 9,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -183,6 +195,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Bio",
       "line": 10,
       "route": null,
+      "sourceTagName": null,
       "type": "textarea",
     },
     {
@@ -197,6 +210,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Save Changes",
       "line": 11,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -213,6 +227,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Edit",
       "line": 4,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -227,6 +242,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Delete",
       "line": 5,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -241,6 +257,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Add new row",
       "line": 7,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -255,6 +272,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 2,
       "route": null,
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -269,6 +287,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Email",
       "line": 3,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -283,6 +302,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Password",
       "line": 4,
       "route": null,
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -297,6 +317,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Log In",
       "line": 5,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -311,6 +332,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Forgot password?",
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -325,6 +347,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "Refresh users",
       "line": 3,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -339,6 +362,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 5,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -353,6 +377,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": "View Profile",
       "line": 6,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -367,6 +392,7 @@ exports[`VueParser golden file - vue-app > matches the committed snapshot for vu
       "label": null,
       "line": 8,
       "route": null,
+      "sourceTagName": null,
       "type": "select",
     },
   ],

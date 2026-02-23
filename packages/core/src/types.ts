@@ -32,6 +32,8 @@ export interface RawElement {
   conditional: boolean;
   dynamic: boolean;
   directive: RSCDirective | null;
+  /** Original JSX tag name in source code. Non-null for componentMap elements (e.g., "Button"). */
+  sourceTagName: string | null;
 }
 
 /** Named element (after naming engine assigns an agentId) */

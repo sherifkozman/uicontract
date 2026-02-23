@@ -17,6 +17,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Get started",
       "line": 14,
       "route": "/",
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -33,6 +34,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Search...",
       "line": 17,
       "route": "/",
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -49,6 +51,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Learn more",
       "line": 18,
       "route": "/",
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -65,6 +68,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": null,
       "line": 17,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "form",
     },
     {
@@ -81,6 +85,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Display name",
       "line": 19,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -97,6 +102,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Email address",
       "line": 29,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "input",
     },
     {
@@ -113,6 +119,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Save changes",
       "line": 38,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "button",
     },
     {
@@ -129,6 +136,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Back to home",
       "line": 43,
       "route": "/settings",
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -145,6 +153,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Home",
       "line": 8,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -161,6 +170,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Settings",
       "line": 11,
       "route": null,
+      "sourceTagName": null,
       "type": "a",
     },
     {
@@ -177,6 +187,7 @@ exports[`Annotated fixture - annotated-app > matches the committed snapshot for 
       "label": "Sign out",
       "line": 14,
       "route": null,
+      "sourceTagName": null,
       "type": "button",
     },
   ],

@@ -12,7 +12,7 @@ describe('uicontract scan (e2e)', () => {
 
     const raw = await fs.readFile(outFile, 'utf-8');
     const manifest = JSON.parse(raw) as Record<string, unknown>;
-    expect(manifest['schemaVersion']).toBe('1.0');
+    expect(manifest['schemaVersion']).toBe('1.1');
     expect(manifest['generator']).toBeDefined();
     expect(manifest['metadata']).toBeDefined();
     expect(Array.isArray(manifest['elements'])).toBe(true);
@@ -29,11 +29,15 @@ describe('uicontract scan (e2e)', () => {
   }, 30_000);
 
   it('respects --framework react flag', async () => {
-    const result = await runUic(['scan', 'fixtures/react-app', '--framework', 'react', '--json']);
+    const tmp = await tempDir();
+    const outFile = path.join(tmp, 'manifest.json');
+    const result = await runUic(['scan', 'fixtures/react-app', '--framework', 'react', '-o', outFile]);
     expect(result.exitCode).toBe(0);
-    const manifest = JSON.parse(result.stdout) as Record<string, unknown>;
+    const raw = await fs.readFile(outFile, 'utf-8');
+    const manifest = JSON.parse(raw) as Record<string, unknown>;
     const metadata = manifest['metadata'] as Record<string, unknown>;
     expect(metadata['framework']).toBe('react');
+    await fs.rm(tmp, { recursive: true, force: true });
   }, 30_000);
 
   it('exits 1 with helpful error for non-existent directory', async () => {

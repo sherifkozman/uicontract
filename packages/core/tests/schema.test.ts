@@ -37,6 +37,7 @@ function validManifest(): Manifest {
         conditional: false,
         dynamic: false,
         directive: null,
+        sourceTagName: null,
       },
       {
         agentId: 'login.submit-button',
@@ -52,6 +53,7 @@ function validManifest(): Manifest {
         conditional: false,
         dynamic: false,
         directive: null,
+        sourceTagName: null,
       },
       {
         agentId: 'nav.home-link',
@@ -67,6 +69,7 @@ function validManifest(): Manifest {
         conditional: false,
         dynamic: false,
         directive: null,
+        sourceTagName: null,
       },
     ],
   };
@@ -235,6 +238,16 @@ describe('validateManifest', () => {
     expect(result.valid).toBe(false);
   });
 
+  it('fails when sourceTagName is a number', () => {
+    const manifest = validManifest();
+    const el = manifest.elements[0] as Record<string, unknown>;
+    el['sourceTagName'] = 42;
+
+    const result = validateManifest(manifest);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.code === 'INVALID_TYPE' && e.path.includes('sourceTagName'))).toBe(true);
+  });
+
   it('fails when attributes values are not strings', () => {
     const manifest = validManifest();
     manifest.elements[0] = {
@@ -264,6 +277,7 @@ describe('buildManifest', () => {
         conditional: false,
         dynamic: false,
         directive: null,
+        sourceTagName: null,
       },
     ];
 
@@ -276,7 +290,7 @@ describe('buildManifest', () => {
       generatorVersion: '0.1.0',
     });
 
-    expect(manifest.schemaVersion).toBe('1.0');
+    expect(manifest.schemaVersion).toBe('1.1');
     expect(manifest.generator.name).toBe('uicontract');
     expect(manifest.generator.version).toBe('0.1.0');
     expect(manifest.metadata.framework).toBe('react');
@@ -340,5 +354,34 @@ describe('deserializeManifest', () => {
     const json = JSON.stringify(manifest);
 
     expect(() => deserializeManifest(json)).toThrow('Invalid manifest');
+  });
+
+  it('normalizes sourceTagName to null for old manifests without the field', () => {
+    const manifest = validManifest();
+    const json = serializeManifest(manifest);
+    // Simulate an old manifest by stripping sourceTagName from all elements
+    const parsed = JSON.parse(json) as Record<string, unknown>;
+    const elements = parsed['elements'] as Record<string, unknown>[];
+    for (const el of elements) {
+      delete el['sourceTagName'];
+    }
+    const oldJson = JSON.stringify(parsed);
+    const restored = deserializeManifest(oldJson);
+
+    for (const el of restored.elements) {
+      expect(el.sourceTagName).toBeNull();
+    }
+  });
+
+  it('preserves sourceTagName through serialize/deserialize round-trip', () => {
+    const manifest = validManifest();
+    manifest.elements[0] = { ...manifest.elements[0]!, sourceTagName: 'Button' };
+    manifest.elements[1] = { ...manifest.elements[1]!, sourceTagName: null };
+
+    const json = serializeManifest(manifest);
+    const restored = deserializeManifest(json);
+
+    expect(restored.elements[0]?.sourceTagName).toBe('Button');
+    expect(restored.elements[1]?.sourceTagName).toBeNull();
   });
 });

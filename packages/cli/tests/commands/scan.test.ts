@@ -142,6 +142,7 @@ describe('generateTempId', () => {
       conditional: false,
       dynamic: false,
       directive: null,
+      sourceTagName: null,
       ...overrides,
     };
   }
