@@ -108,7 +108,7 @@ describe('types', () => {
     const manifest: Manifest = {
       schemaVersion: '1.0',
       generatedAt: new Date().toISOString(),
-      generator: { name: 'uic', version: '0.0.0' },
+      generator: { name: 'uicontract', version: '0.2.1' },
       metadata: {
         framework: 'react',
         projectRoot: '/project',

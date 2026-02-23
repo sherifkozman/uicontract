@@ -9,7 +9,7 @@ import type { Parser, DiscoveryResult, ParserOptions, RawElement, ParserWarning 
 import { discoverFiles } from './file-discovery.js';
 import { parseFile } from './element-visitor.js';
 
-export const VERSION = '0.0.0';
+export const VERSION = '0.2.1';
 
 /** Detect whether a directory likely contains a React project. */
 async function detectReact(dir: string): Promise<boolean> {

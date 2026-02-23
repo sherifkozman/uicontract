@@ -8,6 +8,16 @@ Semantic versioning applies to the **npm packages**. The **manifest schema** has
 
 ---
 
+## [0.2.1] - 2026-02-22
+
+### Fixed
+
+- VERSION constants in source code aligned to package version (were stuck at `0.0.0`)
+- Generator name in test fixtures updated from `uic` to `uicontract`
+- AI-assisted naming documentation added to CLI.md, namer README, and main README
+
+---
+
 ## [0.2.0] - 2026-02-22
 
 ### Packages
