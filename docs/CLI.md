@@ -212,6 +212,8 @@ uicontract find <query> [options]
 |--------|-------------|
 | `--manifest <path>` | Path to manifest file (default: `manifest.json`). |
 | `--type <type>` | Filter results to a specific element type. |
+| `--threshold <n>` | Minimum fuzzy match score between 0 and 1 (default: 0.6). Lower values include weaker matches. |
+| `--limit <n>` | Maximum number of results to return (default: 10). |
 | `--exact` | Use exact substring matching (no fuzzy matching). |
 | `--fuzzy` | Use fuzzy matching (default). |
 | `--json` | Output matching elements as JSON array. |
@@ -225,6 +227,8 @@ uicontract find "pase subscribtion"          # fuzzy match finds "pause-subscrip
 uicontract find "button" --type button
 uicontract find "settings" --exact           # strict substring match only
 uicontract find "settings" --manifest dist/manifest.json --json
+uicontract find "billing" --threshold 0.8      # stricter matching
+uicontract find "billing" --limit 5            # return at most 5 results
 ```
 
 ---

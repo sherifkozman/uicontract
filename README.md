@@ -47,7 +47,7 @@ npx uicontract diff
 
 ```jsonc
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "elements": [
     {
       "agentId": "settings.billing.pause-subscription.button",

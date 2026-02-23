@@ -33,7 +33,7 @@ throw new UicError('MANIFEST_NOT_FOUND', {
 ## API
 
 - **Types**: `ManifestElement`, `RawElement`, `NamedElement`, `ParserPlugin`, `DiscoveryResult`, and more
-- **`validateManifest(manifest)`**: Validates a manifest object against the v1 JSON Schema; returns `{ valid, errors }`
+- **`validateManifest(manifest)`**: Validates a manifest object against the v1.1 JSON Schema; returns `{ valid, errors }`
 - **`createLogger(options)`**: Returns a structured logger with `debug`, `info`, `warn`, and `error` methods
 - **`UicError`**: Base error class with `code` and `context` properties for all UI Contracts packages
 

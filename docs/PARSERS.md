@@ -69,6 +69,7 @@ interface RawElement {
   attributes: Record<string, string>;  // HTML attributes (data-testid, etc.)
   conditional: boolean;          // true if rendered conditionally
   dynamic: boolean;              // true if dynamically generated
+  sourceTagName: string | null;  // Original JSX tag name for componentMap elements
 }
 ```
 
@@ -172,7 +173,7 @@ Your `package.json` should include `@uicontract/core` as a peer dependency:
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@uicontract/core": ">=0.1.0"
+    "@uicontract/core": ">=0.3.0"
   }
 }
 ```
