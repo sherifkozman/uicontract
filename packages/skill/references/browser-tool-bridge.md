@@ -6,17 +6,18 @@ UI Contracts annotates source code with `data-agent-id` attributes. This referen
 
 ### agent-browser
 
-No configuration needed. Use the `find testid` locator to target elements by their agent ID directly.
+Use a scoped snapshot to locate the element ref, then interact using that ref.
 
 ```bash
 # Click an element
-agent-browser find testid "settings.billing.pause-subscription.button" click
+agent-browser snapshot -s '[data-agent-id="settings.billing.pause-subscription.button"]'
+# Returns: - button "Pause subscription" [ref=e1]
+agent-browser click @e1
 
 # Fill a form field
-agent-browser find testid "login.login-form.email.input" fill "user@example.com"
-
-# Check visibility
-agent-browser find testid "settings.billing.pause-subscription.button" visible
+agent-browser snapshot -s '[data-agent-id="login.login-form.email.input"]'
+# Returns: - textbox "Email" [ref=e1]
+agent-browser fill @e1 "user@example.com"
 ```
 
 ### Playwright MCP

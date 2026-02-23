@@ -26,6 +26,8 @@ ARGUMENTS
 OPTIONS
   --manifest <path>      Path to manifest file (default: manifest.json)
   --type <type>          Filter results to a specific element type
+  --threshold <number>   Minimum fuzzy match score between 0 and 1 (default: 0.6)
+  --limit <number>       Maximum number of results to return (default: 10)
   --exact                Use exact substring matching (no fuzzy matching)
   --fuzzy                Use fuzzy matching (default)
   --json                 Output matching elements as JSON array
@@ -37,6 +39,8 @@ EXAMPLES
   uicontract find "button" --type button
   uicontract find "settings" --exact           # strict substring match only
   uicontract find "settings" --manifest dist/manifest.json --json
+  uicontract find "billing" --threshold 0.8    # stricter matching
+  uicontract find "billing" --limit 5          # return at most 5 results
 
 Run "uicontract --help" for the full list of commands.
 `;
@@ -49,6 +53,8 @@ export interface FindArgs {
   query: string | undefined;
   manifest: string;
   type: string | undefined;
+  threshold: number;
+  limit: number;
   json: boolean;
   help: boolean;
   exact: boolean;
@@ -61,6 +67,8 @@ export interface FindArgsError {
 export function parseFindArgs(args: string[]): FindArgs | FindArgsError {
   let manifest = 'manifest.json';
   let type: string | undefined;
+  let threshold = 0.6;
+  let limit = 10;
   let json = false;
   let help = false;
   let exact = false;
@@ -103,6 +111,32 @@ export function parseFindArgs(args: string[]): FindArgs | FindArgsError {
       i++;
       continue;
     }
+    if (arg === '--threshold') {
+      const next = args[i + 1];
+      if (next === undefined || next.startsWith('-')) {
+        return { error: 'Missing value for --threshold. Example: --threshold 0.6' };
+      }
+      const parsed = Number(next);
+      if (Number.isNaN(parsed) || parsed < 0 || parsed > 1) {
+        return { error: '--threshold must be a number between 0 and 1. Example: --threshold 0.6' };
+      }
+      threshold = parsed;
+      i++;
+      continue;
+    }
+    if (arg === '--limit') {
+      const next = args[i + 1];
+      if (next === undefined || next.startsWith('-')) {
+        return { error: 'Missing value for --limit. Example: --limit 10' };
+      }
+      const parsed = Number(next);
+      if (!Number.isInteger(parsed) || parsed < 1) {
+        return { error: '--limit must be a positive integer. Example: --limit 10' };
+      }
+      limit = parsed;
+      i++;
+      continue;
+    }
     if (arg !== undefined && arg.startsWith('-')) {
       return { error: `Unknown option: ${arg}. Run "uicontract find --help" for usage.` };
     }
@@ -119,7 +153,7 @@ export function parseFindArgs(args: string[]): FindArgs | FindArgsError {
     return { error: `Unexpected argument: "${positionals[1] ?? ''}". Wrap multi-word queries in quotes.` };
   }
 
-  return { query: positionals[0], manifest, type, json, help, exact };
+  return { query: positionals[0], manifest, type, threshold, limit, json, help, exact };
 }
 
 // ---------------------------------------------------------------------------
@@ -161,9 +195,9 @@ export interface ScoredElement {
  * Score an element against a query using fuzzy matching.
  * Returns null if the element does not meet the threshold.
  */
-export function scoreElement(el: ManifestElement, query: string): ScoredElement | null {
+export function scoreElement(el: ManifestElement, query: string, threshold?: number): ScoredElement | null {
   const fields = getSearchFields(el);
-  const result = fuzzyMatchElement(fields, query);
+  const result = fuzzyMatchElement(fields, query, threshold);
   if (!result.matches) return null;
   return { element: el, score: result.score };
 }
@@ -239,7 +273,7 @@ export async function findCommand(args: string[]): Promise<number> {
     // Fuzzy matching (default).
     let scored: ScoredElement[] = [];
     for (const el of manifest.elements) {
-      const result = scoreElement(el, query);
+      const result = scoreElement(el, query, parsed.threshold);
       if (result !== null) {
         scored.push(result);
       }
@@ -251,6 +285,9 @@ export async function findCommand(args: string[]): Promise<number> {
 
     // Sort by score descending (best match first).
     scored.sort((a, b) => b.score - a.score);
+
+    // Apply limit.
+    scored = scored.slice(0, parsed.limit);
 
     if (parsed.json) {
       const output = scored.map((s) => ({

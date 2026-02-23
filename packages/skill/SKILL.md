@@ -46,7 +46,12 @@ Use the `agentId` from the find result to target the element in the browser.
 **agent-browser:**
 
 ```bash
-agent-browser find testid "settings.billing.pause-subscription.button" click
+# Scoped snapshot to find the element ref:
+agent-browser snapshot -s '[data-agent-id="settings.billing.pause-subscription.button"]'
+# Returns: - button "Pause subscription" [ref=e1]
+
+# Interact using the ref:
+agent-browser click @e1
 ```
 
 **CSS selector (any tool):**
@@ -200,10 +205,12 @@ npx uicontract find "pause subscription" --json
 agent-browser open http://localhost:3000/settings/billing
 ```
 
-**Step 3 -- Interact:**
+**Step 3 -- Target and interact:**
 
 ```bash
-agent-browser find testid "settings.billing.pause-subscription.button" click
+agent-browser snapshot -s '[data-agent-id="settings.billing.pause-subscription.button"]'
+# Returns: - button "Pause subscription" [ref=e1]
+agent-browser click @e1
 ```
 
 ## Key Rules

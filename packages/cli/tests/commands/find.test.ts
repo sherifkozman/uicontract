@@ -38,6 +38,8 @@ describe('parseFindArgs', () => {
     expect(result.query).toBe('login');
     expect(result.manifest).toBe('manifest.json');
     expect(result.type).toBeUndefined();
+    expect(result.threshold).toBe(0.6);
+    expect(result.limit).toBe(10);
     expect(result.json).toBe(false);
     expect(result.help).toBe(false);
   });
@@ -165,6 +167,117 @@ describe('parseFindArgs', () => {
     expect('error' in result).toBe(false);
     if ('error' in result) return;
     expect(result.exact).toBe(false);
+  });
+
+  // -------------------------------------------------------------------------
+  // --threshold and --limit flags
+  // -------------------------------------------------------------------------
+
+  it('parses --threshold flag', () => {
+    const result = parseFindArgs(['login', '--threshold', '0.8']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.threshold).toBe(0.8);
+  });
+
+  it('defaults threshold to 0.6', () => {
+    const result = parseFindArgs(['login']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.threshold).toBe(0.6);
+  });
+
+  it('returns error when --threshold is missing its value', () => {
+    const result = parseFindArgs(['login', '--threshold']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --threshold/i);
+  });
+
+  it('returns error when --threshold is not a number', () => {
+    const result = parseFindArgs(['login', '--threshold', 'abc']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/--threshold must be a number between 0 and 1/i);
+  });
+
+  it('returns error when --threshold is below 0', () => {
+    const result = parseFindArgs(['login', '--threshold', '-0.1']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    // -0.1 starts with "-", so the parser sees it as a missing value
+    expect(result.error).toMatch(/missing value for --threshold/i);
+  });
+
+  it('returns error when --threshold is above 1', () => {
+    const result = parseFindArgs(['login', '--threshold', '1.5']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/--threshold must be a number between 0 and 1/i);
+  });
+
+  it('accepts --threshold 0', () => {
+    const result = parseFindArgs(['login', '--threshold', '0']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.threshold).toBe(0);
+  });
+
+  it('accepts --threshold 1', () => {
+    const result = parseFindArgs(['login', '--threshold', '1']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.threshold).toBe(1);
+  });
+
+  it('parses --limit flag', () => {
+    const result = parseFindArgs(['login', '--limit', '5']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.limit).toBe(5);
+  });
+
+  it('defaults limit to 10', () => {
+    const result = parseFindArgs(['login']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.limit).toBe(10);
+  });
+
+  it('returns error when --limit is missing its value', () => {
+    const result = parseFindArgs(['login', '--limit']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --limit/i);
+  });
+
+  it('returns error when --limit is not a positive integer', () => {
+    const result = parseFindArgs(['login', '--limit', '0']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/--limit must be a positive integer/i);
+  });
+
+  it('returns error when --limit is a float', () => {
+    const result = parseFindArgs(['login', '--limit', '2.5']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/--limit must be a positive integer/i);
+  });
+
+  it('returns error when --limit is negative', () => {
+    const result = parseFindArgs(['login', '--limit', '-3']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --limit/i);
+  });
+
+  it('parses --threshold and --limit together', () => {
+    const result = parseFindArgs(['login', '--threshold', '0.7', '--limit', '3']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.threshold).toBe(0.7);
+    expect(result.limit).toBe(3);
   });
 });
 
@@ -444,6 +557,16 @@ describe('scoreElement', () => {
     // Should still match on agentId, type, or filePath
     const result = scoreElement(el, 'billing');
     expect(result).not.toBeNull();
+  });
+
+  it('respects custom threshold parameter', () => {
+    const el = makeElement({ label: 'Pause subscription' });
+    // With a very high threshold, a fuzzy query should not match
+    const strict = scoreElement(el, 'pase', 0.99);
+    expect(strict).toBeNull();
+    // With the default (0.3), the same fuzzy query should match
+    const relaxed = scoreElement(el, 'pase');
+    expect(relaxed).not.toBeNull();
   });
 
   it('results are sorted by relevance when multiple elements match', () => {
