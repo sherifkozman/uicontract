@@ -1,6 +1,6 @@
 {
   "name": "@uicontract/annotator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Source code annotator that inserts data-agent-id attributes into UI components",
   "type": "module",
   "license": "MIT",

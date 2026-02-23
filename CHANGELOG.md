@@ -8,6 +8,55 @@ Semantic versioning applies to the **npm packages**. The **manifest schema** has
 
 ---
 
+## [0.2.0] - 2026-02-22
+
+### Packages
+
+| Package | Version |
+|---------|---------|
+| `uicontract` | 0.2.0 |
+| `@uicontract/core` | 0.2.0 |
+| `@uicontract/parser-react` | 0.2.0 |
+| `@uicontract/parser-vue` | 0.2.0 |
+| `@uicontract/namer` | 0.2.0 |
+| `@uicontract/annotator` | 0.2.0 |
+| `@uicontract/skill` | 0.2.0 |
+
+### Added
+
+**Parser (`@uicontract/parser-react`)**
+- Route group stripping: Next.js App Router `(groupName)` segments are filtered from inferred routes (e.g., `app/(auth)/login/page.tsx` yields `/login`)
+- Inline arrow handler extraction: `onClick={() => doThing()}` now extracts `"doThing"` instead of returning null
+- RSC directive detection: `'use client'` and `'use server'` file-level directives are recorded on every element as `directive` field
+- Server action `action` prop: `<form action={submitFn}>` extracts handler name, with `onSubmit` taking precedence when both are present
+- `componentMap` support: custom components (e.g., `<Button>`) are discovered when mapped to native types via `.uicrc.json`
+
+**Namer (`@uicontract/namer`)**
+- AI-assisted naming: functional multi-provider implementation supporting OpenAI, Anthropic, and Google APIs
+- `--ai` flag enables AI naming with deterministic fallback on failure or timeout
+- `--ai-provider`, `--ai-model`, `--ai-timeout` flags for provider configuration
+- Provider auto-detection from environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`)
+
+**Annotator (`@uicontract/annotator`)**
+- Vue SFC annotation: inserts `data-agent-id` attributes into Vue `<template>` blocks
+
+**Core (`@uicontract/core`)**
+- `directive` field added to manifest schema v1.0 (optional, backward-compatible)
+- `loadConfig()` reads `.uicrc.json` for `componentMap` configuration
+- Programmatic manifest validator validates `directive` enum values
+
+### Changed
+
+- `--ai-timeout` default aligned to 10000ms across CLI and namer library
+- Manifest JSON Schema updated with `directive` property on elements
+
+### Fixed
+
+- Route inference for nested route groups (e.g., `app/(g1)/(g2)/dashboard/page.tsx` yields `/dashboard`)
+- Inline arrow handlers with member expression calls (e.g., `onClick={() => obj.method()}` yields `"method"`)
+
+---
+
 ## [0.1.0] - 2026-02-22
 
 Initial public release of UI Contracts.

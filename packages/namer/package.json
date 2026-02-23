@@ -1,6 +1,6 @@
 {
   "name": "@uicontract/namer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Naming engine that assigns hierarchical agent IDs to UI elements",
   "type": "module",
   "license": "MIT",

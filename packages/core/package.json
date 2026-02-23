@@ -1,6 +1,6 @@
 {
   "name": "@uicontract/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Core types, schema, validation, logger, and error classes for UIC",
   "type": "module",
   "license": "MIT",
