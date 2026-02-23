@@ -490,10 +490,20 @@ describe('Handler extraction edge cases', () => {
     expect(form?.handler).toBe('handleSubmit');
   });
 
-  it('returns null for inline arrow handlers', () => {
+  it('extracts handler name from inline arrow calling a function', () => {
     const source = `
       export function InlineHandler() {
         return <button onClick={() => console.log('hi')}>Go</button>;
+      }
+    `;
+    const elements = parse(source);
+    expect(elements[0]!.handler).toBe('log');
+  });
+
+  it('returns null for inline arrow with block body', () => {
+    const source = `
+      export function InlineHandler() {
+        return <button onClick={() => { doA(); doB(); }}>Go</button>;
       }
     `;
     const elements = parse(source);

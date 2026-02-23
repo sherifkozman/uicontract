@@ -105,7 +105,14 @@ export function extractRoute(filePath: string, projectRoot: string): string | nu
   if (dirPart === '.') {
     return '/';
   }
-  return '/' + dirPart;
+
+  // Strip Next.js App Router route groups: (groupName) segments are layout
+  // groups that don't appear in the URL.
+  const segments = dirPart.split('/').filter((s) => !/^\(.*\)$/.test(s));
+  if (segments.length === 0) {
+    return '/';
+  }
+  return '/' + segments.join('/');
 }
 
 // ---------------------------------------------------------------------------
@@ -197,10 +204,39 @@ export function extractLabel(openingPath: NodePath<t.JSXOpeningElement>): string
 // Handler extraction
 // ---------------------------------------------------------------------------
 
-/** Extract the event handler name from event props like onClick, onSubmit, etc. */
+/**
+ * Extract a handler name from a JSX expression value.
+ * Handles identifiers, member expressions, and simple inline arrows.
+ */
+function extractHandlerName(expr: t.Expression | t.JSXEmptyExpression): string | null {
+  // onClick={handleFoo}
+  if (t.isIdentifier(expr)) {
+    return expr.name;
+  }
+
+  // onClick={this.handleFoo} or onClick={obj.method}
+  if (t.isMemberExpression(expr) && t.isIdentifier(expr.property)) {
+    return expr.property.name;
+  }
+
+  // onClick={() => doThing()} or onClick={() => obj.method())
+  if (t.isArrowFunctionExpression(expr) && !t.isBlockStatement(expr.body)) {
+    // Expression-body arrow: extract the called function name
+    if (t.isCallExpression(expr.body)) {
+      return extractHandlerName(expr.body.callee as t.Expression);
+    }
+  }
+
+  return null;
+}
+
+/** Extract the event handler name from event props like onClick, onSubmit, action, etc. */
 export function extractHandler(openingPath: NodePath<t.JSXOpeningElement>): string | null {
   const eventProps = ['onClick', 'onSubmit', 'onChange', 'onInput', 'onFocus', 'onBlur', 'onKeyDown', 'onKeyUp', 'onKeyPress'];
+  // Server Actions: <form action={serverAction}> is a valid form interaction pattern
+  const actionProps = ['action'];
 
+  // First pass: event handler props (higher priority)
   for (const attr of openingPath.node.attributes) {
     if (!t.isJSXAttribute(attr)) continue;
     const name = attrName(attr);
@@ -209,17 +245,21 @@ export function extractHandler(openingPath: NodePath<t.JSXOpeningElement>): stri
     if (!t.isJSXExpressionContainer(attr.value)) continue;
     const expr = attr.value.expression;
 
-    // onClick={handleFoo}
-    if (t.isIdentifier(expr)) {
-      return expr.name;
-    }
+    const handlerName = extractHandlerName(expr);
+    if (handlerName) return handlerName;
+  }
 
-    // onClick={this.handleFoo}
-    if (t.isMemberExpression(expr) && t.isIdentifier(expr.property)) {
-      return expr.property.name;
-    }
+  // Second pass: action prop (lower priority, only if no event handler found)
+  for (const attr of openingPath.node.attributes) {
+    if (!t.isJSXAttribute(attr)) continue;
+    const name = attrName(attr);
+    if (!name || !actionProps.includes(name)) continue;
 
-    // Inline arrow / complex expression → null
+    if (!t.isJSXExpressionContainer(attr.value)) continue;
+    const expr = attr.value.expression;
+
+    const handlerName = extractHandlerName(expr);
+    if (handlerName) return handlerName;
   }
 
   return null;

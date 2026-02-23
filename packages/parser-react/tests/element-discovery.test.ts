@@ -295,4 +295,77 @@ describe('element discovery', () => {
       });
     }
   });
+
+  // ---------------------------------------------------------------------------
+  // componentMap: custom components mapped to native element types
+  // ---------------------------------------------------------------------------
+
+  describe('componentMap', () => {
+    function parseWithMap(
+      source: string,
+      componentMap: Record<string, string>,
+      file = FILE,
+      root = ROOT,
+    ) {
+      return parseFile(source, file, root, componentMap as Record<string, import('@uicontract/core').InteractiveElementType>);
+    }
+
+    it('discovers a mapped custom component as its native type', () => {
+      const elements = parseWithMap(
+        `export default function App() { return <Button onClick={handle}>Click</Button>; }`,
+        { Button: 'button' },
+      );
+      expect(elements).toHaveLength(1);
+      expect(elements[0]!.type).toBe('button');
+    });
+
+    it('discovers multiple mapped components', () => {
+      const elements = parseWithMap(
+        `export default function App() {
+          return (
+            <div>
+              <TextInput placeholder="name" />
+              <Link href="/home">Home</Link>
+            </div>
+          );
+        }`,
+        { TextInput: 'input', Link: 'a' },
+      );
+      expect(elements).toHaveLength(2);
+      expect(elements[0]!.type).toBe('input');
+      expect(elements[1]!.type).toBe('a');
+    });
+
+    it('skips uppercase components not in componentMap', () => {
+      const elements = parseWithMap(
+        `export default function App() { return <CustomButton>Click</CustomButton>; }`,
+        { Button: 'button' }, // CustomButton is not mapped
+      );
+      expect(elements).toHaveLength(0);
+    });
+
+    it('still discovers native elements alongside mapped components', () => {
+      const elements = parseWithMap(
+        `export default function App() {
+          return (
+            <div>
+              <button>Native</button>
+              <IconButton onClick={handle}>Mapped</IconButton>
+            </div>
+          );
+        }`,
+        { IconButton: 'button' },
+      );
+      expect(elements).toHaveLength(2);
+      expect(elements[0]!.type).toBe('button');
+      expect(elements[1]!.type).toBe('button');
+    });
+
+    it('without componentMap, uppercase components are skipped (existing behavior)', () => {
+      const elements = parse(
+        `export default function App() { return <Button onClick={handle}>Click</Button>; }`,
+      );
+      expect(elements).toHaveLength(0);
+    });
+  });
 });

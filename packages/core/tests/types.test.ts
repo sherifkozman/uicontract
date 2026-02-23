@@ -41,6 +41,7 @@ describe('types', () => {
       attributes: { 'data-testid': 'submit-btn' },
       conditional: false,
       dynamic: false,
+      directive: null,
     };
     expect(el.type).toBe('button');
     expect(el.filePath).toBe('src/App.tsx');
@@ -59,6 +60,7 @@ describe('types', () => {
       attributes: {},
       conditional: false,
       dynamic: false,
+      directive: null,
     };
     expect(el.componentName).toBeNull();
     expect(el.route).toBeNull();
@@ -78,6 +80,7 @@ describe('types', () => {
       attributes: {},
       conditional: false,
       dynamic: false,
+      directive: null,
     };
     expect(el.agentId).toBe('app.submit.button');
   });
@@ -96,6 +99,7 @@ describe('types', () => {
       attributes: {},
       conditional: false,
       dynamic: false,
+      directive: null,
     };
     expect(el.agentId).toBe('app.submit-button');
   });

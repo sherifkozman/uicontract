@@ -6,6 +6,7 @@ export const VERSION = '0.0.0';
 // Types
 export type {
   InteractiveElementType,
+  RSCDirective,
   RawElement,
   NamedElement,
   ManifestElement,

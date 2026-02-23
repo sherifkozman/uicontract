@@ -82,8 +82,10 @@ uicontract name <manifest> [options]
 | Option | Description |
 |--------|-------------|
 | `--output, -o <file>` | Write named manifest to a file instead of stdout. |
-| `--ai` | Use AI-assisted naming (falls back to deterministic). |
-| `--ai-timeout <ms>` | Timeout for AI naming in milliseconds (default: 5000). |
+| `--ai` | Use AI-assisted naming (experimental, falls back to deterministic). |
+| `--ai-provider <name>` | AI provider: `openai`, `anthropic`, or `google` (auto-detected from env). |
+| `--ai-model <model>` | Override the default model for the AI provider. |
+| `--ai-timeout <ms>` | Timeout for AI naming in milliseconds (default: 10000). |
 | `--json` | Output as JSON (default). |
 | `--help, -h` | Show help message. |
 
@@ -300,7 +302,12 @@ UI Contracts is configured via a `.uicrc.json` file in your project root. The CL
 {
   "protectedScopes": ["settings.billing", "checkout"],
   "breakingChangePolicy": "block",
-  "plugins": ["uic-parser-svelte"]
+  "plugins": ["uic-parser-svelte"],
+  "componentMap": {
+    "Button": "button",
+    "Link": "a",
+    "TextInput": "input"
+  }
 }
 ```
 
@@ -311,6 +318,7 @@ UI Contracts is configured via a `.uicrc.json` file in your project root. The CL
 | `protectedScopes` | `string[]` | `[]` | Agent ID prefixes that require explicit approval to change. `uicontract diff` exits non-zero when elements under these scopes are modified, even with `--allow-breaking`. |
 | `breakingChangePolicy` | `"block" \| "warn"` | `"block"` | How `uicontract diff` handles breaking changes. `"block"` exits non-zero, `"warn"` prints a warning but exits 0. |
 | `plugins` | `string[]` | `[]` | npm package names implementing the `Parser` interface. Loaded automatically by `uicontract scan`. See [PARSERS.md](./PARSERS.md) for how to write a parser plugin. |
+| `componentMap` | `Record<string, string>` | `{}` | Maps custom component names to native element types. When scanning, `<Button>` is normally skipped because it's an uppercase (custom) component. Adding `"Button": "button"` tells the parser to discover it as a `button` element. Valid types: `button`, `input`, `select`, `textarea`, `a`, `form`, `div`, `span`, `img`, `label`. |
 
 ### Plugin Configuration
 

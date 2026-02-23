@@ -7,7 +7,14 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import type { InteractiveElementType } from './types.js';
 import { UicError } from './errors.js';
+
+/** Valid element types for componentMap validation. */
+const VALID_MAP_TYPES = new Set<string>([
+  'button', 'input', 'select', 'textarea', 'a', 'form',
+  'div', 'span', 'img', 'label',
+]);
 
 // ---------------------------------------------------------------------------
 // Types
@@ -20,12 +27,15 @@ export interface UicConfig {
   breakingChangePolicy: 'block' | 'warn';
   /** npm package names implementing the Parser interface to load at startup */
   plugins: string[];
+  /** Map custom component names to native element types (e.g., { "Button": "button" }). */
+  componentMap: Record<string, InteractiveElementType>;
 }
 
 export const DEFAULT_CONFIG: UicConfig = {
   protectedScopes: [],
   breakingChangePolicy: 'block',
   plugins: [],
+  componentMap: {},
 };
 
 const CONFIG_FILENAME = '.uicrc.json';
@@ -104,6 +114,30 @@ export function validateConfig(raw: unknown): UicConfig {
       });
     }
     config.breakingChangePolicy = raw['breakingChangePolicy'];
+  }
+
+  // componentMap
+  if ('componentMap' in raw) {
+    if (!isRecord(raw['componentMap'])) {
+      throw new UicError('MANIFEST_INVALID', {
+        message:
+          'Invalid .uicrc.json: "componentMap" must be an object mapping component names to element types. ' +
+          'Example: { "Button": "button", "Link": "a" }',
+        context: { received: typeof raw['componentMap'] },
+      });
+    }
+    const map = raw['componentMap'];
+    for (const [key, value] of Object.entries(map)) {
+      if (typeof value !== 'string' || !VALID_MAP_TYPES.has(value)) {
+        throw new UicError('MANIFEST_INVALID', {
+          message:
+            `Invalid .uicrc.json: "componentMap.${key}" must be a valid element type ` +
+            `(${[...VALID_MAP_TYPES].join(', ')}), got "${String(value)}".`,
+          context: { key, received: value },
+        });
+      }
+    }
+    config.componentMap = map as Record<string, InteractiveElementType>;
   }
 
   return config;

@@ -68,7 +68,7 @@ describe('Round-trip integration: scan -> name -> annotate -> re-scan', () => {
     const initialCount = initialResult.elements.length;
 
     // Step 2: Name the discovered elements
-    const namedElements = nameElements(initialResult.elements);
+    const namedElements = await nameElements(initialResult.elements);
     expect(namedElements).toHaveLength(initialCount);
 
     // Step 3: Group named elements by file path and annotate each file
@@ -134,7 +134,7 @@ describe('Round-trip integration: scan -> name -> annotate -> re-scan', () => {
   it('annotation is idempotent: annotating again produces no changes', async () => {
     // Re-scan to get current state
     const result = await parser.discover(tempDir, {});
-    const namedElements = nameElements(result.elements);
+    const namedElements = await nameElements(result.elements);
 
     // Attempt to annotate again
     for (const [relFilePath, fileElements] of groupByFile(namedElements)) {

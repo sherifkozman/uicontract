@@ -36,6 +36,7 @@ function validManifest(): Manifest {
         attributes: { 'data-testid': 'email-input' },
         conditional: false,
         dynamic: false,
+        directive: null,
       },
       {
         agentId: 'login.submit-button',
@@ -50,6 +51,7 @@ function validManifest(): Manifest {
         attributes: {},
         conditional: false,
         dynamic: false,
+        directive: null,
       },
       {
         agentId: 'nav.home-link',
@@ -64,6 +66,7 @@ function validManifest(): Manifest {
         attributes: {},
         conditional: false,
         dynamic: false,
+        directive: null,
       },
     ],
   };
@@ -260,6 +263,7 @@ describe('buildManifest', () => {
         attributes: {},
         conditional: false,
         dynamic: false,
+        directive: null,
       },
     ];
 

@@ -56,7 +56,7 @@ export class ReactParser implements Parser {
     for (const file of files) {
       try {
         const source = await fs.readFile(file, 'utf-8');
-        const fileElements = parseFile(source, file, dir);
+        const fileElements = parseFile(source, file, dir, options.componentMap);
         elements.push(...fileElements);
       } catch (error) {
         filesSkipped++;

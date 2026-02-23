@@ -17,16 +17,17 @@ function makeElement(overrides: Partial<RawElement> = {}): RawElement {
     attributes: {},
     conditional: false,
     dynamic: false,
+    directive: null,
     ...overrides,
   };
 }
 
 describe('nameElements', () => {
-  it('returns empty array for empty input', () => {
-    expect(nameElements([])).toEqual([]);
+  it('returns empty array for empty input', async () => {
+    expect(await nameElements([])).toEqual([]);
   });
 
-  it('names a list of RawElements', () => {
+  it('names a list of RawElements', async () => {
     const elements: RawElement[] = [
       makeElement({
         route: '/settings',
@@ -48,7 +49,7 @@ describe('nameElements', () => {
       }),
     ];
 
-    const result = nameElements(elements);
+    const result = await nameElements(elements);
 
     expect(result).toHaveLength(3);
     expect(result[0]?.agentId).toBe('settings.save.button');
@@ -56,7 +57,7 @@ describe('nameElements', () => {
     expect(result[2]?.agentId).toBe('profile.upload.input');
   });
 
-  it('produces no duplicate IDs in result', () => {
+  it('produces no duplicate IDs in result', async () => {
     const elements: RawElement[] = [
       makeElement({
         route: '/settings',
@@ -78,12 +79,12 @@ describe('nameElements', () => {
       }),
     ];
 
-    const result = nameElements(elements);
+    const result = await nameElements(elements);
     const ids = result.map((e) => e.agentId);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it('all IDs match the agent ID pattern', () => {
+  it('all IDs match the agent ID pattern', async () => {
     const elements: RawElement[] = [
       makeElement({
         route: '/settings/billing',
@@ -96,13 +97,13 @@ describe('nameElements', () => {
       makeElement({ type: 'input', line: 4 }),
     ];
 
-    const result = nameElements(elements);
+    const result = await nameElements(elements);
     for (const el of result) {
       expect(el.agentId).toMatch(AGENT_ID_PATTERN);
     }
   });
 
-  it('preserves all original RawElement fields', () => {
+  it('preserves all original RawElement fields', async () => {
     const original = makeElement({
       route: '/test',
       label: 'Click',
@@ -117,7 +118,7 @@ describe('nameElements', () => {
       dynamic: true,
     });
 
-    const result = nameElements([original]);
+    const result = await nameElements([original]);
     const named = result[0];
     expect(named).toBeDefined();
     expect(named?.filePath).toBe('src/Test.tsx');
@@ -133,12 +134,12 @@ describe('nameElements', () => {
     expect(named?.label).toBe('Click');
   });
 
-  it('accepts NamerOptions without error', () => {
+  it('accepts NamerOptions without error', async () => {
     const elements: RawElement[] = [
       makeElement({ route: '/test', label: 'Go', type: 'button' }),
     ];
-    // AI mode is stubbed, should still produce deterministic names
-    const result = nameElements(elements, { ai: true, aiTimeout: 5000 });
+    // AI mode without an API key falls back to deterministic names
+    const result = await nameElements(elements, { ai: true, aiTimeout: 5000 });
     expect(result).toHaveLength(1);
     expect(result[0]?.agentId).toMatch(AGENT_ID_PATTERN);
   });

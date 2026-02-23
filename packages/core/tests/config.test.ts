@@ -76,6 +76,53 @@ describe('validateConfig', () => {
       /breakingChangePolicy.*must be "block" or "warn"/,
     );
   });
+
+  describe('componentMap', () => {
+    it('accepts a valid componentMap', () => {
+      const result = validateConfig({
+        componentMap: { Button: 'button', Link: 'a', TextInput: 'input' },
+      });
+      expect(result.componentMap).toEqual({
+        Button: 'button',
+        Link: 'a',
+        TextInput: 'input',
+      });
+    });
+
+    it('defaults to empty object when omitted', () => {
+      const result = validateConfig({});
+      expect(result.componentMap).toEqual({});
+    });
+
+    it('throws when componentMap is not an object', () => {
+      expect(() => validateConfig({ componentMap: 'not-an-object' })).toThrow(
+        /componentMap.*must be an object/,
+      );
+    });
+
+    it('throws when componentMap value is not a valid element type', () => {
+      expect(() =>
+        validateConfig({ componentMap: { Button: 'widget' } }),
+      ).toThrow(/componentMap\.Button.*must be a valid element type/);
+    });
+
+    it('throws when componentMap value is not a string', () => {
+      expect(() =>
+        validateConfig({ componentMap: { Button: 123 } }),
+      ).toThrow(/componentMap\.Button.*must be a valid element type/);
+    });
+
+    it('accepts all valid element types as values', () => {
+      const validTypes = [
+        'button', 'input', 'select', 'textarea', 'a', 'form',
+        'div', 'span', 'img', 'label',
+      ];
+      for (const type of validTypes) {
+        const result = validateConfig({ componentMap: { Test: type } });
+        expect(result.componentMap['Test']).toBe(type);
+      }
+    });
+  });
 });
 
 // ---------------------------------------------------------------------------

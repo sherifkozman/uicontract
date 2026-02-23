@@ -212,5 +212,6 @@ function processElement(
     attributes: extractDataAttributes(node),
     conditional: isConditional(node, ancestors),
     dynamic: isDynamic(ancestors),
+    directive: null, // Vue SFCs don't use RSC directives
   });
 }

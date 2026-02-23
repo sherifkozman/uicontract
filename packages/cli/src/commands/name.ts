@@ -25,8 +25,10 @@ ARGUMENTS
 
 OPTIONS
   --output, -o <file>    Write named manifest to a file instead of stdout
-  --ai                   Use AI-assisted naming (falls back to deterministic)
-  --ai-timeout <ms>      Timeout for AI naming in milliseconds (default: 5000)
+  --ai                   Use AI-assisted naming (experimental, falls back to deterministic)
+  --ai-provider <name>   AI provider: openai, anthropic, or google (auto-detected from env)
+  --ai-model <model>     Override the default model for the AI provider
+  --ai-timeout <ms>      Timeout for AI naming in milliseconds (default: 10000)
   --json                 Output as JSON (default)
   --help, -h             Show this help message
 
@@ -47,6 +49,8 @@ export interface NameArgs {
   manifest: string | undefined;
   output: string | undefined;
   ai: boolean;
+  aiProvider: string | undefined;
+  aiModel: string | undefined;
   aiTimeout: number;
   json: boolean;
   help: boolean;
@@ -56,10 +60,14 @@ export interface NameArgsError {
   error: string;
 }
 
+const VALID_AI_PROVIDERS = new Set(['openai', 'anthropic', 'google']);
+
 export function parseNameArgs(args: string[]): NameArgs | NameArgsError {
   let output: string | undefined;
   let ai = false;
-  let aiTimeout = 5000;
+  let aiProvider: string | undefined;
+  let aiModel: string | undefined;
+  let aiTimeout = 10000;
   let json = false;
   let help = false;
   const positionals: string[] = [];
@@ -77,6 +85,27 @@ export function parseNameArgs(args: string[]): NameArgs | NameArgsError {
     }
     if (arg === '--ai') {
       ai = true;
+      continue;
+    }
+    if (arg === '--ai-provider') {
+      const next = args[i + 1];
+      if (next === undefined || next.startsWith('-')) {
+        return { error: 'Missing value for --ai-provider. Example: --ai-provider openai' };
+      }
+      if (!VALID_AI_PROVIDERS.has(next)) {
+        return { error: `Invalid --ai-provider: "${next}". Must be one of: openai, anthropic, google.` };
+      }
+      aiProvider = next;
+      i++;
+      continue;
+    }
+    if (arg === '--ai-model') {
+      const next = args[i + 1];
+      if (next === undefined || next.startsWith('-')) {
+        return { error: 'Missing value for --ai-model. Example: --ai-model gpt-4o-mini' };
+      }
+      aiModel = next;
+      i++;
       continue;
     }
     if (arg === '--ai-timeout') {
@@ -117,7 +146,7 @@ export function parseNameArgs(args: string[]): NameArgs | NameArgsError {
     return { error: `Unexpected argument: "${positionals[1] ?? ''}". Run "uicontract name --help" for usage.` };
   }
 
-  return { manifest: positionals[0], output, ai, aiTimeout, json, help };
+  return { manifest: positionals[0], output, ai, aiProvider, aiModel, aiTimeout, json, help };
 }
 
 // ---------------------------------------------------------------------------
@@ -151,8 +180,10 @@ export async function nameCommand(args: string[]): Promise<number> {
   }
 
   // Name elements
-  const namedElements = nameElements(manifest.elements, {
+  const namedElements = await nameElements(manifest.elements, {
     ai: parsed.ai,
+    aiProvider: parsed.aiProvider,
+    aiModel: parsed.aiModel,
     aiTimeout: parsed.aiTimeout,
   });
 

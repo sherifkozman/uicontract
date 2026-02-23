@@ -184,6 +184,46 @@ describe('route extraction', () => {
     );
     expect(elements[0]!.route).toBe('/about');
   });
+
+  it('strips single route group from path', () => {
+    const elements = parse(
+      `export default function Page() { return <button>Go</button>; }`,
+      '/p/app/(auth)/login/page.tsx',
+    );
+    expect(elements[0]!.route).toBe('/login');
+  });
+
+  it('strips route group and keeps sibling segments', () => {
+    const elements = parse(
+      `export default function Page() { return <button>Go</button>; }`,
+      '/p/app/(marketing)/about/page.tsx',
+    );
+    expect(elements[0]!.route).toBe('/about');
+  });
+
+  it('strips multiple nested route groups', () => {
+    const elements = parse(
+      `export default function Page() { return <button>Go</button>; }`,
+      '/p/app/(group1)/(group2)/dashboard/page.tsx',
+    );
+    expect(elements[0]!.route).toBe('/dashboard');
+  });
+
+  it('returns root when all segments are route groups', () => {
+    const elements = parse(
+      `export default function Page() { return <button>Go</button>; }`,
+      '/p/app/(marketing)/page.tsx',
+    );
+    expect(elements[0]!.route).toBe('/');
+  });
+
+  it('does not strip non-group parenthesized segments', () => {
+    const elements = parse(
+      `export default function Page() { return <button>Go</button>; }`,
+      '/p/app/settings/page.tsx',
+    );
+    expect(elements[0]!.route).toBe('/settings');
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -271,9 +311,30 @@ describe('handler extraction', () => {
     expect(elements[0]!.handler).toBe('handleClick');
   });
 
-  it('returns null for inline arrow function', () => {
+  it('extracts handler from inline arrow calling a function', () => {
+    const elements = parse(
+      `export default function App() { return <button onClick={() => doThing()}>Click</button>; }`,
+    );
+    expect(elements[0]!.handler).toBe('doThing');
+  });
+
+  it('extracts handler from inline arrow calling a member expression', () => {
     const elements = parse(
       `export default function App() { return <button onClick={() => console.log('hi')}>Click</button>; }`,
+    );
+    expect(elements[0]!.handler).toBe('log');
+  });
+
+  it('returns null for inline arrow with block body', () => {
+    const elements = parse(
+      `export default function App() { return <button onClick={() => { a(); b(); }}>Click</button>; }`,
+    );
+    expect(elements[0]!.handler).toBeNull();
+  });
+
+  it('returns null for inline arrow with non-call expression body', () => {
+    const elements = parse(
+      `export default function App() { return <button onClick={() => x + 1}>Click</button>; }`,
     );
     expect(elements[0]!.handler).toBeNull();
   });
@@ -316,6 +377,37 @@ describe('handler extraction', () => {
     );
     // 'a' is always interactive but has no event handler prop
     expect(elements[0]!.handler).toBeNull();
+  });
+
+  it('extracts action prop from form as handler', () => {
+    const elements = parse(
+      `export default function App() {
+         return <form action={submitAction}><button>Go</button></form>;
+       }`,
+    );
+    const form = elements.find((e) => e.type === 'form');
+    expect(form?.handler).toBe('submitAction');
+  });
+
+  it('prefers onSubmit over action prop', () => {
+    const elements = parse(
+      `export default function App() {
+         const handleSubmit = () => {};
+         return <form action={submitAction} onSubmit={handleSubmit}><button>Go</button></form>;
+       }`,
+    );
+    const form = elements.find((e) => e.type === 'form');
+    expect(form?.handler).toBe('handleSubmit');
+  });
+
+  it('extracts action prop with inline arrow', () => {
+    const elements = parse(
+      `export default function App() {
+         return <form action={() => serverAction()}><button>Go</button></form>;
+       }`,
+    );
+    const form = elements.find((e) => e.type === 'form');
+    expect(form?.handler).toBe('serverAction');
   });
 
   it('returns null for complex expression handler', () => {
@@ -488,6 +580,63 @@ describe('data attribute extraction', () => {
 });
 
 // ---------------------------------------------------------------------------
+// RSC directive detection
+// ---------------------------------------------------------------------------
+
+describe('RSC directive detection', () => {
+  it('detects use client directive', () => {
+    const elements = parse(
+      `'use client';
+       export default function App() { return <button>Click</button>; }`,
+    );
+    expect(elements[0]!.directive).toBe('use client');
+  });
+
+  it('detects use server directive', () => {
+    const elements = parse(
+      `'use server';
+       export default function App() { return <button>Click</button>; }`,
+    );
+    expect(elements[0]!.directive).toBe('use server');
+  });
+
+  it('returns null when no directive present', () => {
+    const elements = parse(
+      `export default function App() { return <button>Click</button>; }`,
+    );
+    expect(elements[0]!.directive).toBeNull();
+  });
+
+  it('sets directive on all elements in the file', () => {
+    const elements = parse(
+      `'use client';
+       export default function App() {
+         return <form onSubmit={() => {}}><input /><button>Go</button></form>;
+       }`,
+    );
+    expect(elements.length).toBeGreaterThan(1);
+    expect(elements.every((e) => e.directive === 'use client')).toBe(true);
+  });
+
+  it('ignores non-directive string literals', () => {
+    const elements = parse(
+      `const x = 'not a directive';
+       export default function App() { return <button>Click</button>; }`,
+    );
+    // The first statement is a variable declaration, not an expression statement
+    expect(elements[0]!.directive).toBeNull();
+  });
+
+  it('handles double-quoted directive', () => {
+    const elements = parse(
+      `"use client";
+       export default function App() { return <button>Click</button>; }`,
+    );
+    expect(elements[0]!.directive).toBe('use client');
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Combined: all fields in one realistic component
 // ---------------------------------------------------------------------------
 
@@ -514,8 +663,10 @@ describe('full element metadata', () => {
     expect(form!.attributes).toEqual({ 'data-testid': 'login-form' });
     expect(form!.conditional).toBe(false);
     expect(form!.dynamic).toBe(false);
+    expect(form!.directive).toBe('use client');
 
     const button = elements.find((e) => e.type === 'button');
     expect(button!.label).toBe('Sign in');
+    expect(button!.directive).toBe('use client');
   });
 });
