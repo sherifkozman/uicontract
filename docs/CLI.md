@@ -98,6 +98,65 @@ uicontract name manifest.json --ai
 uicontract name manifest.json --ai --ai-timeout 10000
 ```
 
+### AI-Assisted Naming
+
+The `--ai` flag enables AI-assisted naming for elements that lack strong naming signals (no label and no handler). These "weak" elements normally get fallback IDs like `component.button.47`. With `--ai`, an LLM analyzes the element's context (component name, route, surrounding code) and suggests human-readable name segments instead.
+
+**Setup**
+
+Set one of these environment variables with your API key:
+
+| Variable | Provider |
+|----------|----------|
+| `OPENAI_API_KEY` | OpenAI |
+| `ANTHROPIC_API_KEY` | Anthropic |
+| `GOOGLE_API_KEY` or `GEMINI_API_KEY` | Google |
+
+The provider is auto-detected in this priority order: OpenAI, Anthropic, Google. Use `--ai-provider` to override.
+
+**Default models**
+
+| Provider | Default Model |
+|----------|---------------|
+| OpenAI | `gpt-4o-mini` |
+| Anthropic | `claude-haiku-4-5-20251001` |
+| Google | `gemini-2.0-flash` |
+
+Use `--ai-model` to override (e.g., `--ai-model gpt-4o` for higher quality at higher cost).
+
+**Examples**
+
+```bash
+# Auto-detect provider from env
+export OPENAI_API_KEY=sk-...
+uicontract name manifest.json --ai
+
+# Explicit provider and model
+uicontract name manifest.json --ai --ai-provider anthropic --ai-model claude-sonnet-4-5-20250514
+
+# Increase timeout for slow connections
+uicontract name manifest.json --ai --ai-timeout 20000
+
+# Write output to file
+uicontract name manifest.json --ai -o named-manifest.json
+```
+
+**How it works**
+
+1. The namer scores each element. Elements with a label or handler get deterministic IDs as usual.
+2. Elements with neither (weak names) are batched (up to 20 per request) and sent to the AI provider with their component name, route, file path, and element type.
+3. The AI suggests a kebab-case name segment. The namer validates the response (format, length, uniqueness) before applying it.
+4. If the AI call fails, times out, or returns an invalid name, the element falls back to its deterministic ID silently. AI naming never blocks the pipeline.
+
+**Troubleshooting**
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `No AI provider detected` | No API key in environment | Set `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `GOOGLE_API_KEY` |
+| `AI naming timed out` | Provider too slow or network issue | Increase `--ai-timeout` (default: 10000ms) |
+| Some elements still have weak names | AI returned invalid format or duplicate | Expected; deterministic fallback is intentional |
+| All elements unchanged | No elements qualified as "weak" | AI only targets elements with no label and no handler |
+
 ---
 
 ## `uicontract annotate`
