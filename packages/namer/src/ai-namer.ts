@@ -7,6 +7,11 @@
  *
  * When the AI namer fails or times out, the deterministic namer is used
  * as a fallback.
+ *
+ * TODO: Investigate how AI agent skills can detect and reuse the AI
+ * environment they run within (e.g., Claude Code's API context, Gemini CLI's
+ * credentials) instead of requiring separate API keys. This would enable
+ * zero-config AI naming when invoked as a skill from an AI agent.
  */
 
 import type { RawElement } from '@uicontract/core';
