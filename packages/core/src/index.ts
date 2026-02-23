@@ -1,7 +1,7 @@
 /**
  * @uicontract/core - foundation types and utilities for UIC.
  */
-export const VERSION = '0.2.1';
+export const VERSION = '0.3.0';
 
 // Types
 export type {

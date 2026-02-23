@@ -9,7 +9,7 @@ import type { Parser, DiscoveryResult, ParserOptions, RawElement, ParserWarning 
 import { discoverFiles } from './file-discovery.js';
 import { parseVueFile } from './sfc-visitor.js';
 
-export const VERSION = '0.2.1';
+export const VERSION = '0.3.0';
 
 /** Detect whether a directory likely contains a Vue project. */
 async function detectVue(dir: string): Promise<boolean> {

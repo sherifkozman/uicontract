@@ -8,6 +8,26 @@ Semantic versioning applies to the **npm packages**. The **manifest schema** has
 
 ---
 
+## [0.3.0] - 2026-02-22
+
+### Added
+
+- `sourceTagName` field on manifest elements — preserves the original JSX tag name for componentMap-mapped components (e.g., `"Button"` when mapped to `"button"`)
+- Manifest schema bumped to **v1.1** (additive, backward-compatible)
+- `--threshold` and `--limit` flags for `uicontract find` command
+- componentMap round-trip integration test (scan -> name -> annotate -> verify)
+- Schema validation test for invalid `sourceTagName` type
+- Deserialization normalization test for pre-1.1 manifests
+
+### Fixed
+
+- **Annotator skipped componentMap elements** (#7): `data-agent-id` was not injected into custom component tags (e.g., `<Button>`) because the annotator matched against the native type (`"button"`) instead of the actual JSX tag name (`"Button"`)
+- Old manifests without `sourceTagName` now normalize to `null` on deserialization instead of leaving `undefined`
+- Flaky e2e scan test: stdout truncation at 8192 bytes — now writes to file instead
+- React parser now excludes test files, stories, and setup files from scanning
+
+---
+
 ## [0.2.1] - 2026-02-22
 
 ### Fixed

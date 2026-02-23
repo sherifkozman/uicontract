@@ -1,6 +1,6 @@
 {
   "name": "uicontract",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "CLI tool that makes web app UIs machine-readable for AI agents",
   "type": "module",
   "license": "MIT",
