@@ -21,6 +21,8 @@ npx uicontract scan ./my-app
 
 # Assign stable hierarchical IDs
 npx uicontract name
+# Or with AI-assisted naming (requires OPENAI_API_KEY, ANTHROPIC_API_KEY, or GOOGLE_API_KEY)
+# npx uicontract name --ai
 
 # Preview annotation (no files changed)
 npx uicontract annotate --dry-run
