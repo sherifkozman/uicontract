@@ -19,6 +19,8 @@ import { createBackup } from './backup.js';
 export { annotateSource } from './jsx-annotator.js';
 export type { AnnotationTarget, AnnotationResult } from './jsx-annotator.js';
 
+export { annotateVueSource } from './vue-annotator.js';
+
 export { generatePatch, formatUnifiedDiff } from './patch-generator.js';
 export type { FilePatch } from './patch-generator.js';
 

@@ -20,6 +20,7 @@ function makeNamed(
     attributes: {},
     conditional: false,
     dynamic: false,
+    directive: null,
     ...overrides,
   };
 }

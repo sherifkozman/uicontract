@@ -124,6 +124,11 @@
           },
           "dynamic": {
             "type": "boolean"
+          },
+          "directive": {
+            "type": ["string", "null"],
+            "enum": ["use client", "use server", null],
+            "description": "React Server Component directive detected at file level."
           }
         }
       }

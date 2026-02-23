@@ -15,6 +15,9 @@ export type InteractiveElementType =
   | 'img'
   | 'label';
 
+/** React Server Component directive detected at file level */
+export type RSCDirective = 'use client' | 'use server';
+
 /** Raw element discovered by parser (before naming) */
 export interface RawElement {
   type: InteractiveElementType;
@@ -28,6 +31,7 @@ export interface RawElement {
   attributes: Record<string, string>;
   conditional: boolean;
   dynamic: boolean;
+  directive: RSCDirective | null;
 }
 
 /** Named element (after naming engine assigns an agentId) */
@@ -61,6 +65,8 @@ export interface ParserOptions {
   include?: string[];
   exclude?: string[];
   maxDepth?: number;
+  /** Map custom component names to native element types (e.g., { "Button": "button" }). */
+  componentMap?: Record<string, InteractiveElementType>;
 }
 
 /** Warning emitted during parsing */

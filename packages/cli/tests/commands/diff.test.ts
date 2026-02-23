@@ -25,6 +25,7 @@ function makeElement(overrides: Partial<ManifestElement> = {}): ManifestElement 
     attributes: {},
     conditional: false,
     dynamic: false,
+    directive: null,
     ...overrides,
   };
 }

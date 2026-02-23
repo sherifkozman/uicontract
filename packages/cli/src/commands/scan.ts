@@ -256,7 +256,8 @@ export async function scanCommand(args: string[]): Promise<number> {
     return 1;
   }
 
-  // Load plugins from config
+  // Load plugins and componentMap from config
+  let componentMap: Record<string, string> | undefined;
   try {
     const config = await loadConfig(resolvedDir);
     if (config.plugins.length > 0) {
@@ -264,6 +265,10 @@ export async function scanCommand(args: string[]): Promise<number> {
       if (pluginResult.loaded.length > 0) {
         logger.debug('Loaded plugins', { plugins: pluginResult.loaded });
       }
+    }
+    if (Object.keys(config.componentMap).length > 0) {
+      componentMap = config.componentMap;
+      logger.debug('Loaded componentMap', { entries: Object.keys(config.componentMap).length });
     }
   } catch (err) {
     // Config errors should not block scanning - warn and continue
@@ -304,7 +309,9 @@ export async function scanCommand(args: string[]): Promise<number> {
 
   let result;
   try {
-    result = await parser.discover(resolvedDir, {});
+    result = await parser.discover(resolvedDir, {
+      ...(componentMap ? { componentMap: componentMap as Record<string, import('@uicontract/core').InteractiveElementType> } : {}),
+    });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     process.stderr.write(

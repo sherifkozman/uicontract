@@ -20,6 +20,7 @@ function makeElement(overrides: Partial<NamedElement> & { agentId: string; fileP
     attributes: {},
     conditional: false,
     dynamic: false,
+    directive: null,
     ...overrides,
   };
 }

@@ -17,6 +17,7 @@ function makeElement(overrides: Partial<RawElement> = {}): RawElement {
     attributes: {},
     conditional: false,
     dynamic: false,
+    directive: null,
     ...overrides,
   };
 }

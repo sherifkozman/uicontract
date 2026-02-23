@@ -296,7 +296,8 @@ Six layers. Each layer depends only on the layers below it. No circular dependen
         "data-testid": "pause-btn"
       },
       "conditional": false,
-      "dynamic": false
+      "dynamic": false,
+      "directive": "use client"
     }
   ]
 }

@@ -98,7 +98,7 @@ UI Contracts follows a four-step pipeline:
 
 **1. Discover** - The parser walks your source AST (Babel for React/TSX, `@vue/compiler-dom` for Vue SFCs) and finds every interactive element: `<button>`, `<a>`, `<input>`, `<select>`, `<textarea>`, and any element with an `onClick`, `onChange`, or `onSubmit` handler. No runtime execution required.
 
-**2. Name** - The namer derives a stable hierarchical ID from four signals: route (inferred from file-based routing), component name, element label (aria-label, children text, or htmlFor), and element type. Example: `/settings/billing` + `BillingSettings` + `"Pause subscription"` + `button` produces `settings.billing.pause-subscription.button`. The same source always produces the same ID.
+**2. Name** - The namer derives a stable hierarchical ID from four signals: route (inferred from file-based routing), component name, element label (aria-label, children text, or htmlFor), and element type. Example: `/settings/billing` + `BillingSettings` + `"Pause subscription"` + `button` produces `settings.billing.pause-subscription.button`. The same source always produces the same ID. For elements lacking strong context, pass `--ai` (experimental) to use an LLM to suggest human-readable name segments.
 
 **3. Annotate** - The annotator inserts `data-agent-id="<id>"` directly into source files at the exact line and column the parser recorded. Run `--dry-run` to preview a unified diff patch without touching files. The annotator requires a clean git state and creates `.uic-backup/` before writing.
 
@@ -110,10 +110,42 @@ Agent IDs survive refactors because they are recomputed from source structure, n
 
 ## Supported Frameworks
 
-| Framework | Status |
-|-----------|--------|
-| React / Next.js | Full support |
-| Vue 3 / Nuxt | Full support |
+| Framework | Parsing | Annotation |
+|-----------|---------|------------|
+| React / Next.js | Full | Full |
+| Vue 3 / Nuxt | Full | Full |
+
+---
+
+## Known Limitations
+
+- **Dynamic list item IDs**: Elements rendered inside `.map()` or `v-for` do not encode the row/item key in their agent ID. All iterations receive the same ID (deduplicated with a numeric suffix). Target specific rows using a combination of the agent ID and index or data attributes.
+- **Render-prop and `asChild` composition**: Libraries like Radix UI that forward rendering to a child via `asChild` or render props are not traced through. The inner native element is discovered if it appears directly in source; the wrapper component is skipped unless added to `componentMap`.
+- **Third-party component libraries**: Custom components (`<Button>`, `<TextInput>`) are skipped by default since the parser cannot know which native element they render. Use the `componentMap` config to map them. See [Configuration](#configuration) below.
+
+---
+
+## Configuration
+
+Create a `.uicrc.json` in your project root to customize behavior:
+
+```jsonc
+{
+  // Map custom components to native element types
+  "componentMap": {
+    "Button": "button",
+    "Link": "a",
+    "TextInput": "input",
+    "IconButton": "button"
+  },
+
+  // ID prefixes that require approval to change
+  "protectedScopes": ["settings.billing", "auth"],
+
+  // "block" (default) or "warn" for breaking changes
+  "breakingChangePolicy": "block"
+}
+```
 
 ---
 

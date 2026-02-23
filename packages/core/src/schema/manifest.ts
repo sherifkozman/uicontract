@@ -152,6 +152,18 @@ function validateElement(element: unknown, index: number, errors: ValidationErro
       });
     }
   }
+
+  // directive (optional, but if present must be valid)
+  if ('directive' in element) {
+    const dir = element['directive'];
+    if (dir !== null && dir !== 'use client' && dir !== 'use server') {
+      errors.push({
+        path: `${prefix}.directive`,
+        code: 'INVALID_TYPE',
+        message: 'directive must be "use client", "use server", or null.',
+      });
+    }
+  }
 }
 
 /** Validate a manifest object against the v1 schema. */

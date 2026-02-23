@@ -5,7 +5,7 @@
 import { parse } from '@babel/parser';
 import _traverse from '@babel/traverse';
 import * as t from '@babel/types';
-import type { RawElement, InteractiveElementType } from '@uicontract/core';
+import type { RawElement, InteractiveElementType, RSCDirective } from '@uicontract/core';
 import {
   extractComponentName,
   extractRoute,
@@ -73,6 +73,7 @@ export function parseFile(
   source: string,
   absoluteFilePath: string,
   projectRoot: string,
+  componentMap?: Record<string, InteractiveElementType>,
 ): RawElement[] {
   const ast = parse(source, {
     sourceType: 'module',
@@ -86,23 +87,45 @@ export function parseFile(
     ],
   });
 
+  // Detect 'use client' / 'use server' directive at file top.
+  // Babel parses these as Directive nodes (like 'use strict'), not ExpressionStatements.
+  let directive: RSCDirective | null = null;
+  for (const dir of ast.program.directives) {
+    const val = dir.value.value;
+    if (val === 'use client' || val === 'use server') {
+      directive = val;
+      break;
+    }
+  }
+
   const elements: RawElement[] = [];
 
   traverse(ast, {
     JSXOpeningElement(nodePath) {
       const nameNode = nodePath.node.name;
 
-      // Only handle plain HTML elements (lowercase tag names)
+      // Only handle plain JSX identifiers (not member expressions like Foo.Bar)
       if (!t.isJSXIdentifier(nameNode)) return;
 
       const tagName = nameNode.name;
-      const isAlwaysInteractive = ALWAYS_INTERACTIVE.has(tagName);
-      const isGenericWithHandler =
-        GENERIC_INTERACTIVE_TYPES.has(tagName) && hasEventHandlerProp(nodePath.node);
 
-      if (!isAlwaysInteractive && !isGenericWithHandler) return;
+      // Check componentMap for uppercase (custom component) tags
+      const mappedType = componentMap?.[tagName];
 
-      const elementType = toInteractiveType(tagName);
+      let elementType: InteractiveElementType | null;
+      if (mappedType) {
+        // Custom component mapped to a native element type
+        elementType = mappedType;
+      } else {
+        // Standard native element handling
+        const isAlwaysInteractive = ALWAYS_INTERACTIVE.has(tagName);
+        const isGenericWithHandler =
+          GENERIC_INTERACTIVE_TYPES.has(tagName) && hasEventHandlerProp(nodePath.node);
+
+        if (!isAlwaysInteractive && !isGenericWithHandler) return;
+
+        elementType = toInteractiveType(tagName);
+      }
       if (!elementType) return;
 
       const loc = nodePath.node.loc;
@@ -133,6 +156,7 @@ export function parseFile(
         attributes,
         conditional,
         dynamic,
+        directive,
       });
     },
   });

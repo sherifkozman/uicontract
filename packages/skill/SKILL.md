@@ -95,8 +95,10 @@ npx uicontract name manifest.json -o manifest.json
 | Flag | Description |
 |------|-------------|
 | `-o, --output <path>` | Output file path |
-| `--ai` | Use AI-assisted naming for ambiguous elements |
-| `--ai-timeout <ms>` | Timeout for AI naming requests |
+| `--ai` | Use AI-assisted naming for ambiguous elements (experimental) |
+| `--ai-provider <name>` | AI provider: `openai`, `anthropic`, or `google` (auto-detected from env) |
+| `--ai-model <model>` | Override the default model for the AI provider |
+| `--ai-timeout <ms>` | Timeout for AI naming requests (default: 10000) |
 
 **annotate** -- Insert `data-agent-id` attributes into source files.
 

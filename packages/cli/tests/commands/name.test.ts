@@ -13,7 +13,7 @@ describe('parseNameArgs', () => {
     expect(result.manifest).toBe('manifest.json');
     expect(result.output).toBeUndefined();
     expect(result.ai).toBe(false);
-    expect(result.aiTimeout).toBe(5000);
+    expect(result.aiTimeout).toBe(10000);
     expect(result.json).toBe(false);
     expect(result.help).toBe(false);
   });
@@ -115,6 +115,55 @@ describe('parseNameArgs', () => {
     expect('error' in result).toBe(true);
     if (!('error' in result)) return;
     expect(result.error).toMatch(/unexpected argument/i);
+  });
+
+  it('parses --ai-provider flag with valid value', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-provider', 'openai']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.aiProvider).toBe('openai');
+  });
+
+  it('parses --ai-provider anthropic', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-provider', 'anthropic']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.aiProvider).toBe('anthropic');
+  });
+
+  it('parses --ai-provider google', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-provider', 'google']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.aiProvider).toBe('google');
+  });
+
+  it('returns error for invalid --ai-provider', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-provider', 'unknown']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/invalid --ai-provider/i);
+  });
+
+  it('returns error when --ai-provider is missing its value', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-provider']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --ai-provider/i);
+  });
+
+  it('parses --ai-model flag', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-model', 'gpt-4o']);
+    expect('error' in result).toBe(false);
+    if ('error' in result) return;
+    expect(result.aiModel).toBe('gpt-4o');
+  });
+
+  it('returns error when --ai-model is missing its value', () => {
+    const result = parseNameArgs(['manifest.json', '--ai-model']);
+    expect('error' in result).toBe(true);
+    if (!('error' in result)) return;
+    expect(result.error).toMatch(/missing value for --ai-model/i);
   });
 
   it('parses all flags combined', () => {
